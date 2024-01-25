@@ -57,6 +57,26 @@
                          </a>
                      </li>
                  <?php } ?>
+                 <?php if ($_SESSION[SESS . 'session_admin_users_level'] == 'admin' || $_SESSION[SESS . 'session_admin_users_level'] == 'company') { ?>
+                     <li class="sidebar-item">
+                         <a class="sidebar-link" href="<?= PROJECT_PATH . 'src/html/category/'; ?>" aria-expanded="false">
+                             <span>
+                                 <i class="bi bi-diagram-3 fs-6"></i>
+                             </span>
+                             <span class="hide-menu">category</span>
+                         </a>
+                     </li>
+                 <?php } ?>
+                 <?php if ($_SESSION[SESS . 'session_admin_users_level'] == 'admin' || $_SESSION[SESS . 'session_admin_users_level'] == 'company') { ?>
+                     <li class="sidebar-item">
+                         <a class="sidebar-link" href="<?= PROJECT_PATH . 'src/html/machine/'; ?>" aria-expanded="false">
+                             <span>
+                                 <i class="bi bi-diagram-3 fs-6"></i>
+                             </span>
+                             <span class="hide-menu">machine</span>
+                         </a>
+                     </li>
+                 <?php } ?>
                  <?php if ($_SESSION[SESS . 'session_admin_users_level'] == 'admin' || $_SESSION[SESS . 'session_admin_users_level'] == 'company' || $_SESSION[SESS . 'session_admin_users_level'] == 'branch') { ?>
                      <li class="sidebar-item">
                          <a class="sidebar-link" href="<?= PROJECT_PATH . 'src/html/department/'; ?>" aria-expanded="false">
