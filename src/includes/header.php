@@ -18,7 +18,7 @@ $show_iage = show_iage();
                     <div class="message-body">
                         <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="<?= ($_SESSION[SESS . 'session_admin_users_level'] != 'employee') ? 'dropdown' : '' ?>" aria-expanded="false">
                             <?php if (!empty($show_iage['admin_users_image'])) { ?>
-                                <img src="../<?= $show_iage['admin_users_image'] ?>" alt="" width="35" height="35" class="rounded-circle">
+                                <img src="../assets/images/logos/globle.png" alt="" width="35" height="35" class="rounded-circle">
                             <?php } else { ?>
                                 <i class="ti ti-user"></i>
                             <?php  } ?>

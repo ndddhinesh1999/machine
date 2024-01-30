@@ -13,107 +13,7 @@
 </head>
 
 <style>
-    @import url("https://fonts.googleapis.com/css2?family=Muli&display=swap");
 
-    :root {
-        --line-border-fill: #3498db;
-        --line-border-empty: #e0e0e0;
-        --progress-zIndex: -1;
-    }
-
-    * {
-        box-sizing: border-box;
-    }
-
-    body {
-        align-items: center;
-        background-color: var(--bg-color);
-        display: flex;
-        font-family: "Muli", sans-serif;
-        height: 100vh;
-        justify-content: center;
-        margin: 0;
-        overflow: hidden;
-    }
-
-    .contaienr {
-        text-align: center;
-    }
-
-    .progress-container {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 30px;
-        max-width: 100%;
-        position: relative;
-        width: 350px;
-    }
-
-    .progress-container::before {
-        background-color: var(--line-border-empty);
-        content: "";
-        height: 4px;
-        left: 0;
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 100%;
-        z-index: var(--progress-zIndex);
-    }
-
-    .progress {
-        background-color: var(--line-border-fill);
-        height: 4px;
-        left: 0;
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        transition: 0.4s ease;
-        width: 0%;
-        z-index: var(--progress-zIndex);
-    }
-
-    .circle {
-        align-items: center;
-        background-color: #fff;
-        border: 3px solid #e0e0e0;
-        border-radius: 50%;
-        color: #999;
-        display: flex;
-        height: 30px;
-        justify-content: center;
-        transition: 0.4 ease;
-        width: 30px;
-    }
-
-    .circle.active {
-        border-color: var(--line-border-fill);
-    }
-
-    .btn {
-        background-color: var(--line-border-fill);
-        border: 0;
-        border-radius: 6px;
-        color: #fff;
-        cursor: pointer;
-        font-family: inherit;
-        font-size: 14px;
-        margin: 5px;
-        padding: 8px 30px;
-    }
-
-    .btn:active {
-        transform: scale(0.98);
-    }
-
-    .btn:focus {
-        outline: 0;
-    }
-
-    .btn:disabled {
-        background-color: var(--line-border-empty);
-        cursor: not-allowed;
-    }
 </style>
 
 <body>
@@ -133,22 +33,144 @@
                     <nav>
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/home/">Home</a></li>
-                            <li class="breadcrumb-item active">Department</li>
+                            <li class="breadcrumb-item active">Machine</li>
                         </ol>
                     </nav>
                 </div>
                 <?php if (isset($_REQUEST['page']) && $_REQUEST['page'] == 'add') { ?>
-                    <div class="contaienr">
-                        <div class="progress-container">
-                            <div class="progress" id="progress"></div>
-                            <div class="circle active">1</div>
-                            <div class="circle">2</div>
-                            <div class="circle">3</div>
-                            <div class="circle">4</div>
+
+                    <section class="mt-4">
+                        <div class="container">
+                            <form class="card">
+                                <div class="card-header">
+                                    <nav class="nav nav-pills nav-fill">
+                                        <a class="nav-link tab-pills" href="#">SPEC</a>
+                                        <a class="nav-link tab-pills" href="#">PREVENTIVE</a>
+                                        <a class="nav-link tab-pills" href="#">Autonomous</a>
+                                        <a class="nav-link tab-pills" href="#">Company Details</a>
+                                        <a class="nav-link tab-pills" href="#">Finish</a>
+                                    </nav>
+                                </div>
+                                <div class="card-body">
+                                    <div class="tab d-none row">
+                                        <div class="mb-3 col-md-4">
+                                            <label for="name" class="form-label">MACHINE NAME</label>
+                                            <input type="text" class="form-control" name="name" id="name" placeholder="Please enter name">
+                                        </div>
+                                        <div class="mb-3 col-md-4">
+                                            <label for="email" class="form-label">MACHINE MODEL</label>
+                                            <input type="text" class="form-control" name="name" id="name" placeholder="Please enter name">
+                                        </div>
+                                        <div class="mb-3 col-md-4">
+                                            <label for="password" class="form-label">MACHINE SYSTEM</label>
+                                            <input type="text" class="form-control" name="name" id="name" placeholder="Please enter name">
+                                        </div>
+                                        <div class="mb-3 col-md-4">
+                                            <label for="name" class="form-label">MACHINE SERIAL NUMBER</label>
+                                            <input type="text" class="form-control" name="name" id="name" placeholder="Please enter name">
+                                        </div>
+                                        <div class="mb-3 col-md-4">
+                                            <label for="email" class="form-label">MACHINE NUMBER</label>
+                                            <input type="text" class="form-control" name="name" id="name" placeholder="Please enter name">
+                                        </div>
+                                        <div class="mb-3 col-md-4">
+                                            <label for="password" class="form-label">YEAR OF MANUFACTURE</label>
+                                            <input type="text" class="form-control" name="name" id="name" placeholder="Please enter name">
+                                        </div>
+
+                                        <div class="mb-3 col-md-4">
+                                            <label for="name" class="form-label">LOCATION</label>
+                                            <input type="text" class="form-control" name="name" id="name" placeholder="Please enter name">
+                                        </div>
+                                        <div class="mb-3 col-md-4">
+                                            <label for="email" class="form-label">PREVIOUSLY MAINTENANCE DONE</label>
+                                            <input type="text" class="form-control" name="name" id="name" placeholder="Please enter name">
+                                        </div>
+                                        <div class="mb-3 col-md-4">
+                                            <label for="password" class="form-label">PLANNED MAINTENANCE </label>
+                                            <input type="text" class="form-control" name="name" id="name" placeholder="Please enter name">
+                                        </div>
+
+                                        <div class="mb-3 col-md-4">
+                                            <label for="name" class="form-label">X-axis</label>
+                                            <input type="text" class="form-control" name="name" id="name" placeholder="Please enter name">
+                                        </div>
+                                        <div class="mb-3 col-md-4">
+                                            <label for="email" class="form-label">Y-axis</label>
+                                            <input type="text" class="form-control" name="name" id="name" placeholder="Please enter name">
+                                        </div>
+                                        <div class="mb-3 col-md-4">
+                                            <label for="password" class="form-label">Z-axis</label>
+                                            <input type="text" class="form-control" name="name" id="name" placeholder="Please enter name">
+                                        </div>
+                                        <div class="mb-3 col-md-4">
+                                            <label for="password" class="form-label">Tool storage capacity</label>
+                                            <input type="text" class="form-control" name="name" id="name" placeholder="Please enter name">
+                                        </div>
+
+                                        <div class="col-12 text-center">
+                                            <!-- <button type="button" id="back_button" class="btn btn-secondary" onclick="back()">Back</button> -->
+                                            <button type="button" id="next_button" class="btn btn-primary ms-auto" onclick="next()">Next</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="tab d-none">
+                                        <div class="mb-3">
+                                            <label for="name" class="form-label">Address 1</label>
+                                            <input type="text" class="form-control" name="name" id="name" placeholder="Please enter address 1">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="email" class="form-label">Address 2</label>
+                                            <input type="email" class="form-control" name="email" id="email" placeholder="Please enter address 2">
+                                        </div>
+                                        <div class="row">
+                                            <div class="mb-3 col-md-6">
+                                                <label for="city" class="form-label">City</label>
+                                                <input type="text" class="form-control" name="city" id="city" placeholder="Please enter city">
+                                            </div>
+                                            <div class="mb-3 col-md-6">
+                                                <label for="state" class="form-label">State</label>
+                                                <input type="state" class="form-control" name="state" id="state" placeholder="Please enter state">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 text-center">
+                                            <button type="button" id="back_button" class="btn btn-secondary" onclick="back()">Back</button>
+                                            <button type="button" id="next_button" class="btn btn-primary ms-auto" onclick="next()">Next</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="tab d-none">
+                                        <div class="mb-3">
+                                            <label for="company_name" class="form-label">Company Name</label>
+                                            <input type="text" class="form-control" name="company_name" id="company_name" placeholder="Please enter company name">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="company_address" class="form-label">Company Address</label>
+                                            <textarea class="form-control" name="company_address" id="company_address" placeholder="Please enter company address"></textarea>
+                                        </div>
+                                        <div class="col-12 text-center">
+                                            <button type="button" id="back_button" class="btn btn-secondary" onclick="back()">Back</button>
+                                            <button type="button" id="next_button" class="btn btn-primary ms-auto" onclick="next()">Next</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="tab d-none">
+                                        <p>All Set! Please submit to continue. Thank you</p>
+                                        <div class="col-12 text-center">
+                                            <button type="button" id="back_button" class="btn btn-secondary" onclick="back()">Back</button>
+                                            <button type="button" id="next_button" class="btn btn-primary ms-auto" onclick="next()">Submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer text-end">
+                                    <!-- <div class="d-flex">
+                                        <button type="button" id="back_button" class="btn btn-link" onclick="back()">Back</button>
+                                        <button type="button" id="next_button" class="btn btn-primary ms-auto" onclick="next()">Next</button>
+                                    </div> -->
+                                </div>
+                            </form>
                         </div>
-                        <button class="btn" id="prev" disabled>Prev</button>
-                        <button class="btn" id="next">Next</button>
-                    </div>
+                    </section>
                 <?php } else if (isset($_REQUEST['page']) && $_REQUEST['page'] == 'edit') { ?>
 
                     <div class="col-lg-12 d-flex align-items-strech">
@@ -373,17 +395,12 @@
     </div>
 
 
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <!-- <script src="<?= PROJECT_PATH ?>/src/assets/libs/jquery/dist/jquery.min.js"></script> -->
-    <!-- <script src="<?= PROJECT_PATH ?>/src/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script src="<?= PROJECT_PATH ?>/src/assets/libs/apexcharts/dist/apexcharts.min.js"></script>
-    <script src="<?= PROJECT_PATH ?>/src/assets/libs/simplebar/dist/simplebar.js"></script>
-    <script src="<?= PROJECT_PATH ?>/src/assets/js/dashboard.js"></script> -->
-    <!-- <script src="<?= PROJECT_PATH ?>/src/assets/jquery/jquery.js"></script> -->
-    <!-- <script src="<?= PROJECT_PATH ?>/src/assets/jquery/jquery-ui.js"></script> -->
-    <!-- <script src="<?= PROJECT_PATH ?>/src/assets/DataTable/datatables.min.js"></script> -->
-    <!-- <script src="department-function.js"></script> -->
+    <script src="<?= PROJECT_PATH ?>/src/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="<?= PROJECT_PATH ?>/src/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="<?= PROJECT_PATH ?>/src/assets/jquery/jquery-ui.js"></script>
+    <script src="<?= PROJECT_PATH ?>/src/assets/DataTable/datatables.min.js"></script>
+    <script src="department-function.js"></script>
     <?php
 
     if (isset($_REQUEST['msg'])) {
@@ -430,59 +447,44 @@
                 toastList.forEach(toast => toast.show())
             }
             show_alert();
-            const progress = document.querySelector("#progress");
-            const prev = document.querySelector("#prev");
-            const next = document.querySelector("#next");
-            const circles = document.querySelectorAll(".circle");
-
-            let currentActive = 1;
-
-            next.addEventListener("click", () => {
-                currentActive++;
-                alert('sd');
-                if (currentActive > circles.length) {
-                    currentActive = circles.length;
-                }
-
-                update();
-            });
-
-            prev.addEventListener("click", () => {
-                currentActive--;
-
-                if (currentActive < 1) {
-                    currentActive = 1;
-                }
-
-                update();
-            });
-
-            function update() {
-                circles.forEach((circle, idx) => {
-                    if (idx < currentActive) {
-                        circle.classList.add("active");
-                    } else {
-                        circle.classList.remove("active");
-                    }
-                });
-
-                const actives = document.querySelectorAll(".active");
-
-                progress.style.width =
-                    ((actives.length - 1) / (circles.length - 1)) * 100 + "%";
-
-                if (currentActive === 1) {
-                    prev.disabled = true;
-                } else if (currentActive === circles.length) {
-                    next.disabled = true;
-                } else {
-                    prev.disabled = false;
-                    next.disabled = false;
-                }
-            }
         </script>
     <?php } ?>
 
+    <script>
+        var current = 0;
+        var tabs = $(".tab");
+        var tabs_pill = $(".tab-pills");
+
+        loadFormData(current);
+
+        function loadFormData(n) {
+            $(tabs_pill[n]).addClass("active");
+            $(tabs[n]).removeClass("d-none");
+            $("#back_button").attr("disabled", n == 0 ? true : false);
+            n == tabs.length - 1 ?
+                $("#next_button").text("Submit").removeAttr("onclick") :
+                $("#next_button")
+                .attr("type", "button")
+                .text("Next")
+                .attr("onclick", "next()");
+        }
+
+        function next() {
+            $(tabs[current]).addClass("d-none");
+            $(tabs_pill[current]).removeClass("active");
+
+            current++;
+            loadFormData(current);
+        }
+
+        function back() {
+            $(tabs[current]).addClass("d-none");
+            $(tabs_pill[current]).removeClass("active");
+
+            current--;
+            loadFormData(current);
+        }
+    </script>
 </body>
 
 </html>

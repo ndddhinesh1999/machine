@@ -18,7 +18,8 @@ if (isset($_SESSION[SESS . 'session_admin_users_unique_id'])) {
         updatedepartment();
     }
 
-    include 'view.php';
+        include 'view.php';
+    
 } else {
     header("Location:../../../index.php");
 }
