@@ -31,21 +31,20 @@ function dateDisplayFormat($date)
 
 function fileUpload($file_name, $file_tmp_name, $file_rename, $path)
 {
-	$year = date("Y");
-	$month = date("m");
-	$date = date("d");
-	$file_rename       = preg_replace('/[^a-zA-Z0-9]/s', '-', $file_rename);
-
+	// echo $file_tmp_name;exit;
+	$file_rename     = preg_replace('/[^a-zA-Z0-9]/s', '-', $file_rename);
 	$file_extn       = explode('.', $file_name);
 	$file_name_space = str_replace(' ', '-', strtolower($file_rename));
-	$file_new_name   = $file_name_space . '-' . mktime(0, 0, 0, $month, $date, $year) . '.' . $file_extn[1]; //echo $file_new_name; exit;
+	$file_new_name   = $file_name_space . '-' . uniqid() . '.' . $file_extn[1];
+    //  echo $file_tmp_name,$path.$file_new_name;exit;
 	if (!file_exists($path)) {
-		mkdir($path);
+		mkdir($path, 0777, true);
+		// echo mkdir($path, 0770, true);exit;
 	}
 	if (move_uploaded_file($file_tmp_name, $path . $file_new_name)) {
-		//echo 'upload';
+		// echo 'upload';exit;
 	} else {
-		//echo 'Test';
+		// echo 'Test';exit;
 	}
 
 	return $file_new_name;

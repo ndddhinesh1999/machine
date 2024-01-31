@@ -73,7 +73,7 @@
                              <span>
                                  <i class="bi bi-diagram-3 fs-6"></i>
                              </span>
-                             <span class="hide-menu">machine</span>
+                             <span class="hide-menu">Machine</span>
                          </a>
                      </li>
                  <?php } ?>

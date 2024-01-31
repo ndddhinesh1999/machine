@@ -1,7 +1,16 @@
+$(document).ready(function () {
+  $(".datepicker").datepicker({
+    inline: true,
+    dateFormat: 'dd/mm/yy',
+    changeMonth: true,
+    changeYear: true,
+    yearRange: '-70:+70'
+  });
+});
 
 function get_branch() {
   var company_id = $('#company_id').val();
-  $.get('department-ajax.php?action=get_branch', { company_id: company_id }, function (response) {
+  $.get('machine-ajax.php?action=get_branch', { company_id: company_id }, function (response) {
     $('#branch_id').html(response);
   });
 }
@@ -10,28 +19,28 @@ $(document).ready(function () {
 });
 function search_get_branch() {
   var company_id = $('#search_company_id').val();
-  $.get('department-ajax.php?action=get_branch', { company_id: company_id }, function (response) {
+  $.get('machine-ajax.php?action=get_branch', { company_id: company_id }, function (response) {
     $('#search_branch_id').html(response);
   });
 }
 
-function delete_record(department_id, status) {
+function delete_record(machine_id, status) {
   if (status == 'delete') {
     $('#exampleModalLabel').html('Delete Record');
     $('.modal-body').html('<p>Are you sure you want to delete your record?</p>');
-    $('#department_hidden_status').val(status);
+    $('#machine_hidden_status').val(status);
   } else if (status == 'undo') {
     $('#exampleModalLabel').html('Undo Record');
     $('.modal-body').html('<p>Are you sure you want to undo your record?</p>');
-    $('#department_hidden_status').val(status);
+    $('#machine_hidden_status').val(status);
   }
-  $('#department_hidden_id').val(department_id);
+  $('#machine_hidden_id').val(machine_id);
 }
 $('#delete_button').click(function () {
-  var department_hidden_id = $('#department_hidden_id').val();
-  var status = $('#department_hidden_status').val();
-  $.post('department-ajax.php?action=delete_record', {
-    department_id: department_hidden_id,
+  var machine_hidden_id = $('#machine_hidden_id').val();
+  var status = $('#machine_hidden_status').val();
+  $.post('machine-ajax.php?action=delete_record', {
+    machine_id: machine_hidden_id,
     status: status
   }, function (data) {
     $('#exampleModal').modal('hide');
@@ -52,12 +61,12 @@ $('#delete_button').click(function () {
 });
 
 $(function () {
-  var page = $('#department_page').val();
-  var status = $('#department_status').val();
+  var page = $('#machine_page').val();
+  var status = $('#machine_status').val();
   if (page == 'edit' && status == 1) {
-    $('#department_form input').attr('readonly', 'readonly');
-    $('#department_form textarea').attr('readonly', 'readonly');
-    $('#department_form select').attr('disabled', true);
+    $('#machine_form input').attr('readonly', 'readonly');
+    $('#machine_form textarea').attr('readonly', 'readonly');
+    $('#machine_form select').attr('disabled', true);
   }
 });
 

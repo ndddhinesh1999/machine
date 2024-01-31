@@ -18,25 +18,25 @@ if ($action == 'get_branch') {
 }
 
 if ($action == 'delete_record') {
-    $department_id = $_REQUEST['department_id'];
+    $machine_id = $_REQUEST['machine_id'];
     $status = $_REQUEST['status'];
     $where = '';
     if (!empty($status) && $status == 'delete') {
-        $where .= " department_deleted_status = 1 ";
+        $where .= " machine_deleted_status = 1 ";
     } elseif (!empty($status) && $status == 'undo') {
-        $where .= " department_deleted_status = 0 ";
+        $where .= " machine_deleted_status = 0 ";
     }
 
-    if (!empty($department_id)) {
-        $select_department = "SELECT department_name FROM departments WHERE department_id = '" . $department_id . "' ";
-        list($num_row, $records) = selectRow($select_department);
-        $update = "UPDATE   departments SET $where  WHERE department_id=
-'" . $department_id . "' ";
+    if (!empty($machine_id)) {
+        $select_machine = "SELECT machine_name FROM machines WHERE machine_id = '" . $machine_id . "' ";
+        list($num_row, $records) = selectRow($select_machine);
+        $update = "UPDATE   machines SET $where  WHERE machine_id=
+'" . $machine_id . "' ";
         // echo $update;exit;
         $ids = update($update);
 
         if ($ids > 0) {
-            $data = ((!empty($records['department_name'])) ? ucfirst($records['department_name']) : '');
+            $data = ((!empty($records['machine_name'])) ? ucfirst($records['machine_name']) : '');
         } else {
             $data = 2;
         }
