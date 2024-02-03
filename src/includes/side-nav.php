@@ -87,6 +87,26 @@
                          </a>
                      </li>
                  <?php } ?>
+                 <?php if ($_SESSION[SESS . 'session_admin_users_level'] == 'admin' || $_SESSION[SESS . 'session_admin_users_level'] == 'company') { ?>
+                     <li class="sidebar-item">
+                         <a class="sidebar-link" href="<?= PROJECT_PATH . 'src/html/autonomous-daily/'; ?>" aria-expanded="false">
+                             <span>
+                                 <i class="bi bi-diagram-3 fs-6"></i>
+                             </span>
+                             <span class="hide-menu">Autonomous-Daily</span>
+                         </a>
+                     </li>
+                 <?php } ?>
+                 <?php if ($_SESSION[SESS . 'session_admin_users_level'] == 'admin' || $_SESSION[SESS . 'session_admin_users_level'] == 'company') { ?>
+                     <li class="sidebar-item">
+                         <a class="sidebar-link" href="<?= PROJECT_PATH . 'src/html/autonomous-weekly/'; ?>" aria-expanded="false">
+                             <span>
+                                 <i class="bi bi-diagram-3 fs-6"></i>
+                             </span>
+                             <span class="hide-menu">Autonomous-Weekly</span>
+                         </a>
+                     </li>
+                 <?php } ?>
                  <?php if ($_SESSION[SESS . 'session_admin_users_level'] == 'admin' || $_SESSION[SESS . 'session_admin_users_level'] == 'company' || $_SESSION[SESS . 'session_admin_users_level'] == 'branch') { ?>
                      <li class="sidebar-item">
                          <a class="sidebar-link" href="<?= PROJECT_PATH . 'src/html/department/'; ?>" aria-expanded="false">

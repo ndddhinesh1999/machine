@@ -90,7 +90,7 @@ function insertbreakdown()
         $destinationAft = 'uploads/breakdowns/' . date('Y') . '/' . $nameOfFileAft;
 
 
-        $machine_id             = dataValidation($_POST['machine_id']);
+        $machine_id              = dataValidation($_POST['machine_id']);
         $breakdown_date          = dateDatabaseFormat($_POST['breakdown_date']);
         $nature_of_prob          = dataValidation($_POST['nature_of_prob']);
         $downtime_from           = date('Y-m-d H:i', strtotime($_POST['downtime_from']));
@@ -121,7 +121,7 @@ function insertbreakdown()
         // AND breakdown_name = '" . $breakdown_name . "' ";
         // list($num_row, $record_select) = selectRows($get_breakdown);
         // // Checking required fields
-        $request_fields = ((!empty($breakdown_date)));
+        $request_fields = !empty($breakdown_date);
 
         // if ($num_row == 0) {
         if (!empty($request_fields)) {
