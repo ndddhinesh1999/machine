@@ -165,3 +165,34 @@ function user_info($user_id, $user_lever)
 		}
 	}
 }
+function machine_detail()
+{
+
+	if (isset($_REQUEST['m_id']) && !empty($_REQUEST['m_id']) ? $_REQUEST['m_id'] : '') {
+		$where = "AND machine_id ='" . $_REQUEST['m_id'] . "'";
+	} else {
+		$where = "";
+	}
+	$select = "SELECT * FROM machines WHERE machine_deleted_status = '0' $where";
+	list($row, $result) = selectRows($select);
+	$array = array();
+	$i = 0;
+	if ($row > 1) {
+
+		foreach ($result as $record) {
+			$array[$i]['machine_id'] = $record['machine_id'];
+			$array[$i]['machine_name'] = $record['machine_name'];
+			$array[$i]['machine_model'] = $record['machine_model'];
+			$array[$i]['machine_image'] = $record['machine_image'];
+			$i++;
+		}
+	} else {
+		foreach ($result as $record) {
+			$array['machine_id'] = $record['machine_id'];
+			$array['machine_name'] = $record['machine_name'];
+			$array['machine_model'] = $record['machine_model'];
+			$array['machine_image'] = $record['machine_image'];
+		}
+	}
+	return $array;
+}

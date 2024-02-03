@@ -3,19 +3,19 @@ include '../../includes/config.php';
 include '../../includes/utility_function.php';
 if (isset($_SESSION[SESS . 'session_admin_users_unique_id'])) {
     include 'model.php';
-    $category = category();
-    $list_machine = listmachine();
+
+    $list_department = listdepartment();
     $listCompany = listCompany();
     $listBranch = listBranch();
-    if (isset($_POST['add_machine'])) {
-        insertmachine();
+    if (isset($_POST['add_breakdown'])) {
+        insertdepartment();
     }
 
-    if (isset($_GET['machine_id'])) {
-        $edit_machine = editmachine();
+    if (isset($_GET['department_id'])) {
+        $edit_department = editdepartment();
     }
-    if (isset($_POST['update_machine'])) {
-        updatemachine();
+    if (isset($_POST['update_department'])) {
+        updatedepartment();
     }
 
     include 'view.php';
