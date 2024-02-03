@@ -162,7 +162,6 @@ function insertmachine()
 				                   machine_added_by   ='" . $_SESSION[SESS . 'session_admin_users_id'] . "',
 				                   machine_added_on   =UNIX_TIMESTAMP(NOW()),
 				                   machine_added_ip   ='" . $ip . "'";
-
                 insert($insert_machine);
 
                 header("Location:" . PROJECT_PATH . "src/html/machine/index.php?page=add&msg=1");

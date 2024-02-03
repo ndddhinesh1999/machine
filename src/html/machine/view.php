@@ -76,6 +76,19 @@
                                             </div>
 
                                         <?php    } ?>
+
+                                        <div class="col-md-12" style="margin-bottom:25px ">
+                                            <label class="form-label machine_img" for="machine_img">Machine Image</label>
+                                            <input type="file" name="machine_img" id="machine_img" class="form-control" required>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <label class="form-label machine_name" for="machine_name">Machine Name</label>
+                                            <input name="machine_name" id="machine_name" class="form-control" required>
+                                            <div class="invalid-feedback">
+                                                Please enter machine name.
+                                            </div>
+                                        </div>
                                         <div class="col-md-4">
                                             <label class="form-label machine_name" for="machine_name">Machine Type</label>
                                             <select name="machine_type" id="machine_tpe" class="form-select" required>
