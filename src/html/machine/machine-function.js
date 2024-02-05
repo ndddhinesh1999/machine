@@ -88,3 +88,22 @@ $(function () {
     }, false)
   })
 })()
+
+$(function () {
+  let params = new URLSearchParams(location.search);
+  var id = params.get('machine_id');
+  var page = params.get('page');
+  if (id > 0 || page == 'add') {
+    $('#exampleModalMachine').modal('hide');
+
+  } else {
+    $('#exampleModalMachine').modal('show');
+  }
+});
+
+$('#submit-button').click(function () {
+  var machine_hidden_id = $('#machine_select').val();
+  $('#exampleModalMachine').modal('hide');
+
+
+});

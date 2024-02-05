@@ -542,6 +542,32 @@
         </div>
     </div>
 
+    <!-- Machine modal -->
+    <div class="modal fade" data-bs-keyboard="false" data-bs-backdrop="static" id="exampleModalMachine" tabindex="-1" aria-labelledby="exampleModalMachineLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalMachineLabel"></h5>
+                </div>
+                <div class="modal-body">
+                    <label for="color">Select Machine:</label>
+
+                    <select name="machine_select" id="machine_select" class="form-select">
+                        <?php foreach ($list_machine as $list) {  ?>
+                            <option value="<?= $list['machine_id'] ?>"> <?= $list['machine_name'] ?></option>
+                        <?php }  ?>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" name="machine_hidden_id" id="machine_hidden_id" value="">
+                    <input type="hidden" name="machine_hidden_status" id="machine_hidden_status" value="">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="javascript:window.location.href='<?= PROJECT_PATH . 'src/html/home/' ?>';">Close</button>
+                    <button type="button" class="btn btn-primary" id="submit-button" onclick="$('#exampleModalMachine').modal('hide'); location.href='index.php?machine_id=1' ">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Delete modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">

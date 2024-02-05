@@ -65,8 +65,8 @@ function listmachine()
         $where .= " AND machine_company_id  = '" . $_SESSION[SESS . 'session_admin_users_company_id'] . "'  ";
     }
 
-    if (!empty($_REQUEST['search_machine_name'])) {
-        $where .= " AND  machine_name LIKE '%" . $_REQUEST['search_machine_name'] . "%' ";
+    if (!empty($_REQUEST['machine_id'])) {
+        $where .= " AND  machine_id = '" . $_REQUEST['machine_id'] . "' ";
     }
 
     if (!empty($_REQUEST['search_company_id'])) {
@@ -141,7 +141,7 @@ function insertmachine()
         if ($num_row == 0) {
             if (!empty($request_fields)) {
                 $insert_machine = "INSERT INTO machines  SET 
-                                   machine_name                     ='" . $machine_type . "',
+                                   machine_type                     ='" . $machine_type . "',
 				                   machine_name                     ='" . $machine_name . "',
                                    machine_model                    ='" . $macine_model . "',
                                    machine_system                   ='" . $machine_system . "',
