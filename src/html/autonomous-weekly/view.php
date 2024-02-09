@@ -43,11 +43,11 @@
 
             <div class="container-fluid">
                 <div class="page-title">
-                    <h1>autonomous</h1>
+                    <h1>Autonomous Weekly</h1>
                     <nav>
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/home/">Home</a></li>
-                            <li class="breadcrumb-item active">autonomous</li>
+                            <li class="breadcrumb-item active">autonomous-weekly</li>
                         </ol>
                     </nav>
                 </div>
@@ -55,8 +55,8 @@
                     <div class="col-lg-12 d-flex align-items-strech">
                         <div class="card w-100">
                             <div class="card-header d-flex justify-content-between align-items-center">
-                                <h5 class="mb-0">autonomous Details</h5>
-                                <small class="text-muted float-end">Add autonomous</small>
+                                <h5 class="mb-0">Autonomous Weekly Details</h5>
+                                <small class="text-muted float-end">Add autonomous Weekly</small>
                             </div>
                             <div class="card-body">
                                 <form action="index.php" method="POST" name="autonomous_form" id="autonomous_form" autocomplete="off" class="needs-validation" enctype="multipart/form-data" novalidate>
@@ -76,39 +76,77 @@
                                             </div>
 
                                         <?php    } ?>
+                                        <div class="col-md-2">
+                                            <label class="form-label autonomous_date" for="autonomous_date">Date</label>
+                                            <input name="autonomous_date" id="autonomous_date" value="<?= date('d/m/Y') ?>" class="form-control datepicker" required>
+                                            <div class="invalid-feedback">
+                                                Please enter autonomous date.
+                                            </div>
+                                        </div>
+
+                                        <div class="row" style="margin-top: 15px;">
+
+                                            <div class="col-md-3">
+                                                <label class="form-label ">Label & Standard</label>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <label class="form-label ">Remarks</label>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <label class="form-label ">Before</label>
+
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label class="form-label ">After</label>
+
+                                            </div>
+
+                                        </div>
 
                                         <?php foreach ($listLabels as $get_data) { ?>
 
                                             <div class="row" style="margin-top: 15px;">
 
-                                                <div class="col-md-3">
-                                                    <label><?= $get_data['autonomou_lable_part'] ?> </label>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <label> <?= $get_data['autonomou_lable_standard'] ?></label>
-                                                    <input type="hidden" name="label_id[]" id="machine_id" value="<?= $get_data['autonomou_lable_id'] ?>" class="form-control" required>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <!-- <label class="form-label autonomous_date" for="autonomous_date">Date</label> -->
-                                                    <input name="autonomous_date[]" id="autonomous_date<?= $get_data['autonomou_lable_id'] ?>" value="<?= date('d/m/Y') ?>" class="form-control datepicker" required>
-                                                    <div class="invalid-feedback">
-                                                        Please enter autonomous date.
+                                                <div class="row" style="margin-top: 15px;">
+
+                                                    <div class="col-md-3">
+                                                        <b> <?= $get_data['autonomou_lable_part'] . '.' ?></b>
+                                                        <br>
+                                                        <label> <?= $get_data['autonomou_lable_standard'] ?></label>
+                                                        <input type="hidden" name="label_id[]" id="machine_id" value="<?= $get_data['autonomou_lable_id'] ?>" class="form-control" required>
+                                                    </div>
+
+                                                    <div class="col-md-3">
+                                                        <textarea name="autonomous_remark[]" id="autonomous_remark" class="form-control" cols="30" rows="3"> </textarea>
+
+                                                        <div class="invalid-feedback">
+                                                            Please enter autonomous remark.
+                                                        </div>
+                                                    </div>
+
+                                      
+
+                                                    <div class="col-md-3">
+
+                                                        <input type="file" name="autonomous_img_bfr" id="autonomous_img_bfr" accept="image/*" class="form-control" required>
+                                                        <div class="invalid-feedback">
+                                                            Please Choose Before autonomous Image.
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-3">
+
+                                                        <input type="file" name="autonomous_img[]" id="autonomous_img" accept="image/*" class="form-control" required>
+                                                        <div class="invalid-feedback">
+                                                            Please Choose Before autonomous Image.
+                                                        </div>
                                                     </div>
                                                 </div>
 
-
-
-                                                <div class="col-md-4">
-
-                                                    <input type="file" name="autonomous_img[]" id="bfr_autonomous_img" class="form-control" required>
-                                                    <div class="invalid-feedback">
-                                                        Please Choose Before autonomous Image.
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        <?php } ?>
-                                        <!-- <div class="col-md-4">
+                                            <?php } ?>
+                                            <!-- <div class="col-md-4">
                                             <label class="form-label bfr_autonomous_descript" for="bfr_autonomous_descript">Before autonomous - Description</label>
                                             <input name="bfr_autonomous_descript" id="bfr_autonomous_descript" class="form-control " required>
                                             <div class="invalid-feedback">
@@ -117,14 +155,14 @@
                                         </div> -->
 
 
-                                    </div>
-                                    <div class="mt-5 d-flex justify-content-center gap-3">
-                                        <input type="hidden" name="autonomous_page" id="autonomous_page" value="add">
-                                        <input type="hidden" name="autonomous_status" id="autonomous_status" value="">
-                                        <input name="add_autonomous" type="submit" class="btn btn-primary" id="add_autonomous" value="Save" title="Save" />
-                                        <input type="reset" value="Reset" class="btn btn-outline-secondary" title="Reset" />
-                                        <input type="button" value="Back" class="btn btn-secondary" onclick="location.href='index.php'" title="Back">
-                                    </div>
+                                            </div>
+                                            <div class="mt-5 d-flex justify-content-center gap-3">
+                                                <input type="hidden" name="autonomous_page" id="autonomous_page" value="add">
+                                                <input type="hidden" name="autonomous_status" id="autonomous_status" value="">
+                                                <input name="add_autonomous" type="submit" class="btn btn-primary" id="add_autonomous" value="Save" title="Save" />
+                                                <input type="reset" value="Reset" class="btn btn-outline-secondary" title="Reset" />
+                                                <input type="button" value="Back" class="btn btn-secondary" onclick="location.href='index.php'" title="Back">
+                                            </div>
                                 </form>
                             </div>
                         </div>
@@ -134,8 +172,8 @@
                     <div class="col-lg-12 d-flex align-items-strech">
                         <div class="card w-100">
                             <div class="card-header d-flex justify-content-between align-items-center">
-                                <h5 class="mb-0">autonomous Details</h5>
-                                <small class="text-muted float-end">Edit autonomous</small>
+                                <h5 class="mb-0">Autonomous Weekly Details</h5>
+                                <small class="text-muted float-end">Edit autonomous Weekly</small>
                             </div>
 
                             <div class="card-body">
@@ -156,31 +194,65 @@
                                             </div>
                                         <?php    } ?>
 
-                                        <?php foreach ($edit_autonomous['details'] as $get_data) {
+                                        <div class="col-md-3">
+                                            <label class="form-label autonomous_date" for="autonomous_date">Date</label>
+                                            <input name="autonomous_date" id="autonomous_date" value="<?= !empty($edit_autonomous['dates']) ? dateGeneralFormat($edit_autonomous['dates']) : '00/00/0000'  ?>" class="form-control datepicker" required>
+                                            <div class="invalid-feedback">
+                                                Please enter autonomous date.
+                                            </div>
+                                        </div>
 
-                                            // print_r($get_data);exit;
-                                        ?>
+                                        <div class="row" style="margin-top: 15px;">
+
+                                            <div class="col-md-3">
+                                                <label class="form-label ">Label & Standard</label>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <label class="form-label ">Remark</label>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <label class="form-label ">Before</label>
+
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <label class="form-label ">After</label>
+
+                                            </div>
+                                        </div>
+
+                                        <?php foreach ($edit_autonomous['details'] as $get_data) { ?>
 
                                             <div class="row" style="margin-top: 15px;">
 
-                                                <div class="col-md-3">
-                                                    <label><?= $get_data['label_part'] ?> </label>
-                                                </div>
-                                                <div class="col-md-3">
+                                                
+                                            <div class="col-md-3">
+                                                    <b> <?= $get_data['label_part'] . '.'  ?></b>
+                                                    <br>
                                                     <label> <?= $get_data['label_std'] ?></label>
+
                                                     <input type="hidden" name="label_id[]" id="machine_id" value="<?= $get_data['label_id'] ?>" class="form-control" required>
                                                 </div>
-                                                <div class="col-md-2">
-                                                    <!-- <label class="form-label autonomous_date" for="autonomous_date">Date</label> -->
-                                                    <input name="autonomous_date[]" id="autonomous_date<?= $get_data['label_id'] ?>" value="<?= dateGeneralFormat($get_data['dates'])  ?>" class="form-control datepicker" required>
+                                                <div class="col-md-3">
+                                                    <textarea name="autonomous_remark[]" id="autonomous_remark" class="form-control" cols="30" rows="3"><?= $get_data['remark'] ?></textarea>
+
                                                     <div class="invalid-feedback">
-                                                        Please enter autonomous date.
+                                                        Please enter autonomous remark.
                                                     </div>
                                                 </div>
 
+                                                <div class="col-md-3">
+                                                    <?php $required = empty($get_data['files_bfr']) ? 'required' : ''; ?>
 
+                                                    <input type="file" name="autonomous_img_bfr[]" id="autonomous_img_bfr" class="form-control" <?= $required ?> value="<?= $get_data['files_bfr']  ?>">
+                                                    <div class="invalid-feedback">
+                                                        Please Choose autonomous Before Image.
+                                                    </div>
+                                                </div>
 
-                                                <div class="col-md-4">
+                                                <div class="col-md-3">
                                                     <?php $required = empty($get_data['files']) ? 'required' : ''; ?>
 
                                                     <input type="file" name="autonomous_img[]" id="autonomous_img" class="form-control" value="<?= $get_data['files']  ?>" $required>
@@ -274,7 +346,7 @@
                                     <thead>
                                         <tr>
                                             <th>S No.</th>
-                                            <th>autonomous Name</th>
+                                            <th>Autonomous Date</th>
                                             <th>Status</th>
                                             <?php if ($search_status != 1) { ?>
                                                 <th>Edit</th>
@@ -293,7 +365,7 @@
                                         ?>
                                                 <tr>
                                                     <td><?= $sno++; ?></td>
-                                                    <td><?= ($value['autonomous_date']); ?></td>
+                                                    <td><?= dateGeneralFormat($value['autonomous_date']); ?></td>
                                                     <td><?php if ($value['autonomous_active_status'] == 'active') {
                                                             echo "Active";
                                                         } else {

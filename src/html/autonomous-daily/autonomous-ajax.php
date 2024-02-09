@@ -20,23 +20,26 @@ if ($action == 'get_branch') {
 if ($action == 'delete_record') {
     $autonomous_id = $_REQUEST['autonomous_id'];
     $status = $_REQUEST['status'];
-    $where = '';
+    
+    $where_detail = '';
     if (!empty($status) && $status == 'delete') {
-        $where .= " autonomous_deleted_status = 1 ";
+        $where_detail .= " autonomous_detail_deleted_status = 1 ";
     } elseif (!empty($status) && $status == 'undo') {
-        $where .= " autonomous_deleted_status = 0 ";
+        $where_detail .= " autonomous_detail_deleted_status = 0 ";
     }
 
     if (!empty($autonomous_id)) {
         $select_autonomous = "SELECT autonomous_name FROM autonomouss WHERE autonomous_id = '" . $autonomous_id . "' ";
         list($num_row, $records) = selectRow($select_autonomous);
-        $update = "UPDATE   autonomouss SET $where  WHERE autonomous_id=
-'" . $autonomous_id . "' ";
-        // echo $update;exit;
+        $update = "UPDATE   autonomouss SET $where  WHERE autonomous_id='" . $autonomous_id . "' ";
+
         $ids = update($update);
 
         if ($ids > 0) {
-            $data = ((!empty($records['autonomous_name'])) ? ucfirst($records['autonomous_name']) : '');
+            $update_detial = "UPDATE autonomous_detail SET  $where_detail WHERE autonomous_detail_autonomous_id='" . $autonomous_id . "' ";
+
+
+            $data = ((!empty($records['autonomous_id'])) ? 1 : 2);
         } else {
             $data = 2;
         }

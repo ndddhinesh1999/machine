@@ -23,7 +23,7 @@ function search_get_branch() {
     $('#search_branch_id').html(response);
   });
 }
-
+ 
 function delete_record(autonomous_id, status) {
   if (status == 'delete') {
     $('#exampleModalLabel').html('Delete Record');
@@ -46,12 +46,12 @@ $('#delete_button').click(function () {
     $('#exampleModal').modal('hide');
     if (data != 2) {
       if (status == 'delete') {
-        $('#record_name').html(data);
+        $('#record_name').html('Record');
         $('#exampleModalLabel1').html('Delete Record');
         $('#record_status').html('deleted.');
         $('#success_modal').modal('show');
       } else if (status == 'undo') {
-        $('#record_name').html(data);
+        $('#record_name').html('Record');
         $('#exampleModalLabel1').html('Undo Record');
         $('#record_status').html('restored.');
         $('#success_modal').modal('show');

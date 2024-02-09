@@ -22,7 +22,7 @@ function search_get_branch() {
   $.get('autonomous-ajax.php?action=get_branch', { company_id: company_id }, function (response) {
     $('#search_branch_id').html(response);
   });
-}
+} 
 
 function delete_record(autonomous_id, status) {
   if (status == 'delete') {

@@ -83,13 +83,6 @@ function selectLabel()
 
 function insertautonomous()
 {
-    // echo "<pre>";
-    // print_r($_FILES);
-    // exit;
-    // print_r($_POST);
-    // exit;
-
-
     if (isset($_POST['add_autonomous'])) {
 
         $ip = getRealIpAddr();
@@ -104,6 +97,7 @@ function insertautonomous()
 
         $insert_autonomous = "INSERT INTO autonomous  SET 
                               autonomous_type       ='2',
+                              autonomous_date       = '" . dateDatabaseFormat($_POST['autonomous_date']) . "',
                               autonomous_company_id ='" . $company_id . "',
                               autonomous_uniq_id    ='" . $uniq_id . "',													
                               autonomous_added_by   ='" . $_SESSION[SESS . 'session_admin_users_id'] . "',
@@ -115,34 +109,37 @@ function insertautonomous()
 
 
             $paths = '../../uploads/autonomouss/' . date('Y') . '/';
-            $nameOfFile = fileUpload($_FILES["autonomous_img"]["name"][$i], $_FILES["autonomous_img"]["tmp_name"][$i], 'autonomous-daily', $paths);
+            $nameOfFile = fileUpload($_FILES["autonomous_img"]["name"][$i], $_FILES["autonomous_img"]["tmp_name"][$i], 'autonomous-daily-aft', $paths);
             $destination = 'uploads/autonomous/' . date('Y') . '/' . $nameOfFile;
 
+            $nameOfFileBfr = fileUpload($_FILES["autonomous_img_bfr"]["name"][$i], $_FILES["autonomous_img_bfr"]["tmp_name"][$i], 'autonomous-daily-bfr', $paths);
+            $destinationBfr = 'uploads/autonomous/' . date('Y') . '/' . $nameOfFileBfr;
+
             $autonomous_lable_id   = $_POST['label_id'][$i];
-            $autonomous_date       = dateDatabaseFormat($_POST['autonomous_date'][$i]);
             $autonomous_file       = $destination;
+            $autonomous_file_bfr   = $destinationBfr;
+            $remark = $_POST['autonomous_remark'][$i];
 
             $get_autonomous = "SELECT  autonomous_detail_id  FROM   autonomous_detail
-                               WHERE autonomous_detail_lable_id ='" . $autonomous_lable_id . "' AND  autonomous_detail_date ='" . $autonomous_date . "'
+                               WHERE autonomous_detail_lable_id ='" . $autonomous_lable_id . "' 
                                AND autonomous_detail_deleted_status = 0 ";
             //    echo $get_autonomous;exit;
             list($num_row, $record_select) = selectRows($get_autonomous);
             // Checking required fields
-            $request_fields = !empty($autonomous_date);
+            $request_fields = !empty($autonomous_file);
 
             if ($num_row == 0) {
                 if (!empty($request_fields)) {
                     $insert_autonomous_detail = "INSERT INTO autonomous_detail  SET 
-				                   autonomous_detail_lable_id   ='" . $autonomous_lable_id . "',
-                                   autonomous_detail_date       ='" . $autonomous_date . "',
-                                   autonomous_detail_file       ='" . $autonomous_file . "',
-                                   autonomous_detail_autonomous_id = '" . $id . "',
-                                  
-                                   autonomous_detail_company_id ='" . $company_id . "',
-													
-				                   autonomous_detail_added_by   ='" . $_SESSION[SESS . 'session_admin_users_id'] . "',
-				                   autonomous_detail_added_on   =UNIX_TIMESTAMP(NOW()),
-				                   autonomous_detail_added_ip   ='" . $ip . "'";
+				                                 autonomous_detail_lable_id   ='" . $autonomous_lable_id . "',
+                                                 autonomous_detail_file       ='" . $autonomous_file . "',
+                                                 autonomous_detail_file_bfr   ='" . $autonomous_file_bfr . "',
+                                                 autonomous_detail_remark     = '" . $remark . "',
+                                                 autonomous_detail_autonomous_id = '" . $id . "',
+                                                 autonomous_detail_company_id ='" . $company_id . "',
+				                                 autonomous_detail_added_by   ='" . $_SESSION[SESS . 'session_admin_users_id'] . "',
+				                                 autonomous_detail_added_on   =UNIX_TIMESTAMP(NOW()),
+				                                 autonomous_detail_added_ip   ='" . $ip . "'";
                     insert($insert_autonomous_detail);
                 }
             }
@@ -170,15 +167,19 @@ function editautonomous()
         list($count, $result) = selectRows($edit);
         $arrD['autonomous_id'] = $_GET['autonomous_id'];
         $arrD['deleted_status'] = $result[0]['autonomous_deleted_status'];
+        $arrD['dates'] = $result[0]['autonomous_date'];
+
 
         $i = 0;
         foreach ($result as $records) {
-            $arryData[$i]['label_id'] = $records['autonomous_detail_lable_id'];
+            $arryData[$i]['label_id']   = $records['autonomous_detail_lable_id'];
             $arryData[$i]['label_part'] = $records['autonomou_lable_part'];
-            $arryData[$i]['label_std'] = $records['autonomou_lable_standard'];
-
-            $arryData[$i]['dates'] = $records['autonomous_detail_date'];
+            $arryData[$i]['label_std']  = $records['autonomou_lable_standard'];
+            $arryData[$i]['files_bfr'] = $records['autonomous_detail_file'];
             $arryData[$i]['files'] = $records['autonomous_detail_file'];
+            $arryData[$i]['remark'] = $records['autonomous_detail_remark'];
+
+
 
             $i++;
         }
@@ -212,13 +213,30 @@ function updateautonomous()
             for ($i = 0; $i < count($_POST['label_id']); $i++) {
 
 
-                $paths = '../../uploads/autonomouss/' . date('Y') . '/';
-                $nameOfFile = fileUpload($_FILES["autonomous_img"]["name"][$i], $_FILES["autonomous_img"]["tmp_name"][$i], 'autonomous-daily', $paths);
-                $destination = 'uploads/autonomous/' . date('Y') . '/' . $nameOfFile;
+                $include = '';
+                if (!empty($_FILES["autonomous_img"]["tmp_name"][$i])) {
+
+                    $paths = '../../uploads/autonomouss/' . date('Y') . '/';
+                    $nameOfFile = fileUpload($_FILES["autonomous_img"]["name"][$i], $_FILES["autonomous_img"]["tmp_name"][$i], 'autonomous-daily', $paths);
+                    $destination = 'uploads/autonomous/' . date('Y') . '/' . $nameOfFile;
+
+                    $nameOfFile_bfr = fileUpload($_FILES["autonomous_img_bfr"]["name"][$i], $_FILES["autonomous_img_bfr"]["tmp_name"][$i], 'autonomous-daily-bfr', $paths);
+                    $destination_bfr = 'uploads/autonomous/' . date('Y') . '/' . $nameOfFile_bfr;
+
+
+                    $autonomous_file       = $destination;
+                    $autonomous_file_bfr   = $destination_bfr;
+
+                    $include = "autonomous_detail_file_bfr       ='" . $autonomous_file_bfr . "',
+                                autonomous_detail_file       ='" . $autonomous_file . "', ";
+                }
+
 
                 $autonomous_lable_id   = $_POST['label_id'][$i];
                 $autonomous_date       = dateDatabaseFormat($_POST['autonomous_date'][$i]);
-                $autonomous_file       = $destination;
+                $autonomous_remark     = dateDatabaseFormat($_POST['autonomous_remark'][$i]);
+
+
 
 
 
@@ -227,9 +245,8 @@ function updateautonomous()
 
                 if (!empty($request_fields)) {
                     $update = "UPDATE autonomous_detail  SET 
-				                  
-                                   autonomous_detail_date       ='" . $autonomous_date . "',
-                                   autonomous_detail_file       ='" . $autonomous_file . "',
+                                   autonomous_detail_remark   ='" . $autonomous_remark . "',
+                                   $include
                                    autonomous_detail_modified_by   ='" . $_SESSION[SESS . 'session_admin_users_id'] . "',
 				                   autonomous_detail_modified_on   =UNIX_TIMESTAMP(NOW()),
 				                   autonomous_detail_modified_ip   ='" . $ip . "'

@@ -29,20 +29,20 @@ if ($action == 'delete_record') {
 
     $where_detail = '';
     if (!empty($status) && $status == 'delete') {
-        $where_detail .= " autonomous_deleted_status = 1 ";
+        $where_detail .= " autonomous_detail_deleted_status = 1 ";
     } elseif (!empty($status) && $status == 'undo') {
-        $where_detail .= " autonomous_deleted_status = 0 ";
+        $where_detail .= " autonomous_detail_deleted_status = 0 ";
     }
 
     if (!empty($autonomous_id)) {
-        $select_autonomous = "SELECT autonomous_id FROM autonomous WHERE autonomous_id = '" . $autonomous_id . "' ";
+        $select_autonomous = "SELECT autonomous_name FROM autonomouss WHERE autonomous_id = '" . $autonomous_id . "' ";
         list($num_row, $records) = selectRow($select_autonomous);
-        $update = "UPDATE   autonomous SET $where  WHERE autonomous_id='" . $autonomous_id . "' ";
-        // echo $update;exit;
+        $update = "UPDATE   autonomouss SET $where  WHERE autonomous_id='" . $autonomous_id . "' ";
+
         $ids = update($update);
 
         if ($ids > 0) {
-            $update_detial = "UPDATE autonomous_detail SET  $where_detail WHERE autonomous_id='" . $autonomous_id . "' ";
+            $update_detial = "UPDATE autonomous_detail SET  $where_detail WHERE autonomous_detail_autonomous_id='" . $autonomous_id . "' ";
 
 
             $data = ((!empty($records['autonomous_id'])) ? 1 : 2);

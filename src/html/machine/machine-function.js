@@ -90,6 +90,7 @@ $(function () {
 })()
 
 $(function () {
+    
   let params = new URLSearchParams(location.search);
   var id = params.get('machine_id');
   var page = params.get('page');
@@ -107,3 +108,9 @@ $('#submit-button').click(function () {
 
 
 });
+// function d() {
+//   window.location.href = 'index.php';
+// }
+// function f() {
+//   console.log("f");
+// }
