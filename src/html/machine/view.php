@@ -77,11 +77,25 @@
 
                                         <?php    } ?>
 
-                                        <div class="col-md-12" style="margin-bottom:25px ">
-                                            <label class="form-label machine_img" for="machine_img">Machine Image</label>
-                                            <input type="file" name="machine_img" id="machine_img" class="form-control" required>
-                                        </div>
 
+                                        <div class="col-md-4">
+                                            <label class="form-label machine_name" for="machine_name">Machine Type</label>
+                                            <?php if (isset($_REQUEST['type']) && !empty($_REQUEST['type'])) { ?>
+
+                                                <input type="text" name="machine_type" id="machine_tpe" class="form-control" required value=" <?= $_REQUEST['type'] ?>" readonly>
+                                            <?php      } else { ?>
+                                                <select name="machine_type" id="machine_tpe" class="form-select" required aria-readonly="readonly">
+                                                    <option value="">SELECT</option>
+                                                    <?php foreach ($category as $get_data) { ?>
+                                                        <option value="<?= $get_data['category_id'] ?>" <?= (isset($_REQUEST['type']) && $_REQUEST['type'] == $get_data['category_id']) ? 'selected' : '' ?>><?= $get_data['category_name'] ?></option>
+                                                    <?php   } ?>
+                                                </select>
+                                            <?php }  ?>
+
+                                            <div class="invalid-feedback">
+                                                Please enter machine type.
+                                            </div>
+                                        </div>
                                         <div class="col-md-4">
                                             <label class="form-label machine_name" for="machine_name">Machine Name</label>
                                             <input name="machine_name" id="machine_name" class="form-control" required>
@@ -89,18 +103,7 @@
                                                 Please enter machine name.
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
-                                            <label class="form-label machine_name" for="machine_name">Machine Type</label>
-                                            <select name="machine_type" id="machine_tpe" class="form-select" required>
-                                                <option value="">SELECT</option>
-                                                <?php foreach ($category as $get_data) { ?>
-                                                    <option value="<?= $get_data['category_id'] ?>"><?= $get_data['category_name'] ?></option>
-                                                <?php   } ?>
-                                            </select>
-                                            <div class="invalid-feedback">
-                                                Please enter machine type.
-                                            </div>
-                                        </div>
+
                                         <div class="col-md-4">
                                             <label class="form-label machine_name" for="machine_name">Machine Name</label>
                                             <input name="machine_name" id="machine_name" class="form-control" required>
@@ -205,14 +208,14 @@
                                                 Please enter tool storage capacity.
                                             </div>
                                         </div>
-                                        <div class="col-md-4"> </div>
-                                        <div class="col-md-4" style="margin-bottom:25px ">
+
+                                        <div class="col-md-6" style="margin-bottom:25px ">
                                             <label class="form-label machine_img" for="machine_img">Machine Image</label>
                                             <input type="file" name="machine_img" id="machine_img" class="form-control" onchange="readURL(this);" accept="image/png, image/jpeg" required>
                                         </div>
                                         <div class="col-md-4" style="margin-bottom:25px ">
                                             <img style="max-width: 100px; max-height:100px; object-fit: contain;" id="blah" src="" alt="" />
-                                            
+
                                         </div>
                                     </div>
                                     <div class="mt-5 d-flex justify-content-center gap-3">
@@ -220,7 +223,7 @@
                                         <input type="hidden" name="machine_status" id="machine_status" value="">
                                         <input name="add_machine" type="submit" class="btn btn-primary" id="add_machine" value="Save" title="Save" />
                                         <input type="reset" value="Reset" class="btn btn-outline-secondary" title="Reset" />
-                                        <input type="button" value="Back" class="btn btn-secondary" onclick="location.href='index.php'" title="Back">
+                                        <input type="button" value="Back" class="btn btn-secondary" onclick="location.href='index.php?type=<?= isset($_REQUEST['type']) ? $_REQUEST['type'] : '' ?>'" title="Back">
                                     </div>
                                 </form>
                             </div>
@@ -257,7 +260,7 @@
                                             <select name="machine_type" id="machine_tpe" class="form-select" required>
                                                 <option value="">SELECT</option>
                                                 <?php foreach ($category as $get_data) { ?>
-                                                    <option value="<?= $get_data['category_id'] ?>"><?= $get_data['category_name'] ?></option>
+                                                    <option value="<?= $get_data['category_id'] ?>" <?= ($edit_machine['machine_type'] == $get_data['category_id']) ? 'selected' : '' ?>><?= $get_data['category_name'] ?></option>
                                                 <?php   } ?>
                                             </select>
                                             <div class="invalid-feedback">
@@ -473,7 +476,7 @@
 
                     <div class="card p-2">
                         <div class="d-flex justify-content-end">
-                            <button class="btn btn-primary mx-2 my-2" onclick="location.href='index.php?page=add'">Add</button>
+                            <button class="btn btn-primary mx-2 my-2" onclick="location.href='index.php?page=add&type=<?= isset($_REQUEST['type']) ? $_REQUEST['type'] : '' ?>'">Add</button>
                         </div>
                         <div class="table-responsive text-nowrap">
                             <form action="index.php" method="POST" name="machine_form" id="machine_form" autocomplete="off">
@@ -506,20 +509,20 @@
                                                     <td><?= $sno++; ?></td>
                                                     <td><?= ucfirst($value['machine_name']); ?></td>
                                                     <td><?= $value['machine_active_status'] ?></td>
-                                                    <td><i class="bi bi-pencil-square" style="cursor: pointer;color:blue;" onclick="location.href='../machine-details/index.php?id=<?= $value['machine_id'] ?>'"></i></td>
+                                                    <td><i class="bi bi-plus-circle-fill fs-6" style="cursor: pointer;color:blue;" onclick="location.href='../machine-details/index.php?type=<?= isset($_REQUEST['type']) ? $_REQUEST['type'] : '' ?>&id=<?= $value['machine_id'] ?>'"></i></td>
                                                     <?php if ($search_status != 1) { ?>
                                                         <td>
-                                                            <i class="bi bi-pencil-square" style="cursor: pointer;color:blue;" onclick="location.href='index.php?page=edit&machine_id=<?= $value['machine_id']; ?>'"></i>
+                                                            <i class="bi bi-pencil-square fs-6" style="cursor: pointer;color:blue;" onclick="location.href='index.php?page=edit&machine_id=<?= $value['machine_id']; ?>'"></i>
                                                         </td>
                                                         <td>
-                                                            <span data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="delete_record(<?= $value['machine_id']; ?>,'delete');"><i class="bi bi-trash" style="cursor: pointer;color:red"></i></span>
+                                                            <span data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="delete_record(<?= $value['machine_id']; ?>,'delete');"><i class="bi bi-trash fs-6" style="cursor: pointer;color:red"></i></span>
                                                         </td>
                                                     <?php } else { ?>
                                                         <td>
-                                                            <i class="bi bi-eye fs-5" style="cursor: pointer;color:blue;" onclick="location.href='index.php?page=edit&machine_id=<?= $value['machine_id']; ?>'"></i>
+                                                            <i class="bi bi-eye fs-6" style="cursor: pointer;color:blue;" onclick="location.href='index.php?page=edit&machine_id=<?= $value['machine_id']; ?>'"></i>
                                                         </td>
                                                         <td>
-                                                            <span data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="delete_record(<?= $value['machine_id']; ?>,'undo');"><i class="bi bi-arrow-counterclockwise fs-5" style="cursor: pointer;color:green"></i></span>
+                                                            <span data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="delete_record(<?= $value['machine_id']; ?>,'undo');"><i class="bi bi-arrow-counterclockwise fs-6" style="cursor: pointer;color:green"></i></span>
                                                         </td>
                                                     <?php  } ?>
                                                 </tr>
@@ -541,33 +544,36 @@
             </div>
         </div>
     </div>
+    <?php
+    // print_r($_REQUEST);exit;
+    if (empty($_REQUEST['type'])) { ?>
+        <!-- Machine modal -->
+        <div class="modal fade" data-bs-keyboard="false" data-bs-backdrop="static" id="exampleModalMachine" tabindex="-1" aria-labelledby="exampleModalMachineLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <form action="index.php" method="POST">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalMachineLabel"></h5>
+                        </div>
+                        <div class="modal-body">
+                            <label for="color">Machine Type:</label>
 
-    <!-- Machine modal -->
-    <div class="modal fade" data-bs-keyboard="false" data-bs-backdrop="static" id="exampleModalMachine" tabindex="-1" aria-labelledby="exampleModalMachineLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalMachineLabel"></h5>
-                </div>
-                <div class="modal-body">
-                    <label for="color">Select Machine:</label>
-
-                    <select name="machine_select" id="machine_select" class="form-select">
-                        <?php foreach ($list_machine as $list) {  ?>
-                            <option value="<?= $list['machine_id'] ?>"> <?= $list['machine_name'] ?></option>
-                        <?php }  ?>
-                    </select>
-                </div>
-                <div class="modal-footer">
-                    <input type="hidden" name="machine_hidden_id" id="machine_hidden_id" value="">
-                    <input type="hidden" name="machine_hidden_status" id="machine_hidden_status" value="">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="javascript:window.location.href='<?= PROJECT_PATH . 'src/html/home/' ?>';">Close</button>
-                    <button type="button" class="btn btn-primary" id="submit-button" onclick="$('#exampleModalMachine').modal('hide'); location.href='index.php?machine_id=1' ">Submit</button>
-                </div>
+                            <select name="type" id="type" class="form-select" required>
+                                <option value="">SELECT</option>
+                                <?php foreach ($category as $list) {  ?>
+                                    <option value="<?= $list['category_id'] ?>"> <?= $list['category_name'] ?></option>
+                                <?php }  ?>
+                            </select>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="javascript:window.location.href='<?= PROJECT_PATH . 'src/html/home/' ?>';">Close</button>
+                            <button type="summit" class="btn btn-primary" name="type_submit" id="type_submit">Submit</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
-    </div>
-
+    <?php  } ?>
     <!-- Delete modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -684,7 +690,7 @@
             show_alert();
 
             function readURL(input) {
-                console.log('sdfdx');
+
                 if (input.files && input.files[0]) {
                     var reader = new FileReader();
                     reader.onload = function(e) {

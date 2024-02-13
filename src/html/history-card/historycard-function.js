@@ -10,7 +10,7 @@ $(document).ready(function () {
 
 function get_branch() {
   var company_id = $('#company_id').val();
-  $.get('machine-ajax.php?action=get_branch', { company_id: company_id }, function (response) {
+  $.get('breakdown-ajax.php?action=get_branch', { company_id: company_id }, function (response) {
     $('#branch_id').html(response);
   });
 }
@@ -19,28 +19,28 @@ $(document).ready(function () {
 });
 function search_get_branch() {
   var company_id = $('#search_company_id').val();
-  $.get('machine-ajax.php?action=get_branch', { company_id: company_id }, function (response) {
+  $.get('breakdown-ajax.php?action=get_branch', { company_id: company_id }, function (response) {
     $('#search_branch_id').html(response);
   });
 }
 
-function delete_record(machine_id, status) {
+function delete_record(breakdown_id, status) {
   if (status == 'delete') {
     $('#exampleModalLabel').html('Delete Record');
     $('.modal-body').html('<p>Are you sure you want to delete your record?</p>');
-    $('#machine_hidden_status').val(status);
+    $('#breakdown_hidden_status').val(status);
   } else if (status == 'undo') {
     $('#exampleModalLabel').html('Undo Record');
     $('.modal-body').html('<p>Are you sure you want to undo your record?</p>');
-    $('#machine_hidden_status').val(status);
+    $('#breakdown_hidden_status').val(status);
   }
-  $('#machine_hidden_id').val(machine_id);
+  $('#breakdown_hidden_id').val(breakdown_id);
 }
 $('#delete_button').click(function () {
-  var machine_hidden_id = $('#machine_hidden_id').val();
-  var status = $('#machine_hidden_status').val();
-  $.post('machine-ajax.php?action=delete_record', {
-    machine_id: machine_hidden_id,
+  var breakdown_hidden_id = $('#breakdown_hidden_id').val();
+  var status = $('#breakdown_hidden_status').val();
+  $.post('breakdown-ajax.php?action=delete_record', {
+    breakdown_id: breakdown_hidden_id,
     status: status
   }, function (data) {
     $('#exampleModal').modal('hide');
@@ -61,12 +61,12 @@ $('#delete_button').click(function () {
 });
 
 $(function () {
-  var page = $('#machine_page').val();
-  var status = $('#machine_status').val();
+  var page = $('#breakdown_page').val();
+  var status = $('#breakdown_status').val();
   if (page == 'edit' && status == 1) {
-    $('#machine_form input').attr('readonly', 'readonly');
-    $('#machine_form textarea').attr('readonly', 'readonly');
-    $('#machine_form select').attr('disabled', true);
+    $('#breakdown_form input').attr('readonly', 'readonly');
+    $('#breakdown_form textarea').attr('readonly', 'readonly');
+    $('#breakdown_form select').attr('disabled', true);
   }
 });
 
@@ -88,3 +88,25 @@ $(function () {
     }, false)
   })
 })()
+
+$(document).ready(function () {
+  // Attach click event to the image with the 'preview-trigger' class
+  $('.preview-trigger').on('click', function () {
+    // Show the image preview dialog
+    $('#image-preview-dialog').show();
+  });
+
+  // Close the image preview dialog when clicking outside the image
+  $('#image-preview-dialog').on('click', function () {
+    $(this).hide();
+  });
+});
+
+$(document).on('keypress', '.textstring', function (event) {
+  var regex = new RegExp("^[a-zA-Z \s]+$");
+  var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+  if (!regex.test(key)) {
+    event.preventDefault();
+    return false;
+  }
+});

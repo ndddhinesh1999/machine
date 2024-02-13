@@ -3,7 +3,9 @@ include '../../includes/config.php';
 include '../../includes/utility_function.php';
 if (isset($_SESSION[SESS . 'session_admin_users_unique_id'])) {
     include 'model.php';
+   
     $category = category();
+    
     $list_machine = listmachine();
     $listCompany = listCompany();
     $listBranch = listBranch();

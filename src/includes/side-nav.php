@@ -11,7 +11,7 @@
          <div class="brand-logo d-flex align-items-center justify-content-between">
              <div class="d-flex justify-content-center w-100">
                  <a href="<?= PROJECT_PATH . 'src/html/home/'; ?>" class="text-nowrap logo-img">
-                     <img src="<?= PROJECT_PATH; ?>/src/assets/images/logos/company-logo.svg" width="70" alt="" />
+                     <img src="<?= PROJECT_PATH; ?>/src/assets/images/logos/GC.png" width="70" alt="" />
                  </a>
              </div>
              <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
@@ -47,7 +47,7 @@
                          </a>
                      </li>
                  <?php } ?>
-                 <?php if ($_SESSION[SESS . 'session_admin_users_level'] == 'admin' || $_SESSION[SESS . 'session_admin_users_level'] == 'company') { ?>
+                 <?php if ($_SESSION[SESS . 'session_admin_users_level'] == 'admin') { ?>
                      <li class="sidebar-item">
                          <a class="sidebar-link" href="<?= PROJECT_PATH . 'src/html/branch/'; ?>" aria-expanded="false">
                              <span>
@@ -77,7 +77,7 @@
                          </a>
                      </li>
                  <?php } ?>
-                 <?php if ($_SESSION[SESS . 'session_admin_users_level'] == 'admin' || $_SESSION[SESS . 'session_admin_users_level'] == 'company') { ?>
+                 <!-- <?php if ($_SESSION[SESS . 'session_admin_users_level'] == 'admin' || $_SESSION[SESS . 'session_admin_users_level'] == 'company') { ?>
                      <li class="sidebar-item">
                          <a class="sidebar-link" href="<?= PROJECT_PATH . 'src/html/breakdown/'; ?>" aria-expanded="false">
                              <span>
@@ -86,8 +86,8 @@
                              <span class="hide-menu">Breakdown</span>
                          </a>
                      </li>
-                 <?php } ?>
-                 <?php if ($_SESSION[SESS . 'session_admin_users_level'] == 'admin' || $_SESSION[SESS . 'session_admin_users_level'] == 'company') { ?>
+                 <?php } ?> -->
+                 <!-- <?php if ($_SESSION[SESS . 'session_admin_users_level'] == 'admin' || $_SESSION[SESS . 'session_admin_users_level'] == 'company') { ?>
                      <li class="sidebar-item">
                          <a class="sidebar-link" href="<?= PROJECT_PATH . 'src/html/autonomous-daily/'; ?>" aria-expanded="false">
                              <span>
@@ -96,8 +96,8 @@
                              <span class="hide-menu">Autonomous-Daily</span>
                          </a>
                      </li>
-                 <?php } ?>
-                 <?php if ($_SESSION[SESS . 'session_admin_users_level'] == 'admin' || $_SESSION[SESS . 'session_admin_users_level'] == 'company') { ?>
+                 <?php } ?> -->
+                 <!-- <?php if ($_SESSION[SESS . 'session_admin_users_level'] == 'admin' || $_SESSION[SESS . 'session_admin_users_level'] == 'company') { ?>
                      <li class="sidebar-item">
                          <a class="sidebar-link" href="<?= PROJECT_PATH . 'src/html/autonomous-weekly/'; ?>" aria-expanded="false">
                              <span>
@@ -106,9 +106,9 @@
                              <span class="hide-menu">Autonomous-Weekly</span>
                          </a>
                      </li>
-                 <?php } ?>
+                 <?php } ?> -->
                  <?php if ($_SESSION[SESS . 'session_admin_users_level'] == 'admin' || $_SESSION[SESS . 'session_admin_users_level'] == 'company' || $_SESSION[SESS . 'session_admin_users_level'] == 'branch') { ?>
-                     <li class="sidebar-item">
+                     <!-- <li class="sidebar-item">
                          <a class="sidebar-link" href="<?= PROJECT_PATH . 'src/html/department/'; ?>" aria-expanded="false">
                              <span>
                                  <i class="ti ti-cards"></i>
@@ -123,7 +123,7 @@
                              </span>
                              <span class="hide-menu">Designation</span>
                          </a>
-                     </li>
+                     </li> -->
                      <li class="sidebar-item">
                          <a class="sidebar-link" href="<?= PROJECT_PATH . 'src/html/employee/'; ?>" aria-expanded="false">
                              <span>

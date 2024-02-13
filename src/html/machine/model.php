@@ -68,6 +68,9 @@ function listmachine()
     if (!empty($_REQUEST['machine_id'])) {
         $where .= " AND  machine_id = '" . $_REQUEST['machine_id'] . "' ";
     }
+    if (!empty($_REQUEST['type'])) {
+        $where .= " AND  machine_type = '" . $_REQUEST['type'] . "' ";
+    }
 
     if (!empty($_REQUEST['search_company_id'])) {
         $where .= " AND machine_company_id  = '" . $_REQUEST['search_company_id'] . "'  ";
@@ -88,7 +91,6 @@ function listmachine()
     $select = "SELECT machine_id,machine_name,machine_active_status
                                      FROM   machines
                                     $where  ORDER BY  machine_id   DESC ";
-    // echo $select;die;
     list($count, $result) = selectRows($select);
     return $result;
 }
@@ -201,7 +203,7 @@ function updatemachine()
 
             $machineImage = " machine_image='" . $destination . "',";
         }
-
+        $machine_type = dataValidation($_POST['machine_type']);
         $machine_name = dataValidation($_POST['machine_name']);
         $macine_model = dataValidation($_POST['macine_model']);
         $machine_system = dataValidation($_POST['machine_system']);
@@ -240,6 +242,7 @@ function updatemachine()
             if (!empty($request_fields)) {
                 // machine insert into machinees table
                 $update_machine = "UPDATE machines  SET 
+                                   machine_type                     ='" . $machine_type . "',
 				                   machine_name                     ='" . $machine_name . "',
                                    machine_model                    ='" . $macine_model . "',
                                    machine_system                   ='" . $machine_system . "',
@@ -261,6 +264,7 @@ function updatemachine()
 				  machine_modified_by='" . $_SESSION[SESS . 'session_admin_users_id'] . "',
 				  machine_modified_on=UNIX_TIMESTAMP(NOW()),
 				  machine_modified_ip='" . $ip . "' WHERE machine_id = '" . $machine_id . "' ";
+                //   echo $update_machine;exit; 
                 update($update_machine);
                 header("Location:" . PROJECT_PATH . "src/html/machine/index.php?page=edit&machine_id=$machine_id&msg=2");
                 exit();

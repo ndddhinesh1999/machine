@@ -66,7 +66,7 @@ function listautonomous()
         $where .= "AND autonomous_active_status='active' AND autonomous_deleted_status = 0 ";
     }
 
-    $select = "SELECT * FROM autonomous $where GROUP BY autonomous_date ORDER BY autonomous_id DESC ";
+    $select = "SELECT * FROM autonomous $where AND autonomous_type ='1' GROUP BY autonomous_date ORDER BY autonomous_id DESC ";
 
     list($count, $result) = selectRows($select);
     return $result;
@@ -83,12 +83,6 @@ function selectLabel()
 
 function insertautonomous()
 {
-    echo "<pre>";
-    print_r($_FILES);  exit;
-  
-    print_r($_POST);  exit;
-
-
 
     if (isset($_POST['add_autonomous'])) {
 
@@ -101,13 +95,14 @@ function insertautonomous()
             $company_id = $_SESSION[SESS . 'session_admin_users_company_id'];
             $branch_id = $_SESSION[SESS . 'session_admin_users_branch_id'];
         }
+
         $select = "SELECT autonomous_id FROM autonomous 
         WHERE autonomous_date = '" . dateDatabaseFormat($_POST['autonomous_date']) . "' ";
         list($row, $result) = selectRow($select);
-
         if ($row == 0) {
 
             $insert_autonomous = "INSERT INTO autonomous  SET 
+                              autonomous_machine_id ='" . $_POST['machine_id'] . "',
                               autonomous_type       ='1',
                               autonomous_date       = '" . dateDatabaseFormat($_POST['autonomous_date']) . "',
                               autonomous_company_id ='" . $company_id . "',
@@ -115,47 +110,46 @@ function insertautonomous()
                               autonomous_added_by   ='" . $_SESSION[SESS . 'session_admin_users_id'] . "',
                               autonomous_added_on   =UNIX_TIMESTAMP(NOW()),
                               autonomous_added_ip   ='" . $ip . "'";
-            //   echo $insert_autonomous;exit;
+
             $id = insert($insert_autonomous);
 
             for ($i = 0; $i < count($_POST['label_id']); $i++) {
 
 
-                $paths = '../../uploads/autonomouss/' . date('Y') . '/';
-                $nameOfFile = fileUpload($_FILES["autonomous_img"]["name"][$i], $_FILES["autonomous_img"]["tmp_name"][$i], 'autonomous-daily-aft', $paths);
-                $destination = 'uploads/autonomous/' . date('Y') . '/' . $nameOfFile;
+                $paths = '../../uploads/autonomous/' . date('Y') . '/';
 
-                $nameOfFileBfr = fileUpload($_FILES["autonomous_img_bfr"]["name"][$i], $_FILES["autonomous_img_bfr"]["tmp_name"][$i], 'autonomous-daily-bfr', $paths);
-                $destinationBfr = 'uploads/autonomous/' . date('Y') . '/' . $nameOfFileBfr;
+                $nameOfFile = fileUpload($_FILES["before_images"]["name"][$i], $_FILES["before_images"]["tmp_name"][$i], 'before_images', $paths);
+                $before_image_path = 'uploads/autonomous/' . date('Y') . '/' . $nameOfFile;
+
+                $nameOfFileBfr = fileUpload($_FILES["after_images"]["name"][$i], $_FILES["after_images"]["tmp_name"][$i], 'after_images', $paths);
+                $after_image_path = 'uploads/autonomous/' . date('Y') . '/' . $nameOfFileBfr;
 
 
                 $autonomous_lable_id   = $_POST['label_id'][$i];
-                $autonomous_file       = $destination;
-                $autonomous_file_bfr   = $destinationBfr;
                 $remark = $_POST['autonomous_remark'][$i];
 
                 $get_autonomous = "SELECT  autonomous_detail_id  FROM   autonomous_detail
                                WHERE autonomous_detail_lable_id ='" . $autonomous_lable_id . "' 
                                AND autonomous_detail_deleted_status = 0 ";
-                //    echo $get_autonomous;exit;
+
                 list($num_row, $record_select) = selectRows($get_autonomous);
                 // Checking required fields
-                $request_fields = !empty($autonomous_file);
 
                 if ($num_row == 0) {
-                    if (!empty($request_fields)) {
-                        $insert_autonomous_detail = "INSERT INTO autonomous_detail  SET 
-				                   autonomous_detail_lable_id   ='" . $autonomous_lable_id . "',
-                                   autonomous_detail_file       ='" . $autonomous_file . "',
-                                   autonomous_detail_file_bfr   ='" . $autonomous_file_bfr . "',
-                                   autonomous_detail_remark     = '" . $remark . "',
-                                   autonomous_detail_autonomous_id = '" . $id . "',
-                                   autonomous_detail_company_id ='" . $company_id . "',
-				                   autonomous_detail_added_by   ='" . $_SESSION[SESS . 'session_admin_users_id'] . "',
-				                   autonomous_detail_added_on   =UNIX_TIMESTAMP(NOW()),
-				                   autonomous_detail_added_ip   ='" . $ip . "'";
-                        insert($insert_autonomous_detail);
-                    }
+
+                    $insert_autonomous_detail = "INSERT INTO autonomous_detail  SET 
+                                   autonomous_detail_autonomous_id      = '" . $id . "',
+				                   autonomous_detail_lable_id           ='" . $autonomous_lable_id . "',
+                                   autonomous_detail_before_image       ='" . $before_image_path . "',
+                                   autonomous_detail_before_remarks     ='" . $remark . "',
+                                   autonomous_detail_after_image        ='" . $after_image_path . "',
+                         
+                                   autonomous_detail_company_id         ='" . $company_id . "',
+				                   autonomous_detail_added_by           ='" . $_SESSION[SESS . 'session_admin_users_id'] . "',
+				                   autonomous_detail_added_on           =UNIX_TIMESTAMP(NOW()),
+				                   autonomous_detail_added_ip           ='" . $ip . "'";
+
+                    insert($insert_autonomous_detail);
                 }
             }
             header("Location:" . PROJECT_PATH . "src/html/autonomous-daily/index.php?page=add&msg=1");
@@ -172,33 +166,42 @@ function editautonomous()
 {
     if (isset($_GET['autonomous_id'])) {
         $edit = "SELECT * FROM  autonomous  
+                 LEFT JOIN machines ON machine_id = autonomous_machine_id
                  LEFT JOIN autonomous_detail ON autonomous_detail_autonomous_id =autonomous_id 
-                 LEFT JOIN autonomou_lables ON autonomou_lable_id = autonomous_detail_lable_id  
                  WHERE  autonomous_detail_deleted_status = 0 
-                 AND autonomous_id ='" . $_GET['autonomous_id'] . "'";
+                 AND autonomous_id ='" . $_GET['autonomous_id'] . "' AND autonomous_deleted_status=0";
 
-        list($count, $result) = selectRows($edit);
+        list($count, $result) = selectRow($edit);
 
         if ($count > 0) {
 
-            $arrD['autonomous_id']  = $_GET['autonomous_id'];
-            $arrD['deleted_status'] = $result[0]['autonomous_deleted_status'];
-            $arrD['dates'] = $result[0]['autonomous_date'];
+            $arrD['machine_id']  = $result['machine_id'];
+            $arrD['machine_name']  = $result['machine_name'];
+            $arrD['autonomous_id']  = $result['autonomous_id'];
+            $arrD['deleted_status'] = $result['autonomous_deleted_status'];
+            $arrD['dates'] = $result['autonomous_date'];
 
+            $edit = "SELECT * FROM  autonomous_detail  
+            LEFT JOIN autonomou_lables ON autonomou_lable_id = autonomous_detail_lable_id  
+            WHERE  autonomous_detail_deleted_status = 0 
+            AND autonomous_detail_autonomous_id ='" . $result['autonomous_id'] . "' ORDER BY autonomous_detail_id ASC";
+
+            list($count, $result) = selectRows($edit);
 
             $i = 0;
+            $arrayData = array();
             foreach ($result as $records) {
-                $arryData[$i]['label_id'] = $records['autonomous_detail_lable_id'];
-                $arryData[$i]['label_part'] = $records['autonomou_lable_part'];
-                $arryData[$i]['label_std'] = $records['autonomou_lable_standard'];
-                $arryData[$i]['files_bfr'] = $records['autonomous_detail_file_bfr'];
-                $arryData[$i]['files'] = $records['autonomous_detail_file'];
-                $arryData[$i]['remark'] = $records['autonomous_detail_remark'];
+                $arrayData[$i]['label_id'] = $records['autonomous_detail_lable_id'];
+                $arrayData[$i]['label_part'] = $records['autonomou_lable_part'];
+                $arrayData[$i]['label_std'] = $records['autonomou_lable_standard'];
+                $arrayData[$i]['before_image'] = $records['autonomous_detail_before_image'];
+                $arrayData[$i]['after_image'] = $records['autonomous_detail_after_image'];
+                $arrayData[$i]['remark'] = $records['autonomous_detail_before_remarks'];
 
 
                 $i++;
             }
-            $arrD['details']      = $arryData;
+            $arrD['details']      = $arrayData;
             return $arrD;
         } else {
             return array();
@@ -208,11 +211,9 @@ function editautonomous()
 
 function updateautonomous()
 {
-    // echo "<pre>";
-    // // print_r($_POST);exit;
+    echo "<pre>";
+    // print_r($_POST);exit;
 
-    // print_r($_FILES);
-    // exit;
 
 
     if (isset($_POST['update_autonomous'])) {
@@ -244,43 +245,34 @@ function updateautonomous()
                 for ($i = 0; $i < count($_POST['label_id']); $i++) {
 
                     $include = '';
-                    if (!empty($_FILES["autonomous_img"]["tmp_name"][$i])) {
+                    $paths = '../../uploads/autonomous/' . date('Y') . '/';
+                    $image_path = '';
+                    if (!empty($_FILES["before_images"]["tmp_name"][$i])) {
 
-                        $paths = '../../uploads/autonomouss/' . date('Y') . '/';
-                        $nameOfFile = fileUpload($_FILES["autonomous_img"]["name"][$i], $_FILES["autonomous_img"]["tmp_name"][$i], 'autonomous-daily', $paths);
-                        $destination = 'uploads/autonomous/' . date('Y') . '/' . $nameOfFile;
-
-                        $nameOfFile_bfr = fileUpload($_FILES["autonomous_img_bfr"]["name"][$i], $_FILES["autonomous_img_bfr"]["tmp_name"][$i], 'autonomous-daily-bfr', $paths);
-                        $destination_bfr = 'uploads/autonomous/' . date('Y') . '/' . $nameOfFile_bfr;
-
-
-                        $autonomous_file       = $destination;
-                        $autonomous_file_bfr   = $destination_bfr;
-
-                        $include = "autonomous_detail_file_bfr       ='" . $autonomous_file_bfr . "',
-                                autonomous_detail_file       ='" . $autonomous_file . "', ";
+                        $nameOfFile = fileUpload($_FILES["before_images"]["name"][$i], $_FILES["before_images"]["tmp_name"][$i], 'before_images', $paths);
+                        $before_image_path = 'uploads/autonomous/' . date('Y') . '/' . $nameOfFile;
+                        $image_path .= "autonomous_detail_before_image= '" . $before_image_path . "',";
                     }
 
-
-                    $remark = $_POST['autonomous_remark'][$i];
+                    if (!empty($_FILES["after_image"]["tmp_name"][$i])) {
+                        $nameOfFileBfr = fileUpload($_FILES["after_images"]["name"][$i], $_FILES["after_images"]["tmp_name"][$i], 'after_images', $paths);
+                        $after_image_path = 'uploads/autonomous/' . date('Y') . '/' . $nameOfFileBfr;
+                        $image_path .= "autonomous_detail_after_image = '" . $after_image_path . "'";
+                    }
                     $autonomous_lable_id   = $_POST['label_id'][$i];
-
+                    $remark = $_POST['autonomous_remark'][$i];
 
                     $update = "UPDATE autonomous_detail  SET 
-				                   autonomous_detail_remark     = '" . $remark . "',
-                                   $include
+                                   autonomous_detail_before_remarks     ='" . $remark . "',
+                                   $image_path
                                    autonomous_detail_modified_by   ='" . $_SESSION[SESS . 'session_admin_users_id'] . "',
 				                   autonomous_detail_modified_on   =UNIX_TIMESTAMP(NOW()),
 				                   autonomous_detail_modified_ip   ='" . $ip . "'
                                    WHERE autonomous_detail_autonomous_id = '" . $autonomous_id . "'
-                                   AND  autonomous_detail_lable_id   ='" . $autonomous_lable_id . "'    ";
-
-                    // echo $update;
-                    // exit;
+                                   AND  autonomous_detail_lable_id   ='" . $autonomous_lable_id . "' ";
+                                   
                     update($update);
                 }
-
-
                 header("Location:" . PROJECT_PATH . "src/html/autonomous-daily/index.php?page=edit&autonomous_id=$autonomous_id&msg=2");
                 exit();
             } else {

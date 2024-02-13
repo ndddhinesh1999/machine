@@ -20,13 +20,7 @@ if ($action == 'get_branch') {
 if ($action == 'delete_record') {
     $autonomous_id = $_REQUEST['autonomous_id'];
     $status = $_REQUEST['status'];
-    $where = '';
-    if (!empty($status) && $status == 'delete') {
-        $where .= " autonomous_deleted_status = 1 ";
-    } elseif (!empty($status) && $status == 'undo') {
-        $where .= " autonomous_deleted_status = 0 ";
-    }
-
+    
     $where_detail = '';
     if (!empty($status) && $status == 'delete') {
         $where_detail .= " autonomous_detail_deleted_status = 1 ";

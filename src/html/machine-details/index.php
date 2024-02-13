@@ -4,7 +4,7 @@ include '../../includes/utility_function.php';
 if (isset($_SESSION[SESS . 'session_admin_users_unique_id'])) {
     include 'model.php';
 
-    $list_details = array("Autonomous Daily" => "autonomous-daily", "Autonomous Weekly" => "autonomous-weekly", "Preventive" => "preventive", "Break Down" => "breakdown", "History Card" => "history_card", "Predictive Check" => "predictive_check");
+    $list_details = array("Autonomous Daily" => "autonomous-daily", "Autonomous Weekly" => "autonomous-weekly", "Preventive" => "preventive", "Break Down" => "breakdown", "History Card" => "history-card", "Predictive Check" => "predictive_check");
 
     $machine = machine_detail(isset($_REQUEST['m_id']) && !empty($_REQUEST['m_id']) ? $_REQUEST['m_id'] : '');
 // print_r($machine);exit;

@@ -39,8 +39,8 @@
                     <div class="col-lg-12 d-flex align-items-strech">
                         <div class="card w-100">
                             <div class="card-header d-flex justify-content-between align-items-center">
-                                <h5 class="mb-0">Development Details</h5>
-                                <small class="text-muted float-end">Add Development</small>
+                                <h5 class="mb-0">Preventive Details</h5>
+                                <small class="text-muted float-end">Add Preventive</small>
                             </div>
                             <div class="card-body">
 
@@ -60,25 +60,35 @@
                                                         <?php $j = 1;
                                                         foreach ($record as $details) { ?>
                                                             <div class="row mt-2">
-                                                                <div class="col-5 p-0">
+                                                                <div class="col-3 p-0">
                                                                     <label class="form-label">Activity :</label>
                                                                     <label class="form-label"><b><?= $details['activity_detail_name'] ?></b></label><br>
                                                                     <label class="form-label">Plan:</label>
                                                                     <label class="form-label"> <b><?= $details['activity_details_plan'] ?></b></label>
                                                                 </div>
-                                                                <div class="col-4 p-0">
+                                                                <div class="col-3 p-0">
                                                                     <label class="form-label">Remarks</label>
                                                                     <div class="input-group">
                                                                         <textarea name="" id="" cols="30" rows="3"></textarea>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-3 p-0">
-                                                                    <label class="form-label">File</label>
+                                                                    <label class="form-label">Before File</label>
                                                                     <div class="input-group">
                                                                         <input type="file" name="file[]" id="file<?= $j ?>" class="form-control" required>
-                                                                        <div class="input-group-text">
+                                                                        <!-- <div class="input-group-text">
                                                                             show
-                                                                        </div>
+                                                                        </div> -->
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="col-3 p-0">
+                                                                    <label class="form-label">After File</label>
+                                                                    <div class="input-group">
+                                                                        <input type="file" name="file[]" id="file<?= $j ?>" class="form-control" required>
+                                                                        <!-- <div class="input-group-text">
+                                                                            show
+                                                                        </div> -->
                                                                     </div>
 
                                                                 </div>

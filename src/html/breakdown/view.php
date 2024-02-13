@@ -83,8 +83,8 @@
 
                                         <div class="col-md-4">
                                             <label class="form-label machine_name" for="machine_name">Machine Name</label>
-                                            <input name="machine_name" id="machine_name" class="form-control" required>
-                                            <input type="hidden" name="machine_id" id="machine_id" class="form-control" required>
+                                            <input name="machine_name" id="machine_name" class="form-control" value="<?= $machine['machine_name'] ?>" ; required readonly>
+                                            <input type="hidden" name="machine_id" id="machine_id" class="form-control" value="<?= $machine['machine_id'] ?>" required readonly>
 
                                             <div class="invalid-feedback">
                                                 Please enter Machine Name.
@@ -229,7 +229,7 @@
 
                                         <div class="col-md-4">
                                             <label class="form-label machine_name" for="machine_name">Machine Name</label>
-                                            <input name="machine_name" id="machine_name" class="form-control" required>
+                                            <input name="machine_name" id="machine_name" class="form-control" value="<?= $edit_breakdown['machine_name'] ?>" required readonly>
                                             <input type="hidden" name="machine_id" id="machine_id" class="form-control" value="<?= $edit_breakdown['year_breakdown_machine_id'] ?>" required>
 
                                             <div class="invalid-feedback">
@@ -252,7 +252,9 @@
                                         </div>
 
                                         <div class="col-md-4">
-                                            <label class="form-label downtime_from" for="downtime_from">Downtime - From</label>
+                                            <input id="datetimepicker" type="text">
+
+                                            <!-- <label class="form-label downtime_from" for="downtime_from">Downtime - From</label> -->
                                             <input type="datetime-local" name="downtime_from" id="downtime_from" class="form-control " value="<?= date('Y-m-d', strtotime($edit_breakdown['year_breakdown_downtime_from'])) . 'T' . date('H:i', strtotime($edit_breakdown['year_breakdown_downtime_from'])) ?>" required>
                                             <div class="invalid-feedback">
                                                 Please enter From Downtime Date.
@@ -298,41 +300,62 @@
                                             </div>
                                         </div>
                                         <div class="col-md-4">
-                                            <label class="form-label bfr_breakdown_descript" for="bfr_breakdown_descript">Before Breakdown - Description</label>
-                                            <input name="bfr_breakdown_descript" id="bfr_breakdown_descript" class="form-control " value="<?= $edit_breakdown['year_breakdown_before_text'] ?>" required>
+                                            <label class="form-label bfr_breakdown_descript" for="bfr_breakdown_descript">Before - Description</label>
+                                            <textarea name="bfr_breakdown_descript" id="bfr_breakdown_descript" class="form-control " cols="30" rows="2" required><?= $edit_breakdown['year_breakdown_before_text'] ?></textarea>
                                             <div class="invalid-feedback">
-                                                Please enter Before Breakdown Desc.
+                                                Please enter Before Desc.
                                             </div>
                                         </div>
-                                        <div class="col-md-8">
-                                            <label class="form-label bfr_breakdown_img" for="bfr_breakdown_img">Before Breakdown - Image</label>
+                                        <div class="col-md-4">
+                                            <label class="form-label bfr_breakdown_img" for="bfr_breakdown_img">Before - Image</label>
                                             <?php $required = empty($edit_breakdown['year_breakdown_before_image']) ? 'required' : '' ?>
 
                                             <input type="file" name="bfr_breakdown_img" id="bfr_breakdown_img" class="form-control" value="<?= $edit_breakdown['year_breakdown_before_image'] ?>" $required>
                                             <div class="invalid-feedback">
-                                                Please Choose Before Breakdown Image.
+                                                Please Choose Before Image.
                                             </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <?php $required = empty($edit_breakdown['year_breakdown_before_image']) ? 'required' : '' ?>
+
+                                            <label class="form-label aft_breakdown_img" for="aft_breakdown_img">Before - Image Preview</label><br>
+                                            <div id="image-preview-dialog-before" style="display: none;">
+                                                <img class="preview_image" src="<?= $edit_breakdown['year_breakdown_before_image'] ?>" alt="Image Preview">
+                                            </div>
+                                            <img class="preview-trigger-before" style="width: 100px;" src="<?= $edit_breakdown['year_breakdown_before_image'] ?>" alt="Image Preview">
+
+                                            <input type="hidden" name="before_image" id="before_image" class="textbox" value="<?= $edit_breakdown['year_breakdown_before_image'] ?> " />
                                         </div>
                                         <div class="col-md-4">
-                                            <label class="form-label aft_breakdown_descript" for="aft_breakdown_descript">After Breakdown - Description</label>
-                                            <input name="aft_breakdown_descript" id="aft_breakdown_descript" class="form-control" value="<?= $edit_breakdown['year_breakdown_after_text'] ?>" required>
+                                            <label class="form-label aft_breakdown_descript" for="aft_breakdown_descript">After - Description</label>
+                                            <textarea name="aft_breakdown_descript" id="aft_breakdown_descript" class="form-control" cols="30" rows="2" required><?= $edit_breakdown['year_breakdown_after_text'] ?></textarea>
                                             <div class="invalid-feedback">
-                                                Please enter After Breakdown Desc.
+                                                Please enter After Desc.
                                             </div>
                                         </div>
 
-                                        <div class="col-md-8">
+                                        <div class="col-md-4">
                                             <?php $required = empty($edit_breakdown['year_breakdown_after_image']) ? 'required' : '' ?>
-
-                                            <label class="form-label aft_breakdown_img" for="aft_breakdown_img">After Breakdown - Image</label>
-
+                                            <label class="form-label aft_breakdown_img" for="aft_breakdown_img">After - Image</label>
                                             <input type="file" name="aft_breakdown_img" id="aft_breakdown_img" class="form-control" value="<?= $edit_breakdown['year_breakdown_after_image'] ?>" $required>
                                             <div class="invalid-feedback">
-                                                Please choose After Breakdown Image.
+                                                Please choose After Image.
                                             </div>
                                         </div>
 
 
+                                        <div class="col-md-4">
+                                            <?php $required = empty($edit_breakdown['year_breakdown_after_image']) ? 'required' : '' ?>
+
+                                            <label class="form-label aft_breakdown_img" for="aft_breakdown_img">After - Image Preview</label><br>
+                                            <div id="image-preview-dialog-after" style="display: none;">
+                                                <img class="preview_image" src="<?= $edit_breakdown['year_breakdown_after_image'] ?>" alt="Image Preview">
+                                            </div>
+                                            <img class="preview-trigger-after" style="width: 100px;" src="<?= $edit_breakdown['year_breakdown_after_image'] ?>" alt="Image Preview">
+
+                                            <input type="hidden" name="after_image" id="after_image" class="textbox" value="<?= $edit_breakdown['year_breakdown_after_image'] ?> " />
+                                        </div>
 
                                         <div class="mt-5 d-flex justify-content-center gap-3">
                                             <input type="hidden" name="year_breakdown_id" id="year_breakdown_id" value="<?= $edit_breakdown['year_breakdown_id'] ?>">
@@ -377,17 +400,21 @@
                                         <?php } ?>
 
                                         <div class="flex-column col-md-3">
-                                            <label class="form-label" for="search_breakdown_name">breakdown Name </label>
-                                            <input type="text" name="search_breakdown_name" id="search_breakdown_name" class="form-control" value="<?= $breakdown_name ?>" />
+                                            <label class="form-label" for="">From Date </label>
+                                            <input type="text" name="from_date" id="from_date" class="form-control datepicker" value="<?= $breakdown_name ?>" />
                                         </div>
                                         <div class="flex-column col-md-3">
+                                            <label class="form-label" for="">To Date </label>
+                                            <input type="text" name="to_date" id="to_date" class="form-control datepicker" value="<?= $breakdown_name ?>" />
+                                        </div>
+                                        <!-- <div class="flex-column col-md-3">
                                             <label class="form-label" for="breakdown_search_status">Status</label>
                                             <select name="breakdown_search_status" id="breakdown_search_status" class="form-select">
                                                 <option value="active" <?php if ($search_status == 'active') { ?>selected <?php } ?>>Active</option>
                                                 <option value="inactive" <?php if ($search_status == 'inactive') { ?>selected <?php } ?>>In Active</option>
                                                 <option value="1" <?php if ($search_status == '1') { ?>selected <?php } ?>>Deleted</option>
                                             </select>
-                                        </div>
+                                        </div> -->
 
                                         <div class="d-flex justify-content-center gap-2">
                                             <input name="search" type="submit" class="btn btn-primary" id="search" value="Search" title="Search" />
@@ -414,8 +441,9 @@
                                     <thead>
                                         <tr>
                                             <th>S No.</th>
-                                            <th>breakdown Name</th>
-                                            <th>Status</th>
+                                            <th>Date</th>
+                                            <th>Problem</th>
+
                                             <?php if ($search_status != 1) { ?>
                                                 <th>Edit</th>
                                                 <th>Delete</th>
@@ -433,13 +461,8 @@
                                         ?>
                                                 <tr>
                                                     <td><?= $sno++; ?></td>
+                                                    <td><?= ucfirst($value['year_breakdown_date']); ?></td>
                                                     <td><?= ucfirst($value['year_breakdown_problem']); ?></td>
-                                                    <td><?php if ($value['year_breakdown_active_status'] == 'active') {
-                                                            echo "Active";
-                                                        } else {
-                                                            echo "Inactive";
-                                                        } ?></td>
-
                                                     <?php if ($search_status != 1) { ?>
                                                         <td>
                                                             <i class="bi bi-pencil-square" style="cursor: pointer;color:blue;" onclick="location.href='index.php?page=edit&year_breakdown_id=<?= $value['year_breakdown_id']; ?>'"></i>
@@ -527,6 +550,8 @@
     <script src="<?= PROJECT_PATH ?>/src/assets/jquery/jquery.js"></script>
     <script src="<?= PROJECT_PATH ?>/src/assets/jquery/jquery-ui.js"></script>
     <script src="<?= PROJECT_PATH ?>/src/assets/DataTable/datatables.min.js"></script>
+    <script src="<?= PROJECT_PATH ?>/src/jquery/external/jquery/jquery.js"></script>
+    <script src="<?= PROJECT_PATH ?>/src/assets/DataTime/jquery.datetimepicker.full.min.js"></script>
     <script src="breakdown-function.js"></script>
 
     <?php
@@ -577,7 +602,51 @@
             show_alert();
         </script>
     <?php } ?>
+    <script>
+        function machineName() {
+            $('#machine_name').autocomplete({
+                source: "get-data.php?action=MachineName",
+                minLength: 0,
+                select: function(evt, ui) {
 
+                    document.getElementById('machine_id').value = ui.item.id;
+                },
+                change: function(event, ui) {
+                    if (!ui.item) {
+                        $(event.target).val("");
+                        $('machine_id').val("");
+                    }
+                }
+            });
+        }
+
+
+        $(document).ready(function() {
+            // Attach click event to the image with the 'preview-trigger' class
+            $('.preview-trigger-before').on('click', function() {
+                // Show the image preview dialog
+                $('#image-preview-dialog-before').show();
+            });
+
+            // Close the image preview dialog when clicking outside the image
+            $('#image-preview-dialog-before').on('click', function() {
+                $(this).hide();
+            });
+        });
+        $(document).ready(function() {
+            // Attach click event to the image with the 'preview-trigger' class
+            $('.preview-trigger-after').on('click', function() {
+                // Show the image preview dialog
+                $('#image-preview-dialog-after').show();
+            });
+
+            // Close the image preview dialog when clicking outside the image
+            $('#image-preview-dialog-after').on('click', function() {
+                $(this).hide();
+            });
+        });
+        jQuery('#datetimepicker').datetimepicker();
+    </script>
 </body>
 
 </html>

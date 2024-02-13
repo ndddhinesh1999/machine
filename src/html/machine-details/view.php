@@ -29,7 +29,7 @@
                     <nav>
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/home/">Home</a></li>
-                            <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/machine/">Machine</a></li>
+                            <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/machine/index.php?type= <?= isset($_REQUEST['type']) ? $_REQUEST['type'] : '' ?>">Machine</a></li>
                             <li class="breadcrumb-item active"><?= $machine['machine_name'] ?></li>
                         </ol>
                     </nav>
@@ -158,7 +158,7 @@
                                             <th>S No.</th>
                                             <th>Title</th>
                                             <th>Last Entry Date</th>
-                                            <th>Details</th>
+                                            <!-- <th>Details</th> -->
                                             <th> Entry</th>
 
                                         </tr>
@@ -175,8 +175,8 @@
                                                     <td><?= $sno++; ?></td>
                                                     <td><?= $value ?></td>
                                                     <td>2024/01/11</td>
-                                                    <td><i class="bi bi-pencil-square" style="cursor: pointer;color:blue;" onclick="location.href='../<?= $value ?>/'"></i></td>
-                                                    <td><i class="bi bi-pencil-square" style="cursor: pointer;color:blue;" onclick="location.href='../<?= $value ?>/index.php?page=add&m_id=<?= $machine['machine_id'] ?>'"></i></td>
+                                                    <!-- <td><i class="bi bi-pencil-square" style="cursor: pointer;color:blue;" onclick="location.href='../<?= $value ?>/index.php?type=<?=$_REQUEST['type']?>&m_id=<?= $machine['machine_id'] ?>"></i></td> -->
+                                                    <td><i class="bi bi-plus-circle-fill fs-7" style="cursor: pointer;color:blue;" onclick="location.href='../<?= $value ?>/index.php?page=add&type=<?=$_REQUEST['type']?>&m_id=<?= $machine['machine_id'] ?>'"></i></td>
                                                 </tr>
                                         <?php }
                                         } ?>

@@ -18,25 +18,25 @@ if ($action == 'get_branch') {
 }
 
 if ($action == 'delete_record') {
-    $autonomous_id = $_REQUEST['autonomous_id'];
+    $breakdown_id = $_REQUEST['breakdown_id'];
     $status = $_REQUEST['status'];
     $where = '';
     if (!empty($status) && $status == 'delete') {
-        $where .= " autonomous_deleted_status = 1 ";
+        $where .= " breakdown_deleted_status = 1 ";
     } elseif (!empty($status) && $status == 'undo') {
-        $where .= " autonomous_deleted_status = 0 ";
+        $where .= " breakdown_deleted_status = 0 ";
     }
 
-    if (!empty($autonomous_id)) {
-        $select_autonomous = "SELECT autonomous_name FROM autonomouss WHERE autonomous_id = '" . $autonomous_id . "' ";
-        list($num_row, $records) = selectRow($select_autonomous);
-        $update = "UPDATE   autonomouss SET $where  WHERE autonomous_id=
-'" . $autonomous_id . "' ";
+    if (!empty($breakdown_id)) {
+        $select_breakdown = "SELECT breakdown_name FROM breakdowns WHERE breakdown_id = '" . $breakdown_id . "' ";
+        list($num_row, $records) = selectRow($select_breakdown);
+        $update = "UPDATE   breakdowns SET $where  WHERE breakdown_id=
+'" . $breakdown_id . "' ";
         // echo $update;exit;
         $ids = update($update);
 
         if ($ids > 0) {
-            $data = ((!empty($records['autonomous_name'])) ? ucfirst($records['autonomous_name']) : '');
+            $data = ((!empty($records['breakdown_name'])) ? ucfirst($records['breakdown_name']) : '');
         } else {
             $data = 2;
         }

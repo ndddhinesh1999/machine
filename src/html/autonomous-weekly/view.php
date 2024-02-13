@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?= PROJECT_TITLE ?> - autonomous</title>
+    <title><?= PROJECT_TITLE ?> - Autonomous Weekly</title>
     <link rel="shortcut icon" type="image/png" href="<?= PROJECT_PATH; ?>/src/assets/images/logos/company-logo.svg" />
     <link rel="stylesheet" href="<?= PROJECT_PATH ?>/src/assets/libs/bootstrap-icons/font/bootstrap-icons.css">
     <link rel="stylesheet" href="<?= PROJECT_PATH ?>/src/assets/css/styles.min.css" />
@@ -47,17 +47,16 @@
                     <nav>
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/home/">Home</a></li>
-                            <li class="breadcrumb-item active">autonomous-weekly</li>
+                            <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/machine/index.php?type=<?= isset($_REQUEST['type']) ? $_REQUEST['type'] : '' ?>">Machine</a></li>
+                            <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/machine-details/index.php?type= <?= isset($_REQUEST['type']) ? $_REQUEST['type'] : '' ?>&m_id=<?= $machine['machine_id'] ?>"><?= $machine['machine_name'] ?></a></li>
+                            <li class="breadcrumb-item active">Autonomous Weekly</li>
                         </ol>
                     </nav>
+                    <small class="text-muted float-end">Add Autonomous-Weekly</small>
                 </div>
                 <?php if (isset($_REQUEST['page']) && $_REQUEST['page'] == 'add') { ?>
                     <div class="col-lg-12 d-flex align-items-strech">
                         <div class="card w-100">
-                            <div class="card-header d-flex justify-content-between align-items-center">
-                                <h5 class="mb-0">Autonomous Weekly Details</h5>
-                                <small class="text-muted float-end">Add autonomous Weekly</small>
-                            </div>
                             <div class="card-body">
                                 <form action="index.php" method="POST" name="autonomous_form" id="autonomous_form" autocomplete="off" class="needs-validation" enctype="multipart/form-data" novalidate>
                                     <div class="row">
@@ -76,9 +75,125 @@
                                             </div>
 
                                         <?php    } ?>
+                                        <div class="col-md-4">
+                                            <label class="form-label machine_name" for="machine_name">Machine Name</label>
+                                            <input name="machine_name" id="machine_name" class="form-control" value="<?= $machine['machine_name'] ?>" ; required readonly>
+                                            <input type="hidden" name="machine_id" id="machine_id" class="form-control" value="<?= $machine['machine_id'] ?>" required readonly>
+
+                                            <div class="invalid-feedback">
+                                                Please enter Machine Name.
+                                            </div>
+                                        </div>
                                         <div class="col-md-2">
                                             <label class="form-label autonomous_date" for="autonomous_date">Date</label>
                                             <input name="autonomous_date" id="autonomous_date" value="<?= date('d/m/Y') ?>" class="form-control datepicker" required>
+                                            <div class="invalid-feedback">
+                                                Please enter autonomous date.
+                                            </div>
+                                        </div>
+
+                                        <div class="row" style="margin-top: 15px;">
+
+                                            <div class="col-md-3">
+                                                <label class="form-label ">Label & Standard</label>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <label class="form-label ">Remarks</label>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <label class="form-label ">Before Image </label>
+
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label class="form-label ">After Image</label>
+
+                                            </div>
+
+                                        </div>
+
+                                        <?php foreach ($listLabels as $get_data) { ?>
+
+                                            <div class="row" style="margin-top: 15px;">
+
+                                                <div class="col-md-3">
+                                                    <b> <?= $get_data['autonomou_lable_part'] . '.' ?></b>
+                                                    <br>
+                                                    <label> <?= $get_data['autonomou_lable_standard'] ?></label>
+                                                    <input type="hidden" name="label_id[]" id="label_id" value="<?= $get_data['autonomou_lable_id'] ?>" class="form-control" required>
+                                                </div>
+
+                                                <div class="col-md-3">
+                                                    <textarea name="autonomous_remark[]" id="autonomous_remark" class="form-control" rows="2"> </textarea>
+
+                                                    <div class="invalid-feedback">
+                                                        Please enter autonomous remark.
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-3">
+
+                                                    <input type="file" name="before_images[]" id="before_images" accept="image/*" class="form-control" required>
+                                                    <div class="invalid-feedback">
+                                                        Please Choose Before autonomous Image.
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-3">
+
+                                                    <input type="file" name="after_images[]" id="after_images" accept="image/*" class="form-control" required>
+                                                    <div class="invalid-feedback">
+                                                        Please Choose Before autonomous Image.
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        <?php } ?>
+
+
+
+                                    </div>
+                                    <div class="mt-5 d-flex justify-content-center gap-3">
+                                        <input type="hidden" name="autonomous_page" id="autonomous_page" value="add">
+                                        <input type="hidden" name="autonomous_status" id="autonomous_status" value="">
+                                        <input name="add_autonomous" type="submit" class="btn btn-primary" id="add_autonomous" value="Save" title="Save" />
+                                        <input type="reset" value="Reset" class="btn btn-outline-secondary" title="Reset" />
+                                        <input type="button" value="Back" class="btn btn-secondary" onclick="location.href='index.php'" title="Back">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                <?php } else if (isset($_REQUEST['page']) && $_REQUEST['page'] == 'edit') { ?>
+
+                    <div class="col-lg-12 d-flex align-items-strech">
+                        <div class="card w-100">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">autonomous Details</h5>
+                                <small class="text-muted float-end">Edit autonomous</small>
+                            </div>
+
+                            <div class="card-body">
+                                <form action="index.php" method="POST" name="autonomous_form" id="autonomous_form" autocomplete="off" class="needs-validation" enctype="multipart/form-data" novalidate>
+                                    <div class="row">
+                                        <?php if ($_SESSION[SESS . 'session_admin_users_level'] == 'admin') { ?>
+                                            <div class="col-md-3">
+                                                <label class="form-label company_id" for="company_id">Company</label>
+                                                <select name="company_id" id="company_id" class="form-select" required>
+                                                    <option value="">-Select-</option>
+                                                    <?php foreach ($listCompany as $data) { ?>
+                                                        <option value="<?= $data['company_id']; ?>" <?= ($data['company_id'] == $edit_autonomous['autonomous_company_id']) ? 'selected' : '' ?>><?= $data['company_code'] . ' - ' . $data['company_name']; ?></option>
+                                                    <?php    } ?>
+                                                </select>
+                                                <div class="invalid-feedback">
+                                                    Please select a company.
+                                                </div>
+                                            </div>
+                                        <?php    } ?>
+                                        <div class="col-md-3">
+                                            <label class="form-label autonomous_date" for="autonomous_date">Date</label>
+                                            <input name="autonomous_date" id="autonomous_date" value="<?= !empty($edit_autonomous['dates']) ? dateGeneralFormat($edit_autonomous['dates']) : '00/00/0000'  ?>" class="form-control datepicker" required>
                                             <div class="invalid-feedback">
                                                 Please enter autonomous date.
                                             </div>
@@ -104,162 +219,51 @@
                                             </div>
 
                                         </div>
-
-                                        <?php foreach ($listLabels as $get_data) { ?>
-
-                                            <div class="row" style="margin-top: 15px;">
-
-                                                <div class="row" style="margin-top: 15px;">
-
-                                                    <div class="col-md-3">
-                                                        <b> <?= $get_data['autonomou_lable_part'] . '.' ?></b>
-                                                        <br>
-                                                        <label> <?= $get_data['autonomou_lable_standard'] ?></label>
-                                                        <input type="hidden" name="label_id[]" id="machine_id" value="<?= $get_data['autonomou_lable_id'] ?>" class="form-control" required>
-                                                    </div>
-
-                                                    <div class="col-md-3">
-                                                        <textarea name="autonomous_remark[]" id="autonomous_remark" class="form-control" cols="30" rows="3"> </textarea>
-
-                                                        <div class="invalid-feedback">
-                                                            Please enter autonomous remark.
-                                                        </div>
-                                                    </div>
-
-                                      
-
-                                                    <div class="col-md-3">
-
-                                                        <input type="file" name="autonomous_img_bfr" id="autonomous_img_bfr" accept="image/*" class="form-control" required>
-                                                        <div class="invalid-feedback">
-                                                            Please Choose Before autonomous Image.
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-md-3">
-
-                                                        <input type="file" name="autonomous_img[]" id="autonomous_img" accept="image/*" class="form-control" required>
-                                                        <div class="invalid-feedback">
-                                                            Please Choose Before autonomous Image.
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                            <?php } ?>
-                                            <!-- <div class="col-md-4">
-                                            <label class="form-label bfr_autonomous_descript" for="bfr_autonomous_descript">Before autonomous - Description</label>
-                                            <input name="bfr_autonomous_descript" id="bfr_autonomous_descript" class="form-control " required>
-                                            <div class="invalid-feedback">
-                                                Please enter Before autonomous Desc.
-                                            </div>
-                                        </div> -->
-
-
-                                            </div>
-                                            <div class="mt-5 d-flex justify-content-center gap-3">
-                                                <input type="hidden" name="autonomous_page" id="autonomous_page" value="add">
-                                                <input type="hidden" name="autonomous_status" id="autonomous_status" value="">
-                                                <input name="add_autonomous" type="submit" class="btn btn-primary" id="add_autonomous" value="Save" title="Save" />
-                                                <input type="reset" value="Reset" class="btn btn-outline-secondary" title="Reset" />
-                                                <input type="button" value="Back" class="btn btn-secondary" onclick="location.href='index.php'" title="Back">
-                                            </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                <?php } else if (isset($_REQUEST['page']) && $_REQUEST['page'] == 'edit') { ?>
-
-                    <div class="col-lg-12 d-flex align-items-strech">
-                        <div class="card w-100">
-                            <div class="card-header d-flex justify-content-between align-items-center">
-                                <h5 class="mb-0">Autonomous Weekly Details</h5>
-                                <small class="text-muted float-end">Edit autonomous Weekly</small>
-                            </div>
-
-                            <div class="card-body">
-                                <form action="index.php" method="POST" name="autonomous_form" id="autonomous_form" autocomplete="off" class="needs-validation" enctype="multipart/form-data" novalidate>
-                                    <div class="row">
-                                        <?php if ($_SESSION[SESS . 'session_admin_users_level'] == 'admin') { ?>
-                                            <div class="col-md-3">
-                                                <label class="form-label company_id" for="company_id">Company</label>
-                                                <select name="company_id" id="company_id" class="form-select" required>
-                                                    <option value="">-Select-</option>
-                                                    <?php foreach ($listCompany as $data) { ?>
-                                                        <option value="<?= $data['company_id']; ?>" <?= ($data['company_id'] == $edit_autonomous['autonomous_company_id']) ? 'selected' : '' ?>><?= $data['company_code'] . ' - ' . $data['company_name']; ?></option>
-                                                    <?php    } ?>
-                                                </select>
-                                                <div class="invalid-feedback">
-                                                    Please select a company.
-                                                </div>
-                                            </div>
-                                        <?php    } ?>
-
-                                        <div class="col-md-3">
-                                            <label class="form-label autonomous_date" for="autonomous_date">Date</label>
-                                            <input name="autonomous_date" id="autonomous_date" value="<?= !empty($edit_autonomous['dates']) ? dateGeneralFormat($edit_autonomous['dates']) : '00/00/0000'  ?>" class="form-control datepicker" required>
-                                            <div class="invalid-feedback">
-                                                Please enter autonomous date.
-                                            </div>
-                                        </div>
-
-                                        <div class="row" style="margin-top: 15px;">
-
-                                            <div class="col-md-3">
-                                                <label class="form-label ">Label & Standard</label>
-                                            </div>
-
-                                            <div class="col-md-3">
-                                                <label class="form-label ">Remark</label>
-                                            </div>
-
-                                            <div class="col-md-3">
-                                                <label class="form-label ">Before</label>
-
-                                            </div>
-
-                                            <div class="col-md-3">
-                                                <label class="form-label ">After</label>
-
-                                            </div>
-                                        </div>
-
-                                        <?php foreach ($edit_autonomous['details'] as $get_data) { ?>
+                                        <?php foreach ($edit_autonomous['details'] as $get_data) {  ?>
 
                                             <div class="row" style="margin-top: 15px;">
-
-                                                
-                                            <div class="col-md-3">
-                                                    <b> <?= $get_data['label_part'] . '.'  ?></b>
-                                                    <br>
-                                                    <label> <?= $get_data['label_std'] ?></label>
-
+                                                <div class="col-md-3">
+                                                    <label> <?= $get_data['label_part'] . ' & ' . $get_data['label_std'] ?></label>
                                                     <input type="hidden" name="label_id[]" id="machine_id" value="<?= $get_data['label_id'] ?>" class="form-control" required>
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <textarea name="autonomous_remark[]" id="autonomous_remark" class="form-control" cols="30" rows="3"><?= $get_data['remark'] ?></textarea>
+                                                    <textarea name="autonomous_remark[]" id="autonomous_remark" class="form-control" rows="2"><?= $get_data['remark'] ?></textarea>
 
                                                     <div class="invalid-feedback">
                                                         Please enter autonomous remark.
                                                     </div>
                                                 </div>
+                                                <?php if ($get_data['before_image'] != '') { ?>
+                                                    <div class="col-md-3">
+                                                        <?php $required = empty($get_data['before_image']) ? 'required' : '' ?>
+                                                        <input type="file" name="before_images[]" id="before_images" class="form-control" value="<?= $get_data['before_image'] ?>" $required>
+                                                        <div class="invalid-feedback">
+                                                            Please choose before_images.
+                                                        </div>
+                                                        <br>
+                                                        <img class="preview-trigger" style="width: 30px;" src="<?= PROJECT_PATH . 'src/' . $get_data['before_image'] ?>" alt="Image Preview" onclick="beforeImage(<?= $get_data['label_id'] ?>);">
 
-                                                <div class="col-md-3">
-                                                    <?php $required = empty($get_data['files_bfr']) ? 'required' : ''; ?>
-
-                                                    <input type="file" name="autonomous_img_bfr[]" id="autonomous_img_bfr" class="form-control" <?= $required ?> value="<?= $get_data['files_bfr']  ?>">
-                                                    <div class="invalid-feedback">
-                                                        Please Choose autonomous Before Image.
+                                                        <div id="before-image-preview-dialog<?= $get_data['label_id'] ?>" style="display: none;">
+                                                            <img class="preview_image" src="<?= PROJECT_PATH . 'src/' . $get_data['before_image'] ?>" alt="Image Preview" onclick="beforeImagePreview(<?= $get_data['label_id'] ?>);">
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                <?php } ?>
 
-                                                <div class="col-md-3">
-                                                    <?php $required = empty($get_data['files']) ? 'required' : ''; ?>
+                                                <?php if ($get_data['after_image'] != '') { ?>
+                                                    <div class="col-md-3">
+                                                        <?php $required = empty($get_data['after_image']) ? 'required' : '' ?>
+                                                        <input type="file" name="after_image[]" id="after_image" class="form-control" value="<?= $get_data['after_image'] ?>" $required>
+                                                        <div class="invalid-feedback">
+                                                            Please choose before_images.
+                                                        </div>
+                                                        <br>
+                                                        <img class="preview-trigger" style="width: 30px;" src="<?= PROJECT_PATH . 'src/' . $get_data['after_image'] ?>" alt="Image Preview" onclick="AfterImage(<?= $get_data['label_id'] ?>);">
 
-                                                    <input type="file" name="autonomous_img[]" id="autonomous_img" class="form-control" value="<?= $get_data['files']  ?>" $required>
-                                                    <div class="invalid-feedback">
-                                                        Please Choose autonomous Image.
+                                                        <div id="after-image-preview-dialog<?= $get_data['label_id'] ?>" style="display: none;">
+                                                            <img class="preview_image" src="<?= PROJECT_PATH . 'src/' . $get_data['after_image'] ?>" alt="Image Preview" onclick="AfterImagePreview(<?= $get_data['label_id'] ?>);">
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                <?php } ?>
                                             </div>
 
                                         <?php } ?>
@@ -365,7 +369,7 @@
                                         ?>
                                                 <tr>
                                                     <td><?= $sno++; ?></td>
-                                                    <td><?= dateGeneralFormat($value['autonomous_date']); ?></td>
+                                                    <td><?= date('d/m/Y', strtotime($value['autonomous_date'])); ?></td>
                                                     <td><?php if ($value['autonomous_active_status'] == 'active') {
                                                             echo "Active";
                                                         } else {
@@ -428,15 +432,15 @@
     </div>
     <!-- Delete success message  modal -->
     <div class="modal fade" id="success_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered ">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel1"></h5>
                 </div>
                 <div class="modal-body1">
                     <div class="d-flex justify-content-center">
-                        <p>The Recors Was
-                            <span id="record_status"></span>
+                        <p>The
+                            <span id="record_name"></span> was <span id="record_status"></span>
                         </p>
                     </div>
                 </div>
@@ -477,7 +481,7 @@
             $msg = 'Please fill all required fields';
             $color = 'warning';
         } else if ($_REQUEST['msg'] == 5) {
-            $msg = 'autonomous Name Already Created';
+            $msg = 'Autonomous For this Date Already Created';
             $color = 'danger';
         }
     }
@@ -509,7 +513,24 @@
             show_alert();
         </script>
     <?php } ?>
+    <script>
+        function beforeImage(id) {
+            $('#before-image-preview-dialog' + id).show();
+        }
 
+        function beforeImagePreview(id) {
+            $('#before-image-preview-dialog' + id).hide();
+        }
+
+        function AfterImage(id) {
+            $('#after-image-preview-dialog' + id).show();
+        }
+
+        function afterImagePreview(id) {
+            console.log(id);
+            $('#after-image-preview-dialog' + id).hide();
+        }
+    </script>
 </body>
 
 </html>

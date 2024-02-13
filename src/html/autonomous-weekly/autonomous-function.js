@@ -22,8 +22,8 @@ function search_get_branch() {
   $.get('autonomous-ajax.php?action=get_branch', { company_id: company_id }, function (response) {
     $('#search_branch_id').html(response);
   });
-} 
-
+}
+ 
 function delete_record(autonomous_id, status) {
   if (status == 'delete') {
     $('#exampleModalLabel').html('Delete Record');
@@ -47,7 +47,7 @@ $('#delete_button').click(function () {
     if (data != 2) {
       if (status == 'delete') {
         $('#record_name').html('Record');
-        $('#exampleModalLabel1').html('Deleted Record');
+        $('#exampleModalLabel1').html('Delete Record');
         $('#record_status').html('deleted.');
         $('#success_modal').modal('show');
       } else if (status == 'undo') {
@@ -59,10 +59,6 @@ $('#delete_button').click(function () {
     }
   });
 });
-
-// window.ready = () => { 
-
-// }
 
 $(function () {
   var page = $('#autonomous_page').val();

@@ -28,8 +28,13 @@
                         <div class="card mb-0">
                             <div class="card-body">
                                 <a href="<?= PROJECT_PATH; ?>index.php" class="text-nowrap logo-img text-center d-block py-3 w-100">
-                                    <img src="<?= PROJECT_PATH; ?>/src/assets/images/logos/company-logo.svg" width="70" alt="">
+                                    <img src="<?= PROJECT_PATH; ?>/src/assets/images/logos/GC.png" width="70" alt="">
                                 </a>
+                                <div class="text-center">
+                                    <h4>GLOBE COMPONENTS (P) LTD C5,</h4>
+                                    <h4>AMBATTUR INDUSTRIAL ESTATE,</h4>
+                                    <h4>CHENNAI - 600 058.</h4>
+                                </div>
                                 <form action="index.php" method="post" name="log_in_form" id="log_in_form" autocomplete="off">
                                     <div class="mb-3">
                                         <label for="user_name" class="form-label">User Name</label>
