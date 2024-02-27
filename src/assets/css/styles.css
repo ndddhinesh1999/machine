@@ -2938,7 +2938,7 @@ progress {
     color: #5A6A85;
     background-color: transparent;
     background-clip: padding-box;
-    border: var(--bs-border-width) solid #4a4c4f;
+    /* border: var(--bs-border-width) solid #4a4c4f; */
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -3190,7 +3190,7 @@ textarea.form-control-lg {
     background-repeat: no-repeat;
     background-position: right 16px center;
     background-size: 16px 12px;
-    border: var(--bs-border-width) solid #4a4c4f;
+    /* border: var(--bs-border-width) solid #4a4c4f; */
     border-radius: 7px;
     -webkit-box-shadow: unset;
     box-shadow: unset;
@@ -4133,19 +4133,19 @@ fieldset:disabled .btn {
 
 .btn-secondary {
     --bs-btn-color: #fff;
-    --bs-btn-bg: #49BEFF;
-    --bs-btn-border-color: #49BEFF;
+    --bs-btn-bg: #aeaeae;
+    --bs-btn-border-color: #aeaeae;
     --bs-btn-hover-color: #fff;
-    --bs-btn-hover-bg: #3ea2d9;
-    --bs-btn-hover-border-color: #3a98cc;
+    --bs-btn-hover-bg: #919191;
+    --bs-btn-hover-border-color: #919191;
     --bs-btn-focus-shadow-rgb: 100, 200, 255;
     --bs-btn-active-color: #fff;
-    --bs-btn-active-bg: #3a98cc;
-    --bs-btn-active-border-color: #378fbf;
+    --bs-btn-active-bg: #919191;
+    --bs-btn-active-border-color: #919191;
     --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
     --bs-btn-disabled-color: #fff;
-    --bs-btn-disabled-bg: #49BEFF;
-    --bs-btn-disabled-border-color: #49BEFF
+    --bs-btn-disabled-bg: #919191;
+    --bs-btn-disabled-border-color: #919191
 }
 
 .btn-success {
@@ -4455,19 +4455,19 @@ fieldset:disabled .btn {
 }
 
 .btn-outline-secondary {
-    --bs-btn-color: #49BEFF;
-    --bs-btn-border-color: #49BEFF;
+    --bs-btn-color: #aeaeae;
+    --bs-btn-border-color: #aeaeae;
     --bs-btn-hover-color: #fff;
-    --bs-btn-hover-bg: #49BEFF;
-    --bs-btn-hover-border-color: #49BEFF;
+    --bs-btn-hover-bg: #aeaeae;
+    --bs-btn-hover-border-color: #aeaeae;
     --bs-btn-focus-shadow-rgb: 73, 190, 255;
     --bs-btn-active-color: #fff;
-    --bs-btn-active-bg: #49BEFF;
-    --bs-btn-active-border-color: #49BEFF;
+    --bs-btn-active-bg: #aeaeae;
+    --bs-btn-active-border-color: #aeaeae;
     --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-    --bs-btn-disabled-color: #49BEFF;
+    --bs-btn-disabled-color: #aeaeae;
     --bs-btn-disabled-bg: transparent;
-    --bs-btn-disabled-border-color: #49BEFF;
+    --bs-btn-disabled-border-color: #aeaeae;
     --bs-gradient: none
 }
 

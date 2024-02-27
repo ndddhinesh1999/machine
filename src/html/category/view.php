@@ -71,7 +71,7 @@
                                         <input type="hidden" name="category_status" id="category_status" value="">
                                         <input name="add_category" type="submit" class="btn btn-primary" id="add_category" value="Save" title="Save" />
                                         <input type="reset" value="Reset" class="btn btn-outline-secondary" title="Reset" />
-                                        <input type="button" value="Back" class="btn btn-secondary" onclick="location.href='index.php'" title="Back">
+                                        <input type="button" value="Back" class="btn btn-dark" onclick="location.href='index.php'" title="Back">
                                     </div>
                                 </form>
                             </div>
@@ -127,7 +127,7 @@
                                         <?php } ?>
                                         <input type="hidden" name="category_page" id="category_page" value="edit">
                                         <input type="hidden" name="category_status" id="category_status" value="<?= $edit_category['category_deleted_status'] ?>">
-                                        <input type="button" value="Back" class="btn btn-secondary" onclick="location.href='index.php'" title="Back">
+                                        <input type="button" value="Back" class="btn btn-dark" onclick="location.href='index.php'" title="Back">
                                     </div>
                                 </form>
                             </div>
@@ -175,8 +175,8 @@
                                         </div>
 
                                         <div class="d-flex justify-content-center gap-2">
-                                            <input name="search" type="submit" class="btn btn-primary" id="search" value="Search" title="Search" />
-                                            <input name="view_all" type="button" class="btn btn-success" id="view_all" onclick="location.href='index.php'" title="Display All" value="Display All" />
+                                            <input name="search" type="submit" class="btn btn-dark" id="search" value="Search" title="Search" />
+                                            <input name="view_all" type="button" class="btn btn-outline-secondary" id="view_all" onclick="location.href='index.php'" title="Display All" value="Display All" />
                                         </div>
                                     </div>
                                 </div>

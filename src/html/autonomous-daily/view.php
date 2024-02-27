@@ -79,7 +79,7 @@
                                             </div>
 
                                         <?php    } ?>
-                                        <div class="col-md-4">
+                                        <!-- <div class="col-md-4">
                                             <label class="form-label machine_name" for="machine_name">Machine Name</label>
                                             <input name="machine_name" id="machine_name" class="form-control" value="<?= $machine['machine_name'] ?>" ; required readonly>
                                             <input type="hidden" name="machine_id" id="machine_id" class="form-control" value="<?= $machine['machine_id'] ?>" required readonly>
@@ -87,7 +87,7 @@
                                             <div class="invalid-feedback">
                                                 Please enter Machine Name.
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <div class="col-md-2">
                                             <label class="form-label autonomous_date" for="autonomous_date">Date</label>
                                             <input name="autonomous_date" id="autonomous_date" value="<?= date('d/m/Y') ?>" class="form-control datepicker" required>

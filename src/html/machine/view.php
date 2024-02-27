@@ -550,10 +550,10 @@
         <!-- Machine modal -->
         <div class="modal fade" data-bs-keyboard="false" data-bs-backdrop="static" id="exampleModalMachine" tabindex="-1" aria-labelledby="exampleModalMachineLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
-                <form action="index.php" method="POST">
-                    <div class="modal-content">
+                <div class="modal-content">
+                    <form action="index.php" method="POST">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalMachineLabel"></h5>
+                            <h5 class="modal-title" id="exampleModalMachineLabel">Machine</h5>
                         </div>
                         <div class="modal-body">
                             <label for="color">Machine Type:</label>
@@ -569,8 +569,8 @@
                             <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="javascript:window.location.href='<?= PROJECT_PATH . 'src/html/home/' ?>';">Close</button>
                             <button type="summit" class="btn btn-primary" name="type_submit" id="type_submit">Submit</button>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     <?php  } ?>
