@@ -36,7 +36,7 @@ function fileUpload($file_name, $file_tmp_name, $file_rename, $path)
 	$file_extn       = explode('.', $file_name);
 	$file_name_space = str_replace(' ', '-', strtolower($file_rename));
 	$file_new_name   = $file_name_space . '-' . uniqid() . '.' . $file_extn[1];
-    //  echo $file_tmp_name,$path.$file_new_name;exit;
+	//  echo $file_tmp_name,$path.$file_new_name;exit;
 	if (!file_exists($path)) {
 		mkdir($path, 0777, true);
 		// echo mkdir($path, 0770, true);exit;
@@ -194,4 +194,8 @@ function machine_detail()
 		}
 	}
 	return $array;
+}
+function companyDetails()
+{
+	return array('name' => 'GLOBE COMPONENTS (P) LTD', 'address' => 'CHENNAI -58', 'logo' => '../../assets/images/logos/gc.jpeg');
 }

@@ -5,6 +5,7 @@ if (isset($_SESSION[SESS . 'session_admin_users_unique_id'])) {
     include 'model.php';
     $machine = machine_detail();
     $actively_details = actively();
+    $preventive_list = preventive_list();
     if (isset($_POST['save'])) {
         CreateData();
     }

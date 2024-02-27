@@ -30,7 +30,7 @@
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/home/">Home</a></li>
                             <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/machine/">Machine</a></li>
-                            <li class=" breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/machine-details/index.php?id=<?= $machine['machine_id'] ?>"><?= $machine['machine_name'] ?></a></li>
+                            <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/machine-details/index.php?type= <?= isset($_REQUEST['type']) ? $_REQUEST['type'] : '' ?>&m_id=<?= $machine['machine_id'] ?>"><?= $machine['machine_name'] ?></a></li>
                             <li class="breadcrumb-item active">Preventive</li>
                         </ol>
                     </nav>
@@ -39,112 +39,106 @@
                     <div class="col-lg-12 d-flex align-items-strech">
                         <div class="card w-100">
                             <div class="card-header d-flex justify-content-between align-items-center">
-                                <h5 class="mb-0">Preventive Details</h5>
+                                <h5 class="mb-0"><?= $machine['machine_name'] ?></h5>
                                 <small class="text-muted float-end">Add Preventive</small>
                             </div>
                             <div class="card-body">
 
                                 <div class="accordion" id="accordionExample">
-                                    <?php $i = 1;
-                                    foreach ($actively_details as $actively) { ?>
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header" id="heading<?= $i ?>">
-                                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?= $i ?>" aria-expanded="true" aria-controls="collapse<?= $i ?>">
-                                                    <?php echo $actively['activity_name'];
-                                                    $record = $actively['details']; ?>
-                                                </button>
-                                            </h2>
-                                            <div id="collapse<?= $i ?>" class="accordion-collapse collapse" aria-labelledby="heading<?= $i ?>" data-bs-parent="#accordionExample">
-                                                <form action="index.php" method="POST" enctype="multipart/form-data">
+                                    <form action="index.php" method="POST" name="department_form" id="department_form" autocomplete="off" class="needs-validation" enctype="multipart/form-data" novalidate>
+                                        <div class="col-md-4">
+                                            <!-- <label class="form-label machine_name" for="machine_name">Machine Name</label> -->
+                                            <!-- <input name="machine_name" id="machine_name" class="form-control" value="<?= $machine['machine_name'] ?>" ; required readonly> -->
+                                            <input type="hidden" name="machine_id" id="machine_id" class="form-control" value="<?= $machine['machine_id'] ?>" required readonly>
+
+                                            <div class="invalid-feedback">
+                                                Please enter Machine Name.
+                                            </div>
+                                        </div>
+                                        <?php $i = 1;
+                                        // echo "<pre>";
+                                        // print_r($actively_details);
+                                        // exit;
+                                        foreach ($actively_details as $actively) { ?>
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header" id="heading<?= $i ?>">
+                                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?= $i ?>" aria-expanded="true" aria-controls="collapse<?= $i ?>">
+                                                        <?php echo $actively['activity_name'];
+                                                        $record = $actively['details']; ?>
+                                                    </button>
+                                                    <input type="hidden" name="activity_id[]" id="activity_id" value="<?= $actively['activity_id'] ?>">
+                                                </h2>
+                                                <div id="collapse<?= $i ?>" class="accordion-collapse collapse" aria-labelledby="heading<?= $i ?>" data-bs-parent="#accordionExample">
+                                                    <!-- <form action="index.php" method="POST" enctype="multipart/form-data"> -->
                                                     <div class="accordion-body">
+                                                        <div class="row mt-2">
+                                                            <div class="col-3 p-0">
+                                                                <label class="form-label">Activity & Plan</label>
+                                                            </div>
+                                                            <div class="col-3 p-0">
+                                                                <label class="form-label">Remarks</label>
+                                                            </div>
+                                                            <div class="col-3 p-0">
+                                                                <label class="form-label">Before File</label>
+                                                            </div>
+                                                            <div class="col-3 p-0">
+                                                                <label class="form-label">After File</label>
+                                                            </div>
+                                                        </div>
                                                         <?php $j = 1;
                                                         foreach ($record as $details) { ?>
                                                             <div class="row mt-2">
                                                                 <div class="col-3 p-0">
-                                                                    <label class="form-label">Activity :</label>
                                                                     <label class="form-label"><b><?= $details['activity_detail_name'] ?></b></label><br>
-                                                                    <label class="form-label">Plan:</label>
                                                                     <label class="form-label"> <b><?= $details['activity_details_plan'] ?></b></label>
+                                                                    <input type="hidden" name="activity_detail_id<?= $actively['activity_id'] ?>[]" id="activity_detail_id" value="<?= $details['activity_detail_id'] ?>">
                                                                 </div>
                                                                 <div class="col-3 p-0">
-                                                                    <label class="form-label">Remarks</label>
+
                                                                     <div class="input-group">
-                                                                        <textarea name="" id="" cols="30" rows="3"></textarea>
+                                                                        <textarea name="remarks<?= $actively['activity_id'] ?>[]" id="remarks<?= $j ?>" cols="30" rows="2" require></textarea>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-3 p-0">
-                                                                    <label class="form-label">Before File</label>
                                                                     <div class="input-group">
-                                                                        <input type="file" name="file[]" id="file<?= $j ?>" class="form-control" required>
+                                                                        <input type="file" name="before_image<?= $actively['activity_id'] ?>[]" id="before_image<?= $j ?>" class="form-control" accept="image/png, image/gif, image/jpeg" required>
+                                                                        <!-- <div class="input-group-text">
+                                                                            show
+                                                                        </div> -->
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-3 p-0">
+                                                                    <div class="input-group">
+                                                                        <input type="file" name="after_image<?= $actively['activity_id'] ?>[]" id="after_image<?= $j ?>" class="form-control" accept="image/png, image/gif, image/jpeg" required>
                                                                         <!-- <div class="input-group-text">
                                                                             show
                                                                         </div> -->
                                                                     </div>
 
                                                                 </div>
-                                                                <div class="col-3 p-0">
-                                                                    <label class="form-label">After File</label>
-                                                                    <div class="input-group">
-                                                                        <input type="file" name="file[]" id="file<?= $j ?>" class="form-control" required>
-                                                                        <!-- <div class="input-group-text">
-                                                                            show
-                                                                        </div> -->
-                                                                    </div>
-
-                                                                </div>
-                                                                <input type="hidden" name="user_id" id="user_id" value="<?= $i + 1 ?>">
                                                             </div>
                                                         <?php $j++;
                                                         }
                                                         ?>
                                                     </div>
-                                                    <div class="accordion-footer d-flex justify-content-center gap-3 mb-2" style="background-color: #dfe7ff;padding: 10px;">
+                                                    <!-- <div class="accordion-footer d-flex justify-content-center gap-3 mb-2" style="background-color: #dfe7ff;padding: 10px;">
                                                         <input type="reset" class="btn btn-secondary">
                                                         <input type="submit" name="save" value="Save" class="btn btn-success">
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div><br>
-                                    <?php $i++;
-                                    }
-                                    ?>
-
-
-
-                                </div>
-
-                                <form action="index.php" method="POST" name="department_form" id="department_form" autocomplete="off" class="needs-validation" novalidate>
-                                    <div class="row">
-                                        <?php if ($_SESSION[SESS . 'session_admin_users_level'] == 'admin') { ?>
-                                            <div class="col-md-4">
-                                                <label class="form-label company_id" for="company_id">Company</label>
-                                                <select name="company_id" id="company_id" class="form-select" required>
-                                                    <option value="">-Select-</option>
-                                                    <?php foreach ($listCompany as $data) { ?>
-                                                        <option value="<?= $data['company_id']; ?>"><?= $data['company_code'] . ' - ' . $data['company_name']; ?></option>
-                                                    <?php    } ?>
-                                                </select>
-                                                <div class="invalid-feedback">
-                                                    Please select a company.
+                                                    </div> -->
+                                                    <!-- </form> -->
                                                 </div>
-                                            </div>
-
-                                        <?php    } ?>
-                                        <!-- <div class="col-md-4">
-                                            <label class="form-label department_name" for="department_name">Department Name</label>
-                                            <input name="department_name" id="department_name" class="form-control" required>
-                                            <div class="invalid-feedback">
-                                                Please enter department name.
-                                            </div>
-                                        </div> -->
-                                    </div>
-                                    <div class="mt-5 d-flex justify-content-center gap-3">
-                                        <input type="hidden" name="department_page" id="department_page" value="add">
-                                        <input type="hidden" name="department_status" id="department_status" value="">
-                                        <input name="add_department" type="submit" class="btn btn-primary" id="add_department" value="Save" title="Save" />
-                                        <input type="reset" value="Reset" class="btn btn-outline-secondary" title="Reset" />
-                                        <input type="button" value="Back" class="btn btn-secondary" onclick="location.href='index.php'" title="Back">
-                                    </div>
+                                            </div><br>
+                                        <?php $i++;
+                                        }
+                                        ?>
+                                </div>
+                                <div class="mt-5 d-flex justify-content-center gap-3">
+                                    <input type="hidden" name="department_page" id="department_page" value="add">
+                                    <input type="hidden" name="department_status" id="department_status" value="">
+                                    <input name="save" type="submit" class="btn btn-primary" id="save" value="Save" title="Save" />
+                                    <input type="reset" value="Reset" class="btn btn-outline-secondary" title="Reset" />
+                                    <input type="button" value="Back" class="btn btn-secondary" onclick="location.href='index.php'" title="Back">
+                                </div>
                                 </form>
                             </div>
                         </div>
@@ -228,8 +222,8 @@
                                     <thead>
                                         <tr>
                                             <th>S No.</th>
-                                            <th>Development Name</th>
-                                            <th>Status</th>
+                                            <th>Date</th>
+
                                             <th>Edit</th>
                                             <th>Delete</th>
 
@@ -237,7 +231,17 @@
                                     </thead>
                                     <tbody>
 
-
+                                        <?php
+                                        $i = 1;
+                                        foreach ($preventive_list as $get) {
+                                        ?>
+                                            <tr>
+                                                <td><?= $i++ ?></td>
+                                                <td><?= $get['date'] ?></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        <?php } ?>
                                     </tbody>
                                 </table>
                             </form>

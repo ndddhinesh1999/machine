@@ -71,7 +71,7 @@
                      <li class="sidebar-item">
                          <a class="sidebar-link" href="<?= PROJECT_PATH . 'src/html/machine/'; ?>" aria-expanded="false">
                              <span>
-                                 <i class="bi bi-diagram-3 fs-6"></i>
+                                 <i class="bi bi-gear-wide-connected fs-6"></i>
                              </span>
                              <span class="hide-menu">Machine</span>
                          </a>

@@ -3190,7 +3190,7 @@ textarea.form-control-lg {
     background-repeat: no-repeat;
     background-position: right 16px center;
     background-size: 16px 12px;
-    border: var(--bs-border-width) solid #DFE5EF;
+    border: var(--bs-border-width) solid #4a4c4f;
     border-radius: 7px;
     -webkit-box-shadow: unset;
     box-shadow: unset;

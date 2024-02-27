@@ -1,0 +1,180 @@
+.page {
+    padding-left: 40px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+}
+
+.new-page {
+    padding-left: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 7px;
+}
+
+
+.page1 {
+    padding-left: 40px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10px;
+}
+
+.page-landscape {
+    padding-top: 40px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+}
+
+.report-outer-table {
+    border: 1px solid #000000;
+}
+
+.report-outer-table-without-bottom-border {
+    border: 1px solid #000000;
+    border-bottom: 0px;
+}
+
+.report-outer-border {
+    border: 1px solid #000000;
+}
+
+.report-header {
+    border-bottom: 1px solid #000000;
+    padding-bottom: 5px;
+    background: #F7F7F7;
+}
+
+.report-heading {
+    font-weight: bold;
+
+}
+
+.report-company-name {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.report-record {
+    border: 0.5px solid #000000;
+}
+
+.report-record td {
+    border: 0.5px solid #000000;
+    padding: 2px 5px;
+}
+
+.report-product-details {
+    font-size: 10px;
+    font-weight: normal;
+}
+
+
+.report-record-listing {
+    border: 1px solid #000000;
+}
+
+.report-record-listing td {
+    border: 1px solid #000000;
+    padding: 5px 2px;
+}
+
+.report-title {
+    border: 1px solid #000000;
+    padding-bottom: 5px;
+    background: #F7F7F7;
+}
+
+.report-border-line {
+    border-bottom: 1px solid #000000;
+}
+
+
+.report-background {
+    background: #CCCCCC;
+}
+
+.report-record-listing-view {
+    border: 1px solid #000000;
+    padding: 5px 2px;
+}
+
+.report-with-border {
+    border: 1px solid #000000;
+    /*padding-bottom:5px;*/
+
+
+}
+
+.report-without-border {
+    border-bottom: 0px;
+    border-left: 0px;
+    border-top: 0px;
+    border-right: 1px solid #000000;
+    /*padding-bottom:5px;*/
+
+
+}
+
+.report-table-border-top {
+    border-top: 1px solid #000000;
+}
+
+.report-table-border-bottom {
+    border-bottom: 1px solid #000000;
+}
+
+.report-border-top {
+    border-top: 1px solid #000000;
+}
+
+.report-border-right {
+    border-right: 1px solid #000000;
+}
+
+.report-border-bottom {
+    border-bottom: 1px solid #000000;
+}
+
+.report-border-left {
+    border-left: 1px solid #000000;
+}
+
+.report-padding-top-bottom {
+    padding: 5px 0px;
+}
+
+/*.report-table-view-font {
+font-family:Arial, Helvetica, sans-serif;
+font-size:12px;
+
+}*/
+.report-padding-table-top-bottom {
+    padding: 4px 0px;
+}
+
+.repor-table-border {
+    border-left: 1px solid #000000;
+
+}
+
+.repor-table-left-bottom {
+    border-bottom: 1px solid #000000;
+    border-left: 1px solid #000000;
+
+
+}
+
+.vv {
+    -moz-transform: rotate(305.0deg);
+    /* FF3.5+ */
+    -o-transform: rotate(305.0deg);
+    /* Opera 10.5 */
+    -webkit-transform: rotate(305.0deg);
+    /* Saf3.1+, Chrome */
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=305 deg);
+    /* IE6,IE7 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=305)";
+    /* IE8 */
+    font-size: 8px;
+    text-align: right;
+    float: left;
+    width: 3%;
+}

@@ -28,7 +28,7 @@
             <div class="container-fluid">
                 <!--  Row 1 -->
 
-                <div class="d-flex flex-md-row flex-column flex-fill">
+                <!-- <div class="d-flex flex-md-row flex-column flex-fill">
                     <div class="col-md-8">
                         <h5>Branch Wise Present & Absent</h5>
                         <canvas id="myChart"></canvas>
@@ -37,6 +37,9 @@
                         <h5>Present & Absent</h5>
                         <canvas id="myChart_2"></canvas>
                     </div>
+                </div> -->
+                <div class="text-center">
+                    <h1>WELCOME!</h1>
                 </div>
 
 
@@ -53,7 +56,7 @@
     <script src="<?= PROJECT_PATH ?>/src/assets/libs/apexcharts/dist/apexcharts.min.js"></script>
     <script src="<?= PROJECT_PATH ?>/src/assets/libs/simplebar/dist/simplebar.js"></script>
     <script src="<?= PROJECT_PATH ?>/src/assets/js/dashboard.js"></script>
-<script src="home-function.js"></script>
+    <script src="home-function.js"></script>
 </body>
 
 </html>

@@ -140,10 +140,10 @@
                                             </div>
                                         </div>
                                         <div class="col-md-4">
-                                            <label class="form-label machine_manufac_year" for="machine_manufac_year">Year Of Manufacture</label>
-                                            <!-- <input name="machine_manufac_year" id="machine_manufac_year" class="form-control" required> -->
+                                            <label class="form-label machine_manufac_year" for="machine_manufac_year">Year Of Manufacture (month,year)</label>
+                                            <input type="month" name="machine_manufac_year" id="machine_manufac_year" class="form-control" required>
 
-                                            <select name="machine_manufac_year" id="machine_manufac_year" class="form-control" required>
+                                            <!-- <select name="machine_manufac_year" id="machine_manufac_year" class="form-control" required>
                                                 <?php
                                                 // Assuming you want a range of years, for example, from 2020 to 2030
                                                 $startYear = date('Y') - 72;
@@ -153,7 +153,7 @@
                                                     echo "<option value=\"$year\">$year</option>";
                                                 }
                                                 ?>
-                                            </select>
+                                            </select> -->
 
                                             <div class="invalid-feedback">
                                                 Please enter manufacture year.
@@ -491,8 +491,8 @@
                                             <th>Status</th>
                                             <th>Entry</th>
                                             <?php if ($search_status != 1) { ?>
-                                                <th>Edit</th>
-                                                <th>Delete</th>
+                                                <!-- <th>Edit</th> -->
+                                                <!-- <th>Delete</th> -->
                                             <?php } else { ?>
                                                 <th>View</th>
                                                 <th>Undo </th>
@@ -511,12 +511,12 @@
                                                     <td><?= $value['machine_active_status'] ?></td>
                                                     <td><i class="bi bi-plus-circle-fill fs-6" style="cursor: pointer;color:blue;" onclick="location.href='../machine-details/index.php?type=<?= isset($_REQUEST['type']) ? $_REQUEST['type'] : '' ?>&id=<?= $value['machine_id'] ?>'"></i></td>
                                                     <?php if ($search_status != 1) { ?>
-                                                        <td>
+                                                        <!-- <td>
                                                             <i class="bi bi-pencil-square fs-6" style="cursor: pointer;color:blue;" onclick="location.href='index.php?page=edit&machine_id=<?= $value['machine_id']; ?>'"></i>
-                                                        </td>
-                                                        <td>
+                                                        </td> -->
+                                                        <!-- <td>
                                                             <span data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="delete_record(<?= $value['machine_id']; ?>,'delete');"><i class="bi bi-trash fs-6" style="cursor: pointer;color:red"></i></span>
-                                                        </td>
+                                                        </td> -->
                                                     <?php } else { ?>
                                                         <td>
                                                             <i class="bi bi-eye fs-6" style="cursor: pointer;color:blue;" onclick="location.href='index.php?page=edit&machine_id=<?= $value['machine_id']; ?>'"></i>

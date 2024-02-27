@@ -52,11 +52,15 @@
                             <li class="breadcrumb-item active">Autonomous Weekly</li>
                         </ol>
                     </nav>
-                    <small class="text-muted float-end">Add Autonomous-Weekly</small>
+
                 </div>
                 <?php if (isset($_REQUEST['page']) && $_REQUEST['page'] == 'add') { ?>
                     <div class="col-lg-12 d-flex align-items-strech">
                         <div class="card w-100">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0"><?= $machine['machine_name'] ?></h5>
+                                <small class="text-muted float-end">Add Autonomous Daily</small>
+                            </div>
                             <div class="card-body">
                                 <form action="index.php" method="POST" name="autonomous_form" id="autonomous_form" autocomplete="off" class="needs-validation" enctype="multipart/form-data" novalidate>
                                     <div class="row">

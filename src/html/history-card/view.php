@@ -48,7 +48,7 @@
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/home/">Home</a></li>
                             <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/machine/index.php?type=<?= isset($_REQUEST['type']) ? $_REQUEST['type'] : '' ?>">Machine</a></li>
-                            <li class=" breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/machine-details/index.php?id=<?= $machine['machine_id'] ?>"><?= $machine['machine_name'] ?></a></li>
+                            <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/machine-details/index.php?type= <?= isset($_REQUEST['type']) ? $_REQUEST['type'] : '' ?>&m_id=<?= $machine['machine_id'] ?>"><?= $machine['machine_name'] ?></a></li>
                             <li class="breadcrumb-item active">historycard</li>
                         </ol>
                     </nav>

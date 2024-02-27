@@ -48,7 +48,7 @@
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/home/">Home</a></li>
                             <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/machine/">Machine</a></li>
-                            <li class=" breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/machine-details/index.php?id=<?= $machine['machine_id'] ?>"><?= $machine['machine_name'] ?></a></li>
+                            <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/machine-details/index.php?type= <?= isset($_REQUEST['type']) ? $_REQUEST['type'] : '' ?>&m_id=<?= $machine['machine_id'] ?>"><?= $machine['machine_name'] ?></a></li>
                             <li class="breadcrumb-item active">Breakdown</li>
                         </ol>
                     </nav>
@@ -252,9 +252,7 @@
                                         </div>
 
                                         <div class="col-md-4">
-                                            <input id="datetimepicker" type="text">
-
-                                            <!-- <label class="form-label downtime_from" for="downtime_from">Downtime - From</label> -->
+                                            <label class="form-label downtime_from" for="downtime_from">Downtime - From</label>
                                             <input type="datetime-local" name="downtime_from" id="downtime_from" class="form-control " value="<?= date('Y-m-d', strtotime($edit_breakdown['year_breakdown_downtime_from'])) . 'T' . date('H:i', strtotime($edit_breakdown['year_breakdown_downtime_from'])) ?>" required>
                                             <div class="invalid-feedback">
                                                 Please enter From Downtime Date.
