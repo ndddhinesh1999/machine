@@ -72,7 +72,7 @@
                                         foreach ($actively_details as $actively) { ?>
                                             <div class="accordion-item">
                                                 <h2 class="accordion-header" id="heading<?= $i ?>">
-                                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?= $i ?>" aria-expanded="true" aria-controls="collapse<?= $i ?>">
+                                                    <button class="accordion-button" type="button" id="expand_<?= $i ?>" data-bs-toggle="collapse" data-bs-target="#collapse<?= $i ?>" aria-expanded="true" aria-controls="collapse<?= $i ?>">
                                                         <?php echo $actively['activity_name'];
                                                         $record = $actively['details']; ?>
                                                     </button>
@@ -130,6 +130,7 @@
                                                         <?php $j++;
                                                         }
                                                         ?>
+                                                          <button type="button" class="btn btn-primary mt-3" onclick="$('#expand_<?= $i+1 ?>').click()">Next</button>
                                                     </div>
                                                     <!-- <div class="accordion-footer d-flex justify-content-center gap-3 mb-2" style="background-color: #dfe7ff;padding: 10px;">
                                                         <input type="reset" class="btn btn-secondary">
@@ -137,6 +138,7 @@
                                                     </div> -->
                                                     <!-- </form> -->
                                                 </div>
+                                                
                                             </div><br>
                                         <?php $i++;
                                         }
@@ -355,7 +357,7 @@
             </div>
         </div>
     </div>
-
+ 
     <?php if (isset($_REQUEST['msg'])) { ?>
         <script>
             function show_alert() {
