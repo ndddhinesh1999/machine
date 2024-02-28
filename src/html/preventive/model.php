@@ -51,7 +51,7 @@ function CreateData()
                               preventive_uniq_id              = '" . $uniq_id . "',
                               preventive_machine_id           = '" . $machine_id . "',
                               preventive_activity_detail_id   = '" . $activity_detail . "',
-                              preventives_main_id             = '" . $main_id . "'
+                              preventives_main_id             = '" . $main_id . "',
                               preventive_before_text          ='" . $remark . "' ,
                               preventive_before_file          ='" . $before_image . "' ,
                               preventive_after_file           ='" . $after_image . "' ,

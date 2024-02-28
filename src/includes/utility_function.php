@@ -172,7 +172,9 @@ function machine_detail()
 	} else {
 		$where = "";
 	}
-	$select = "SELECT * FROM machines WHERE machine_deleted_status = '0' $where";
+	$select = "SELECT * FROM machines 
+	LEFT JOIN company ON company_id =machine_company_id
+	WHERE machine_deleted_status = '0' AND  company_id ='" . $_SESSION[SESS . 'session_admin_users_company_id'] . "'  $where";
 	list($row, $result) = selectRows($select);
 	$array = array();
 	$i = 0;
@@ -195,6 +197,38 @@ function machine_detail()
 	}
 	return $array;
 }
+
+
+function machine_type_detail()
+{
+
+	if (isset($_REQUEST['type']) && !empty($_REQUEST['type']) ? $_REQUEST['type'] : '') {
+		$where = "AND category_id  ='" . $_REQUEST['type'] . "'";
+	} else {
+		$where = "";
+	}
+	$select = "SELECT * FROM categorys 
+	LEFT JOIN company ON company_id =category_company_id
+	WHERE category_deleted_status = '0' AND  company_id ='" . $_SESSION[SESS . 'session_admin_users_company_id'] . "' $where";
+	list($row, $result) = selectRows($select);
+	$array = array();
+	$i = 0;
+	if ($row > 1) {
+
+		foreach ($result as $record) {
+			$array[$i]['category_id '] = $record['category_id '];
+			$array[$i]['category_name'] = $record['category_name'];
+			$i++;
+		}
+	} else {
+		foreach ($result as $record) {
+			$array['category_id'] = $record['category_id'];
+			$array['category_name'] = $record['category_name'];
+		}
+	}
+	return $array;
+}
+
 function companyDetails()
 {
 	return array('name' => 'GLOBE COMPONENTS (P) LTD', 'address' => 'CHENNAI -58', 'logo' => '../../assets/images/logos/gc.jpeg');

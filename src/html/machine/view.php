@@ -42,14 +42,16 @@
             <?php include '../../includes/header.php'; ?>
 
             <div class="container-fluid">
-                <div class="page-title">
-                    <h1>Machine</h1>
-                    <nav>
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/home/">Home</a></li>
-                            <li class="breadcrumb-item active">Machine</li>
-                        </ol>
-                    </nav>
+                <div class="d-flex justify-content-between">
+                    <div class="page-title">
+                        <nav>
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/home/">Home</a></li>
+                                <li class="breadcrumb-item active">Machine</li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <h3>Machine</h3>
                 </div>
                 <?php if (isset($_REQUEST['page']) && $_REQUEST['page'] == 'add') { ?>
                     <div class="col-lg-12 d-flex align-items-strech">
@@ -82,9 +84,10 @@
                                             <label class="form-label machine_name" for="machine_name">Machine Type</label>
                                             <?php if (isset($_REQUEST['type']) && !empty($_REQUEST['type'])) { ?>
 
-                                                <input type="text" name="machine_type" id="machine_tpe" class="form-control" required value=" <?= $_REQUEST['type'] ?>" readonly>
+                                                <input type="text" name="machine_type_name" id="machine_type_name" class="form-control" required value=" <?= $machine_type_detail['category_name'] ?>" readonly>
+                                                <input type="hidden" name="machine_type" id="machine_type" class="form-control" required value=" <?= $machine_type_detail['category_id'] ?>" readonly>
                                             <?php      } else { ?>
-                                                <select name="machine_type" id="machine_tpe" class="form-select" required aria-readonly="readonly">
+                                                <select name="machine_type" id="machine_type" class="form-select" required aria-readonly="readonly">
                                                     <option value="">SELECT</option>
                                                     <?php foreach ($category as $get_data) { ?>
                                                         <option value="<?= $get_data['category_id'] ?>" <?= (isset($_REQUEST['type']) && $_REQUEST['type'] == $get_data['category_id']) ? 'selected' : '' ?>><?= $get_data['category_name'] ?></option>

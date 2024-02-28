@@ -42,25 +42,24 @@
             <?php include '../../includes/header.php'; ?>
 
             <div class="container-fluid">
-                <div class="d-flex justify-content-between">
-                    <div class="page-title">
-                        <nav>
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/home/">Home</a></li>
-                                <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/machine/index.php?type=<?= isset($_REQUEST['type']) ? $_REQUEST['type'] : '' ?>">Machine</a></li>
-                                <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/machine-details/index.php?type= <?= isset($_REQUEST['type']) ? $_REQUEST['type'] : '' ?>&m_id=<?= $machine['machine_id'] ?>"><?= $machine['machine_name'] ?></a></li>
-                                <li class="breadcrumb-item active">Autonomous Weekly</li>
-                            </ol>
-                        </nav>
-                    </div>
-                    <h4>Autonomous Weekly</h4>
+                <div class="page-title">
+                    <h1>Autonomous Weekly</h1>
+                    <nav>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/home/">Home</a></li>
+                            <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/machine/index.php?type=<?= isset($_REQUEST['type']) ? $_REQUEST['type'] : '' ?>">Machine</a></li>
+                            <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/machine-details/index.php?type= <?= isset($_REQUEST['type']) ? $_REQUEST['type'] : '' ?>&m_id=<?= $machine['machine_id'] ?>"><?= $machine['machine_name'] ?></a></li>
+                            <li class="breadcrumb-item active">Autonomous Weekly</li>
+                        </ol>
+                    </nav>
+
                 </div>
                 <?php if (isset($_REQUEST['page']) && $_REQUEST['page'] == 'add') { ?>
                     <div class="col-lg-12 d-flex align-items-strech">
                         <div class="card w-100">
                             <div class="card-header d-flex justify-content-between align-items-center">
                                 <h5 class="mb-0"><?= $machine['machine_name'] ?></h5>
-                                <small class="text-muted float-end">Add Autonomous Weekly</small>
+                                <small class="text-muted float-end">Add Autonomous Daily</small>
                             </div>
                             <div class="card-body">
                                 <form action="index.php" method="POST" name="autonomous_form" id="autonomous_form" autocomplete="off" class="needs-validation" enctype="multipart/form-data" novalidate>
@@ -80,7 +79,7 @@
                                             </div>
 
                                         <?php    } ?>
-                                        <!-- <div class="col-md-4">
+                                        <div class="col-md-4">
                                             <label class="form-label machine_name" for="machine_name">Machine Name</label>
                                             <input name="machine_name" id="machine_name" class="form-control" value="<?= $machine['machine_name'] ?>" ; required readonly>
                                             <input type="hidden" name="machine_id" id="machine_id" class="form-control" value="<?= $machine['machine_id'] ?>" required readonly>
@@ -88,7 +87,7 @@
                                             <div class="invalid-feedback">
                                                 Please enter Machine Name.
                                             </div>
-                                        </div> -->
+                                        </div>
                                         <div class="col-md-2">
                                             <label class="form-label autonomous_date" for="autonomous_date">Date</label>
                                             <input name="autonomous_date" id="autonomous_date" value="<?= date('d/m/Y') ?>" class="form-control datepicker" required>
@@ -130,7 +129,7 @@
                                                 </div>
 
                                                 <div class="col-md-3">
-                                                    <textarea name="autonomous_remark[]" id="autonomous_remark" class="form-control" rows="2"></textarea>
+                                                    <textarea name="autonomous_remark[]" id="autonomous_remark" class="form-control" rows="2"> </textarea>
 
                                                     <div class="invalid-feedback">
                                                         Please enter autonomous remark.
@@ -175,8 +174,8 @@
                     <div class="col-lg-12 d-flex align-items-strech">
                         <div class="card w-100">
                             <div class="card-header d-flex justify-content-between align-items-center">
-                                <h5 class="mb-0"><?= $machine['machine_name'] ?></h5>
-                                <small class="text-muted float-end">Edit</small>
+                                <h5 class="mb-0">autonomous Details</h5>
+                                <small class="text-muted float-end">Edit autonomous</small>
                             </div>
 
                             <div class="card-body">
@@ -243,7 +242,7 @@
                                                         <?php $required = empty($get_data['before_image']) ? 'required' : '' ?>
                                                         <input type="file" name="before_images[]" id="before_images" class="form-control" value="<?= $get_data['before_image'] ?>" $required>
                                                         <div class="invalid-feedback">
-                                                            Please choose Before Images.
+                                                            Please choose before_images.
                                                         </div>
                                                         <br>
                                                         <img class="preview-trigger" style="width: 30px;" src="<?= PROJECT_PATH . 'src/' . $get_data['before_image'] ?>" alt="Image Preview" onclick="beforeImage(<?= $get_data['label_id'] ?>);">
@@ -259,7 +258,7 @@
                                                         <?php $required = empty($get_data['after_image']) ? 'required' : '' ?>
                                                         <input type="file" name="after_image[]" id="after_image" class="form-control" value="<?= $get_data['after_image'] ?>" $required>
                                                         <div class="invalid-feedback">
-                                                            Please choose After Images.
+                                                            Please choose before_images.
                                                         </div>
                                                         <br>
                                                         <img class="preview-trigger" style="width: 30px;" src="<?= PROJECT_PATH . 'src/' . $get_data['after_image'] ?>" alt="Image Preview" onclick="AfterImage(<?= $get_data['label_id'] ?>);">
@@ -294,8 +293,6 @@
 
                     <?php
                     $autonomous_name = isset($_REQUEST['search_autonomous_name']) ? $_REQUEST['search_autonomous_name'] : '';
-                    $from_date = isset($_REQUEST['from_date']) ? $_REQUEST['from_date'] : '';
-                    $to_date = isset($_REQUEST['to_date']) ? $_REQUEST['to_date'] : '';
                     $search_status = isset($_REQUEST['autonomous_search_status']) ? $_REQUEST['autonomous_search_status'] : '';
                     $company_id = isset($_REQUEST['search_company_id']) ? $_REQUEST['search_company_id'] : '';
 
@@ -305,62 +302,39 @@
                     <div class="col-xl">
                         <div class="card mb-4">
                             <form action="index.php" method="POST" name="autonomous_form" id="autonomous_form" autocomplete="off">
-                                <!-- <div class="card-body container-bg">
-                                    <div class="form-group d-flex flex-column flex-md-row flex-wrap align-items-md-end justify-content-center gap-3"> -->
-                                <?php if ($_SESSION[SESS . 'session_admin_users_level'] == 'admin') { ?>
-                                    <div class="flex-column col-md-3">
-                                        <label class="form-label" for="search_company_id">Company</label>
-                                        <select name="search_company_id" id="search_company_id" class="form-select">
-                                            <option value="">-Select-</option>
-                                            <?php foreach ($listCompany as $data) { ?>
-                                                <option value="<?= $data['company_id']; ?>" <?= ($company_id == $data['company_id']) ? 'selected' : '' ?>><?= $data['company_code'] . ' - ' . $data['company_name']; ?></option>
-                                            <?php    } ?>
-                                        </select>
-                                    </div>
-                                <?php } ?>
-
-
-                                <!-- <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Toggle right offcanvas</button> -->
-
-                                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-                                    <div class="offcanvas-header">
-                                        <h5 id="offcanvasRightLabel">Filler</h5>
-                                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                                    </div>
-                                    <div class="offcanvas-body">
-                                        <div class="row">
-
-                                            <div class="col-md-6">
-                                                <label class="form-label" for="search_from_date">From Date </label>
-                                                <input type="text" name="from_date" id="from_date" class="form-control datepicker" placeholder="DD/MM/YYYY" value="<?= $from_date ?>" />
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label class="form-label" for="search_to_date">To Date </label>
-                                                <input type="text" name="to_date" id="to_date" class="form-control datepicker" placeholder="DD/MM/YYYY" value="<?= $to_date ?>" />
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label class="form-label" for="search_autonomous_name">Label</label>
-                                                <input type="text" name="search_autonomous_name" id="search_autonomous_name" class="form-control " value="<?= $autonomous_name ?>" />
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label class="form-label" for="autonomous_search_status">Status</label>
-                                                <select name="autonomous_search_status" id="autonomous_search_status" class="form-select">
-                                                    <option value="active" <?php if ($search_status == 'active') { ?>selected <?php } ?>>Active</option>
-                                                    <option value="inactive" <?php if ($search_status == 'inactive') { ?>selected <?php } ?>>In Active</option>
-                                                    <option value="1" <?php if ($search_status == '1') { ?>selected <?php } ?>>Deleted</option>
+                                <div class="card-body container-bg">
+                                    <div class="form-group d-flex flex-column flex-md-row flex-wrap align-items-md-end justify-content-center gap-3">
+                                        <?php if ($_SESSION[SESS . 'session_admin_users_level'] == 'admin') { ?>
+                                            <div class="flex-column col-md-3">
+                                                <label class="form-label" for="search_company_id">Company</label>
+                                                <select name="search_company_id" id="search_company_id" class="form-select">
+                                                    <option value="">-Select-</option>
+                                                    <?php foreach ($listCompany as $data) { ?>
+                                                        <option value="<?= $data['company_id']; ?>" <?= ($company_id == $data['company_id']) ? 'selected' : '' ?>><?= $data['company_code'] . ' - ' . $data['company_name']; ?></option>
+                                                    <?php    } ?>
                                                 </select>
                                             </div>
-                                        </div><br>
+                                        <?php } ?>
+
+                                        <div class="flex-column col-md-3">
+                                            <label class="form-label" for="search_autonomous_name">autonomous Name </label>
+                                            <input type="text" name="search_autonomous_name" id="search_autonomous_name" class="form-control" value="<?= $autonomous_name ?>" />
+                                        </div>
+                                        <div class="flex-column col-md-3">
+                                            <label class="form-label" for="autonomous_search_status">Status</label>
+                                            <select name="autonomous_search_status" id="autonomous_search_status" class="form-select">
+                                                <option value="active" <?php if ($search_status == 'active') { ?>selected <?php } ?>>Active</option>
+                                                <option value="inactive" <?php if ($search_status == 'inactive') { ?>selected <?php } ?>>In Active</option>
+                                                <option value="1" <?php if ($search_status == '1') { ?>selected <?php } ?>>Deleted</option>
+                                            </select>
+                                        </div>
+
                                         <div class="d-flex justify-content-center gap-2">
                                             <input name="search" type="submit" class="btn btn-primary" id="search" value="Search" title="Search" />
                                             <input name="view_all" type="button" class="btn btn-success" id="view_all" onclick="location.href='index.php'" title="Display All" value="Display All" />
                                         </div>
                                     </div>
                                 </div>
-
-
-                                <!-- </div>
-                                </div> -->
                             </form>
                         </div>
                     </div>
@@ -368,12 +342,9 @@
 
 
                     <div class="card p-2">
-                        <div class="d-flex justify-content-between">
-                            <!-- <button class="btn btn-primary mx-2 my-2" onclick="location.href='index.php?page=add'">Add</button> -->
-                            <button class="btn btn-danger mx-2 my-2" title="PDF" onclick="location.href='pdf.php?from_date=<?= $from_date ?>&to_date=<?= $to_date ?>'"><i class="bi bi-file-pdf"></i>PDF</button>
-                            <button class="btn btn-dark mx-2 my-2" title="Filter" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class="bi bi-filter-left"></i>Filter</button>
+                        <div class="d-flex justify-content-end">
+                            <button class="btn btn-primary mx-2 my-2" onclick="location.href='index.php?page=add'">Add</button>
                         </div>
-
                         <div class="table-responsive text-nowrap">
                             <form action="index.php" method="POST" name="autonomous_form" id="autonomous_form" autocomplete="off">
                                 <table id="example" class="table table-striped" style="width:100%">
@@ -497,7 +468,6 @@
     <script src="<?= PROJECT_PATH ?>/src/assets/jquery/jquery-ui.js"></script>
     <script src="<?= PROJECT_PATH ?>/src/assets/DataTable/datatables.min.js"></script>
     <script src="autonomous-function.js"></script>
-    <script src="../../assets/js/from-to-date.js"></script>
 
     <?php
 
