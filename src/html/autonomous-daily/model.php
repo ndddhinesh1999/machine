@@ -39,9 +39,7 @@ function listautonomous()
 {
     // Search tds record form database table
     $where = " WHERE autonomous_id > 0 ";
-    // echo "<pre>";
-    // print_r($_REQUEST);
-    // exit;
+
     if ($_SESSION[SESS . 'session_admin_users_level'] == 'admin') {
         $where .= " AND autonomous_id  > 0 ";
     } else if ($_SESSION[SESS . 'session_admin_users_level'] == 'company') {
@@ -53,6 +51,9 @@ function listautonomous()
     }
     if (!empty($_REQUEST['from_date']) && !empty($_REQUEST['to_date'])) {
         $where .= " AND  autonomous_date BETWEEN '" . dateDatabaseFormat($_REQUEST['from_date']) . "'  AND '" . dateDatabaseFormat($_REQUEST['to_date']) . "'";
+    }
+    if (!empty($_REQUEST['m_id']) && !empty($_REQUEST['m_id'])) {
+        $where .= " AND  autonomous_machine_id = '" . $_REQUEST['m_id'] . "'";
     }
 
     if (!empty($_REQUEST['search_company_id'])) {
@@ -72,7 +73,6 @@ function listautonomous()
     }
 
     $select = "SELECT * FROM autonomous $where AND autonomous_type ='1' GROUP BY autonomous_date ORDER BY autonomous_id DESC ";
-
     list($count, $result) = selectRows($select);
     return $result;
 }
@@ -175,7 +175,7 @@ function editautonomous()
                  LEFT JOIN autonomous_detail ON autonomous_detail_autonomous_id =autonomous_id 
                  WHERE  autonomous_detail_deleted_status = 0  AND       autonomous_type ='1'
                  AND autonomous_id ='" . $_GET['autonomous_id'] . "' AND autonomous_deleted_status=0";
-                 
+
         list($count, $result) = selectRow($edit);
 
         if ($count > 0) {
@@ -293,9 +293,7 @@ function updateautonomous()
 
 function pdfList()
 {
-    // echo "<pre>";
-    // print_r($_REQUEST);
-    // exit;
+
 
     $where = "";
     if (isset($_REQUEST['from_date']) && isset($_REQUEST['to_date']) && !empty($_REQUEST['from_date'])  && !empty($_REQUEST['to_date'])) {
@@ -304,7 +302,7 @@ function pdfList()
 
     $select = "SELECT * FROM  autonomous  
                  LEFT JOIN machines ON machine_id = autonomous_machine_id
-                 WHERE  autonomous_deleted_status=0 $where ORDER BY autonomous_date ASC";
+                 WHERE  autonomous_deleted_status=0  AND  autonomous_type ='1' $where ORDER BY autonomous_date ASC";
 
     list($count, $record) = selectRows($select);
 

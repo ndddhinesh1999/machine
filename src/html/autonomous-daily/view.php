@@ -83,12 +83,13 @@
                                         <!-- <div class="col-md-4">
                                             <label class="form-label machine_name" for="machine_name">Machine Name</label>
                                             <input name="machine_name" id="machine_name" class="form-control" value="<?= $machine['machine_name'] ?>" ; required readonly>
-                                            <input type="hidden" name="machine_id" id="machine_id" class="form-control" value="<?= $machine['machine_id'] ?>" required readonly>
+                                           
 
                                             <div class="invalid-feedback">
                                                 Please enter Machine Name.
                                             </div>
                                         </div> -->
+                                        <input type="hidden" name="machine_id" id="machine_id" class="form-control" value="<?= $machine['machine_id'] ?>" required readonly>
                                         <div class="col-md-2">
                                             <label class="form-label autonomous_date" for="autonomous_date">Date</label>
                                             <input name="autonomous_date" id="autonomous_date" value="<?= date('d/m/Y') ?>" class="form-control datepicker" required>
@@ -164,7 +165,7 @@
                                         <input type="hidden" name="autonomous_status" id="autonomous_status" value="">
                                         <input name="add_autonomous" type="submit" class="btn btn-primary" id="add_autonomous" value="Save" title="Save" />
                                         <input type="reset" value="Reset" class="btn btn-outline-secondary" title="Reset" />
-                                        <input type="button" value="Back" class="btn btn-secondary" onclick="location.href='index.php'" title="Back">
+                                        <input type="button" value="Back" class="btn btn-secondary" onclick="location.href='<?= PROJECT_PATH ?>src/html/machine-details/index.php?type= <?= isset($_REQUEST['type']) ? $_REQUEST['type'] : '' ?>&m_id=<?= $machine['machine_id'] ?>'" title="Back">
                                     </div>
                                 </form>
                             </div>
@@ -298,6 +299,7 @@
                     $to_date = isset($_REQUEST['to_date']) ? $_REQUEST['to_date'] : '';
                     $search_status = isset($_REQUEST['autonomous_search_status']) ? $_REQUEST['autonomous_search_status'] : '';
                     $company_id = isset($_REQUEST['search_company_id']) ? $_REQUEST['search_company_id'] : '';
+                    $m_id = isset($_REQUEST['m_id']) ? $_REQUEST['m_id'] : '';
 
                     ?>
 
@@ -350,6 +352,7 @@
                                                     <option value="1" <?php if ($search_status == '1') { ?>selected <?php } ?>>Deleted</option>
                                                 </select>
                                             </div>
+                                            <input type="hidden" name="m_id" id="m_id" class="form-control " value="<?= $m_id ?>" />
                                         </div><br>
                                         <div class="d-flex justify-content-center gap-2">
                                             <input name="search" type="submit" class="btn btn-primary" id="search" value="Search" title="Search" />

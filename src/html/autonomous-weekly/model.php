@@ -39,9 +39,7 @@ function listautonomous()
 {
     // Search tds record form database table
     $where = " WHERE autonomous_id > 0 ";
-    // echo "<pre>";
-    // print_r($_REQUEST);
-    // exit;
+
     if ($_SESSION[SESS . 'session_admin_users_level'] == 'admin') {
         $where .= " AND autonomous_id  > 0 ";
     } else if ($_SESSION[SESS . 'session_admin_users_level'] == 'company') {
@@ -55,6 +53,9 @@ function listautonomous()
         $where .= " AND  autonomous_date BETWEEN '" . dateDatabaseFormat($_REQUEST['from_date']) . "'  AND '" . dateDatabaseFormat($_REQUEST['to_date']) . "'";
     }
 
+    if (!empty($_REQUEST['m_id']) && !empty($_REQUEST['m_id'])) {
+        $where .= " AND  autonomous_machine_id = '" . $_REQUEST['m_id'] . "'";
+    }
     if (!empty($_REQUEST['search_company_id'])) {
         $where .= " AND autonomous_company_id  = '" . $_REQUEST['search_company_id'] . "'  ";
     }
@@ -81,6 +82,8 @@ function selectLabel()
 {
     $select = "SELECT * FROM autonomou_lables WHERE autonomou_lable_deleted_status=0
     AND autonomou_lable_type='2'";
+    // echo $select;
+    // exit;
     list($rows, $results) = selectRows($select);
 
     return $results;
@@ -293,9 +296,7 @@ function updateautonomous()
 
 function pdfList()
 {
-    // echo "<pre>";
-    // print_r($_REQUEST);
-    // exit;
+
 
     $where = "";
     if (isset($_REQUEST['from_date']) && isset($_REQUEST['to_date']) && !empty($_REQUEST['from_date'])  && !empty($_REQUEST['to_date'])) {
@@ -304,7 +305,7 @@ function pdfList()
 
     $select = "SELECT * FROM  autonomous  
                  LEFT JOIN machines ON machine_id = autonomous_machine_id
-                 WHERE  autonomous_deleted_status=0 $where ORDER BY autonomous_date ASC";
+                 WHERE  autonomous_deleted_status=0 AND  autonomous_type ='2' $where ORDER BY autonomous_date ASC";
 
     list($count, $record) = selectRows($select);
 

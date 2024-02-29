@@ -39,7 +39,7 @@ $stylesheet = file_get_contents(PROJECT_PATH."/src/assets/css/pdf-table-style.cs
 ob_end_clean();
 $mpdf->WriteHTML($stylesheet, \Mpdf\HTMLParserMode::HEADER_CSS);
 $mpdf->WriteHTML($template, \Mpdf\HTMLParserMode::HTML_BODY);
-$mpdf->Output($file_name . date("d/m/Y") . '.pdf', 'I');
+$mpdf->Output($file_name . date("d/m/Y") . '.pdf', 'D');
 
 // $mpdf->WriteHTML('Hello World');
 

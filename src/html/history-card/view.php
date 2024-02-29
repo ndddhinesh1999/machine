@@ -143,12 +143,12 @@
                                         <input type="hidden" name="historycard_status" id="historycard_status" value="">
                                         <input name="add_historycard" type="submit" class="btn btn-primary" id="add_historycard" value="Save" title="Save" />
                                         <input type="reset" value="Reset" class="btn btn-outline-secondary" title="Reset" />
-                                        <input type="button" value="Back" class="btn btn-secondary" onclick="location.href='index.php'" title="Back">
+                                        <input type="button" value="Back" class="btn btn-secondary" onclick="location.href='<?= PROJECT_PATH ?>src/html/machine-details/index.php?type= <?= isset($_REQUEST['type']) ? $_REQUEST['type'] : '' ?>&m_id=<?= $machine['machine_id'] ?>'" title="Back">
                                     </div>
-                                    <div class="mt-5 d-flex justify-content-between gap-3">
+                                    <!-- <div class="mt-5 d-flex justify-content-between gap-3">
                                         <input type="button" value="< Preventive" class="btn btn-warning" onclick="location.href='../preventive/index?page=add'" title="Preventive">
                                         <input type="button" value="History Card >" class="btn btn-success" onclick="location.href='../history_card/index?page=add'" title="History Card">
-                                    </div>
+                                    </div> -->
                                 </form>
                             </div>
                         </div>

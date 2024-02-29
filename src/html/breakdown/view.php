@@ -192,7 +192,7 @@
                                         <input type="hidden" name="breakdown_status" id="breakdown_status" value="">
                                         <input name="add_breakdown" type="submit" class="btn btn-primary" id="add_breakdown" value="Save" title="Save" />
                                         <input type="reset" value="Reset" class="btn btn-outline-secondary" title="Reset" />
-                                        <input type="button" value="Back" class="btn btn-secondary" onclick="location.href='index.php'" title="Back">
+                                        <input type="button" value="Back" class="btn btn-secondary" onclick="location.href='<?= PROJECT_PATH ?>src/html/machine-details/index.php?type= <?= isset($_REQUEST['type']) ? $_REQUEST['type'] : '' ?>&m_id=<?= $machine['machine_id'] ?>'" title="Back">
                                     </div>
                                 </form>
                             </div>

@@ -70,6 +70,7 @@
                                         // echo "<pre>";
                                         // print_r($actively_details);
                                         // exit;
+
                                         foreach ($actively_details as $actively) { ?>
                                             <div class="accordion-item">
                                                 <h2 class="accordion-header" id="heading<?= $i ?>">
@@ -128,8 +129,16 @@
                                                             </div>
                                                         <?php $j++;
                                                         }
+                                                        if (count($actively_details) != $i) {
                                                         ?>
-                                                        <button type="button" class="btn btn-primary mt-3" onclick="$('#expand_<?= $i + 1 ?>').click(),valid_function(<?= $i  ?> )">Next</button>
+                                                            <div class="d-flex justify-content-end">
+                                                                <button type="button" class="btn btn-primary mt-3" onclick="$('#expand_<?= $i + 1 ?>').click(),valid_function(<?= $i  ?> )">Next</button>
+                                                            </div>
+                                                        <?php } else { ?>
+                                                            <div class="d-flex justify-content-end">
+                                                                <button type="button" class="btn btn-primary mt-3" onclick="$('#expand_<?= $i?>').click(),valid_function(<?= $i  ?> )">Finish</button>
+                                                            </div>
+                                                        <?php } ?>
                                                     </div>
                                                     <!-- <div class="accordion-footer d-flex justify-content-center gap-3 mb-2" style="background-color: #dfe7ff;padding: 10px;">
                                                         <input type="reset" class="btn btn-secondary">
@@ -148,7 +157,7 @@
                                     <input type="hidden" name="department_status" id="department_status" value="">
                                     <input name="save" type="submit" class="btn btn-primary" id="save" value="Save" title="Save" />
                                     <input type="reset" value="Reset" class="btn btn-outline-secondary" title="Reset" />
-                                    <input type="button" value="Back" class="btn btn-secondary" onclick="location.href='index.php'" title="Back">
+                                    <input type="button" value="Back" class="btn btn-secondary" onclick="location.href='<?= PROJECT_PATH ?>src/html/machine-details/index.php?type= <?= isset($_REQUEST['type']) ? $_REQUEST['type'] : '' ?>&m_id=<?= $machine['machine_id'] ?>'" title="Back">
                                 </div>
                                 </form>
                             </div>
@@ -340,7 +349,7 @@
                 $('#expand_' + id).removeClass('bg-secondary');
                 $('#expand_' + id).addClass('bg-success');
             }
-            
+
         }
     </script>
     <?php if (isset($_REQUEST['msg'])) { ?>

@@ -20,7 +20,7 @@ function listCompany()
 
 function listBranch()
 {
-    Category
+
     $where = "WHERE branch_deleted_status = 0 ";
 
     if ($_SESSION[SESS . 'session_admin_users_level'] == 'admin') {

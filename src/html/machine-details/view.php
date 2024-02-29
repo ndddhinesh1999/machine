@@ -160,7 +160,7 @@
                                             <th>S No.</th>
                                             <th>Title</th>
                                             <th>Last Entry Date</th>
-                                            <!-- <th>Details</th> -->
+                                            <th>Report</th>
                                             <th> Entry</th>
 
                                         </tr>
@@ -177,7 +177,7 @@
                                                     <td><?= $sno++; ?></td>
                                                     <td><?= $value ?></td>
                                                     <td>2024/01/11</td>
-                                                    <!-- <td><i class="bi bi-pencil-square" style="cursor: pointer;color:blue;" onclick="location.href='../<?= $value ?>/index.php?type=<?= $_REQUEST['type'] ?>&m_id=<?= $machine['machine_id'] ?>"></i></td> -->
+                                                    <td><i class="bi bi-pencil-square fs-7" style="cursor: pointer;color:blue;" onclick="location.href='../<?= $value ?>/index.php?type=<?= $_REQUEST['type'] ?>&m_id=<?= $machine['machine_id'] ?>'"></i></td>
                                                     <td><i class="bi bi-plus-circle-fill fs-7" style="cursor: pointer;color:blue;" onclick="location.href='../<?= $value ?>/index.php?page=add&type=<?= $_REQUEST['type'] ?>&m_id=<?= $machine['machine_id'] ?>'"></i></td>
                                                 </tr>
                                         <?php }
