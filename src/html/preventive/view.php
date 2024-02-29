@@ -62,7 +62,7 @@
                                         foreach ($actively_details as $actively) { ?>
                                             <div class="accordion-item">
                                                 <h2 class="accordion-header" id="heading<?= $i ?>">
-                                                    <button class="accordion-button" type="button" id="expand_<?= $i ?>" data-bs-toggle="collapse" data-bs-target="#collapse<?= $i ?>" aria-expanded="true" aria-controls="collapse<?= $i ?>">
+                                                    <button class="accordion-button bg-secondary text-white" type="button" onclick="valid_function(<?= $i ?>)" id="expand_<?= $i ?>" data-bs-toggle="collapse" data-bs-target="#collapse<?= $i ?>" aria-expanded="true" aria-controls="collapse<?= $i ?>">
                                                         <?php echo $actively['activity_name'];
                                                         $record = $actively['details']; ?>
                                                     </button>
@@ -87,14 +87,13 @@
                                                         </div>
                                                         <?php $j = 1;
                                                         foreach ($record as $details) { ?>
-                                                            <div class="row mt-2">
+                                                            <div class="row mt-2" id="form_row_<?= $i ?>">
                                                                 <div class="col-3 p-0">
                                                                     <label class="form-label"><b><?= $details['activity_detail_name'] ?></b></label><br>
                                                                     <label class="form-label"> <b><?= $details['activity_details_plan'] ?></b></label>
                                                                     <input type="hidden" name="activity_detail_id<?= $actively['activity_id'] ?>[]" id="activity_detail_id" value="<?= $details['activity_detail_id'] ?>">
                                                                 </div>
                                                                 <div class="col-3 p-0">
-
                                                                     <div class="input-group">
                                                                         <textarea name="remarks<?= $actively['activity_id'] ?>[]" id="remarks<?= $j ?>" cols="30" rows="2" require></textarea>
                                                                     </div>
@@ -114,13 +113,12 @@
                                                                             show
                                                                         </div> -->
                                                                     </div>
-
                                                                 </div>
                                                             </div>
                                                         <?php $j++;
                                                         }
                                                         ?>
-                                                          <button type="button" class="btn btn-primary mt-3" onclick="$('#expand_<?= $i+1 ?>').click()">Next</button>
+                                                        <button type="button" class="btn btn-primary mt-3" onclick="$('#expand_<?= $i + 1 ?>').click(),valid_function(<?= $i  ?> )">Next</button>
                                                     </div>
                                                     <!-- <div class="accordion-footer d-flex justify-content-center gap-3 mb-2" style="background-color: #dfe7ff;padding: 10px;">
                                                         <input type="reset" class="btn btn-secondary">
@@ -128,7 +126,7 @@
                                                     </div> -->
                                                     <!-- </form> -->
                                                 </div>
-                                                
+
                                             </div><br>
                                         <?php $i++;
                                         }
@@ -347,7 +345,29 @@
             </div>
         </div>
     </div>
- 
+    <script>
+        function valid_function(id) {
+            var count = 0;
+            $('#form_row_' + id + ' input[type="file"]').each(function() {
+                if (!$(this).val()) {
+                    count += 1;
+                }
+            });
+            $('#form_row_' + id + ' textarea').each(function() {
+                if (!$(this).val()) {
+                    count += 1;
+                }
+            });
+            if (count > 0) {
+                $('#expand_' + id).addClass('bg-secondary');
+                $('#expand_' + id).addClass('text-white');
+            } else {
+                $('#expand_' + id).removeClass('bg-secondary');
+                $('#expand_' + id).addClass('bg-success');
+            }
+            
+        }
+    </script>
     <?php if (isset($_REQUEST['msg'])) { ?>
         <script>
             function show_alert() {
