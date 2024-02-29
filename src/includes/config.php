@@ -36,7 +36,7 @@ date_default_timezone_set(TZ_TIMEZONE);
 define("HOST_NAME", "localhost");
 define("USERNAME", "root");
 define("PASSWORD", "");
-define("DATABASE", "machine");
+define("DATABASE", "machine_org");
 
 
 // Database connection

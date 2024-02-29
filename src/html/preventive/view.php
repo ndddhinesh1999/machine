@@ -24,23 +24,26 @@
             <?php include '../../includes/header.php'; ?>
 
             <div class="container-fluid">
-                <div class="page-title">
-                    <h1>Preventive</h1>
-                    <nav>
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/home/">Home</a></li>
-                            <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/machine/">Machine</a></li>
-                            <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/machine-details/index.php?type= <?= isset($_REQUEST['type']) ? $_REQUEST['type'] : '' ?>&m_id=<?= $machine['machine_id'] ?>"><?= $machine['machine_name'] ?></a></li>
-                            <li class="breadcrumb-item active">Preventive</li>
-                        </ol>
-                    </nav>
+                <div class="d-flex justify-content-between">
+                    <div class="page-title">
+
+                        <nav>
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/home/">Home</a></li>
+                                <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/machine/">Machine</a></li>
+                                <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/machine-details/index.php?type= <?= isset($_REQUEST['type']) ? $_REQUEST['type'] : '' ?>&m_id=<?= $machine['machine_id'] ?>"><?= $machine['machine_name'] ?></a></li>
+                                <li class="breadcrumb-item active">Preventive</li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <h4>Preventive</h4>
                 </div>
                 <?php if (isset($_REQUEST['page']) && $_REQUEST['page'] == 'add') { ?>
                     <div class="col-lg-12 d-flex align-items-strech">
                         <div class="card w-100">
                             <div class="card-header d-flex justify-content-between align-items-center">
                                 <h5 class="mb-0"><?= $machine['machine_name'] ?></h5>
-                                <small class="text-muted float-end">Add Preventive</small>
+                                <small class="text-muted float-end">ADD</small>
                             </div>
                             <div class="card-body">
 
@@ -53,6 +56,13 @@
 
                                             <div class="invalid-feedback">
                                                 Please enter Machine Name.
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="form-label date" for="date">Date</label>
+                                            <input name="date" id="date" value="<?= date('d/m/Y') ?>" class="form-control datepicker" required>
+                                            <div class="invalid-feedback">
+                                                Please enter date.
                                             </div>
                                         </div>
                                         <?php $i = 1;
@@ -149,7 +159,7 @@
                         <div class="card w-100">
                             <div class="card-header d-flex justify-content-between align-items-center">
                                 <h5 class="mb-0">Department Details</h5>
-                                <small class="text-muted float-end">Edit Department</small>
+                                <small class="text-muted float-end">EDIT</small>
                             </div>
                             <div class="card-body">
 
@@ -310,7 +320,7 @@
     <script src="<?= PROJECT_PATH ?>/src/assets/jquery/jquery.js"></script>
     <script src="<?= PROJECT_PATH ?>/src/assets/jquery/jquery-ui.js"></script>
     <script src="<?= PROJECT_PATH ?>/src/assets/DataTable/datatables.min.js"></script>
-    <script src="department-function.js"></script>
+    <script src="preventive-function.js"></script>
     <?php
 
     if (isset($_REQUEST['msg'])) {

@@ -39,9 +39,7 @@ function listautonomous()
 {
     // Search tds record form database table
     $where = " WHERE autonomous_id > 0 ";
-    // echo "<pre>";
-    // print_r($_REQUEST);
-    // exit;
+
     if ($_SESSION[SESS . 'session_admin_users_level'] == 'admin') {
         $where .= " AND autonomous_id  > 0 ";
     } else if ($_SESSION[SESS . 'session_admin_users_level'] == 'company') {
@@ -50,9 +48,6 @@ function listautonomous()
 
     if (!empty($_REQUEST['search_autonomous_name'])) {
         $where .= " AND  autonomous_name LIKE '%" . $_REQUEST['search_autonomous_name'] . "%' ";
-    }
-    if (!empty($_REQUEST['from_date']) && !empty($_REQUEST['to_date'])) {
-        $where .= " AND  autonomous_date BETWEEN '" . dateDatabaseFormat($_REQUEST['from_date']) . "'  AND '" . dateDatabaseFormat($_REQUEST['to_date']) . "'";
     }
 
     if (!empty($_REQUEST['search_company_id'])) {
@@ -71,7 +66,7 @@ function listautonomous()
         $where .= "AND autonomous_active_status='active' AND autonomous_deleted_status = 0 ";
     }
 
-    $select = "SELECT * FROM autonomous $where AND autonomous_type ='1' GROUP BY autonomous_date ORDER BY autonomous_id DESC ";
+    $select = "SELECT * FROM autonomous $where AND autonomous_type ='2' GROUP BY autonomous_date ORDER BY autonomous_id DESC ";
 
     list($count, $result) = selectRows($select);
     return $result;
@@ -80,7 +75,7 @@ function listautonomous()
 function selectLabel()
 {
     $select = "SELECT * FROM autonomou_lables WHERE autonomou_lable_deleted_status=0
-    AND autonomou_lable_type=1";
+    AND autonomou_lable_type=2";
     list($rows, $results) = selectRows($select);
 
     return $results;
@@ -108,7 +103,7 @@ function insertautonomous()
 
             $insert_autonomous = "INSERT INTO autonomous  SET 
                               autonomous_machine_id ='" . $_POST['machine_id'] . "',
-                              autonomous_type       ='1',
+                              autonomous_type       ='2',
                               autonomous_date       = '" . dateDatabaseFormat($_POST['autonomous_date']) . "',
                               autonomous_company_id ='" . $company_id . "',
                               autonomous_uniq_id    ='" . $uniq_id . "',													
@@ -134,7 +129,7 @@ function insertautonomous()
                 $remark = $_POST['autonomous_remark'][$i];
 
                 $get_autonomous = "SELECT  autonomous_detail_id  FROM   autonomous_detail
-                               WHERE autonomous_detail_lable_id ='" . $autonomous_lable_id . "' AND autonomous_detail_autonomous_id='" . $id . "'
+                               WHERE autonomous_detail_lable_id ='" . $autonomous_lable_id . "' 
                                AND autonomous_detail_deleted_status = 0 ";
 
                 list($num_row, $record_select) = selectRows($get_autonomous);
@@ -173,9 +168,9 @@ function editautonomous()
         $edit = "SELECT * FROM  autonomous  
                  LEFT JOIN machines ON machine_id = autonomous_machine_id
                  LEFT JOIN autonomous_detail ON autonomous_detail_autonomous_id =autonomous_id 
-                 WHERE  autonomous_detail_deleted_status = 0  AND       autonomous_type ='1'
+                 WHERE  autonomous_detail_deleted_status = 0 
                  AND autonomous_id ='" . $_GET['autonomous_id'] . "' AND autonomous_deleted_status=0";
-                 
+
         list($count, $result) = selectRow($edit);
 
         if ($count > 0) {
@@ -216,7 +211,7 @@ function editautonomous()
 
 function updateautonomous()
 {
-
+    echo "<pre>";
     // print_r($_POST);exit;
 
 
@@ -275,7 +270,7 @@ function updateautonomous()
 				                   autonomous_detail_modified_ip   ='" . $ip . "'
                                    WHERE autonomous_detail_autonomous_id = '" . $autonomous_id . "'
                                    AND  autonomous_detail_lable_id   ='" . $autonomous_lable_id . "' ";
-
+                                   
                     update($update);
                 }
                 header("Location:" . PROJECT_PATH . "src/html/autonomous-daily/index.php?page=edit&autonomous_id=$autonomous_id&msg=2");
@@ -288,56 +283,5 @@ function updateautonomous()
             header("Location:" . PROJECT_PATH . "src/html/autonomous-daily/index.php?page=edit&autonomous_id=$autonomous_id&msg=5");
             exit();
         }
-    }
-}
-
-function pdfList()
-{
-    // echo "<pre>";
-    // print_r($_REQUEST);
-    // exit;
-
-    $where = "";
-    if (isset($_REQUEST['from_date']) && isset($_REQUEST['to_date']) && !empty($_REQUEST['from_date'])  && !empty($_REQUEST['to_date'])) {
-        $where .= "AND  autonomous_date BETWEEN '" . dateDatabaseFormat($_REQUEST['from_date']) . "' AND '" . dateDatabaseFormat($_REQUEST['to_date']) . "'";
-    }
-
-    $select = "SELECT * FROM  autonomous  
-                 LEFT JOIN machines ON machine_id = autonomous_machine_id
-                 WHERE  autonomous_deleted_status=0 $where ORDER BY autonomous_date ASC";
-
-    list($count, $record) = selectRows($select);
-
-    $arrD = array();
-    $i = 0;
-    if ($count > 0) {
-        foreach ($record as $result) {
-            $arrD[$i]['machine_id']  = $result['machine_id'];
-            $arrD[$i]['machine_name']  = $result['machine_name'];
-            $arrD[$i]['autonomous_id']  = $result['autonomous_id'];
-            $arrD[$i]['deleted_status'] = $result['autonomous_deleted_status'];
-            $arrD[$i]['dates'] = $result['autonomous_date'];
-
-            $select_details = "SELECT * FROM  autonomous_detail  
-            LEFT JOIN autonomou_lables ON autonomou_lable_id = autonomous_detail_lable_id  
-            WHERE  autonomous_detail_deleted_status = 0 
-            AND autonomous_detail_autonomous_id ='" . $result['autonomous_id'] . "' ORDER BY autonomous_detail_id ASC";
-            list($count, $result_details) = selectRows($select_details);
-
-            $j = 0;
-            $arrayData = array();
-            foreach ($result_details as $records) {
-                $arrayData[$j]['label_id'] = $records['autonomous_detail_lable_id'];
-                $arrayData[$j]['label_part'] = $records['autonomou_lable_part'];
-                $arrayData[$j]['label_std'] = $records['autonomou_lable_standard'];
-                $arrayData[$j]['before_image'] = $records['autonomous_detail_before_image'];
-                $arrayData[$j]['after_image'] = $records['autonomous_detail_after_image'];
-                $arrayData[$j]['remark'] = $records['autonomous_detail_before_remarks'];
-                $j++;
-            }
-            $arrD[$i]['details']      = $arrayData;
-            $i++;
-        }
-        return $arrD;
     }
 }

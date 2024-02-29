@@ -42,24 +42,25 @@
             <?php include '../../includes/header.php'; ?>
 
             <div class="container-fluid">
-                <div class="page-title">
-                    <h1>Autonomous Daily</h1>
-                    <nav>
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/home/">Home</a></li>
-                            <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/machine/index.php?type=<?= isset($_REQUEST['type']) ? $_REQUEST['type'] : '' ?>">Machine</a></li>
-                            <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/machine-details/index.php?type= <?= isset($_REQUEST['type']) ? $_REQUEST['type'] : '' ?>&m_id=<?= $machine['machine_id'] ?>"><?= $machine['machine_name'] ?></a></li>
-                            <li class="breadcrumb-item active">Autonomous Daily</li>
-                        </ol>
-                    </nav>
-
+                <div class="d-flex justify-content-between">
+                    <div class="page-title">
+                        <nav>
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/home/">Home</a></li>
+                                <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/machine/index.php?type=<?= isset($_REQUEST['type']) ? $_REQUEST['type'] : '' ?>">Machine</a></li>
+                                <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/machine-details/index.php?type= <?= isset($_REQUEST['type']) ? $_REQUEST['type'] : '' ?>&m_id=<?= $machine['machine_id'] ?>"><?= $machine['machine_name'] ?></a></li>
+                                <li class="breadcrumb-item active">Autonomous Daily</li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <h4>Autonomous Daily</h4>
                 </div>
                 <?php if (isset($_REQUEST['page']) && $_REQUEST['page'] == 'add') { ?>
                     <div class="col-lg-12 d-flex align-items-strech">
                         <div class="card w-100">
                             <div class="card-header d-flex justify-content-between align-items-center">
                                 <h5 class="mb-0"><?= $machine['machine_name'] ?></h5>
-                                <small class="text-muted float-end">Add Autonomous Daily</small>
+                                <small class="text-muted float-end">ADD</small>
                             </div>
                             <div class="card-body">
                                 <form action="index.php" method="POST" name="autonomous_form" id="autonomous_form" autocomplete="off" class="needs-validation" enctype="multipart/form-data" novalidate>
@@ -129,7 +130,7 @@
                                                 </div>
 
                                                 <div class="col-md-3">
-                                                    <textarea name="autonomous_remark[]" id="autonomous_remark" class="form-control" rows="2"> </textarea>
+                                                    <textarea name="autonomous_remark[]" id="autonomous_remark" class="form-control" rows="2"></textarea>
 
                                                     <div class="invalid-feedback">
                                                         Please enter autonomous remark.
@@ -174,8 +175,8 @@
                     <div class="col-lg-12 d-flex align-items-strech">
                         <div class="card w-100">
                             <div class="card-header d-flex justify-content-between align-items-center">
-                                <h5 class="mb-0">autonomous Details</h5>
-                                <small class="text-muted float-end">Edit autonomous</small>
+                                <h5 class="mb-0"><?= $machine['machine_name'] ?></h5>
+                                <small class="text-muted float-end">EDIT</small>
                             </div>
 
                             <div class="card-body">
@@ -242,7 +243,7 @@
                                                         <?php $required = empty($get_data['before_image']) ? 'required' : '' ?>
                                                         <input type="file" name="before_images[]" id="before_images" class="form-control" value="<?= $get_data['before_image'] ?>" $required>
                                                         <div class="invalid-feedback">
-                                                            Please choose before_images.
+                                                            Please choose Before Images.
                                                         </div>
                                                         <br>
                                                         <img class="preview-trigger" style="width: 30px;" src="<?= PROJECT_PATH . 'src/' . $get_data['before_image'] ?>" alt="Image Preview" onclick="beforeImage(<?= $get_data['label_id'] ?>);">
@@ -258,7 +259,7 @@
                                                         <?php $required = empty($get_data['after_image']) ? 'required' : '' ?>
                                                         <input type="file" name="after_image[]" id="after_image" class="form-control" value="<?= $get_data['after_image'] ?>" $required>
                                                         <div class="invalid-feedback">
-                                                            Please choose before_images.
+                                                            Please choose After Images.
                                                         </div>
                                                         <br>
                                                         <img class="preview-trigger" style="width: 30px;" src="<?= PROJECT_PATH . 'src/' . $get_data['after_image'] ?>" alt="Image Preview" onclick="AfterImage(<?= $get_data['label_id'] ?>);">
