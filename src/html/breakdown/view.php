@@ -42,23 +42,25 @@
             <?php include '../../includes/header.php'; ?>
 
             <div class="container-fluid">
-                <div class="page-title">
-                    <h1>Breakdown</h1>
-                    <nav>
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/home/">Home</a></li>
-                            <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/machine/">Machine</a></li>
-                            <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/machine-details/index.php?type= <?= isset($_REQUEST['type']) ? $_REQUEST['type'] : '' ?>&m_id=<?= $machine['machine_id'] ?>"><?= $machine['machine_name'] ?></a></li>
-                            <li class="breadcrumb-item active">Breakdown</li>
-                        </ol>
-                    </nav>
+                <div class="d-flex justify-content-between">
+                    <div class="page-title">
+                        <nav>
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/home/">Home</a></li>
+                                <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/machine/">Machine</a></li>
+                                <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/machine-details/index.php?type= <?= isset($_REQUEST['type']) ? $_REQUEST['type'] : '' ?>&m_id=<?= $machine['machine_id'] ?>"><?= $machine['machine_name'] ?></a></li>
+                                <li class="breadcrumb-item active">Breakdown</li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <h4>Breakdown</h4>
                 </div>
                 <?php if (isset($_REQUEST['page']) && $_REQUEST['page'] == 'add') { ?>
                     <div class="col-lg-12 d-flex align-items-strech">
                         <div class="card w-100">
                             <div class="card-header d-flex justify-content-between align-items-center">
-                                <h5 class="mb-0">Breakdown Details</h5>
-                                <small class="text-muted float-end">Add Breakdown</small>
+                                <h5 class="mb-0"><?= $machine['machine_name'] ?></h5>
+                                <small class="text-muted float-end">ADD</small>
                             </div>
                             <div class="card-body">
                                 <form action="index.php" method="POST" name="breakdown_form" id="breakdown_form" autocomplete="off" class="needs-validation" enctype="multipart/form-data" novalidate>
@@ -161,7 +163,7 @@
                                         <div class="col-md-4">
                                             <label class="form-label bfr_breakdown_img" for="bfr_breakdown_img">Before Breakdown - Image</label>
 
-                                            <input type="file" name="bfr_breakdown_img" id="bfr_breakdown_img" class="form-control" required>
+                                            <input type="file" name="bfr_breakdown_img" id="bfr_breakdown_img" class="form-control" accept="image/*" required>
                                             <div class="invalid-feedback">
                                                 Please Choose Before Breakdown Image.
                                             </div>
@@ -178,7 +180,7 @@
                                         <div class="col-md-4">
                                             <label class="form-label aft_breakdown_img" for="aft_breakdown_img">After Breakdown - Image</label>
 
-                                            <input type="file" name="aft_breakdown_img" id="aft_breakdown_img" class="form-control" required>
+                                            <input type="file" name="aft_breakdown_img" id="aft_breakdown_img" class="form-control" accept="image/*" required>
                                             <div class="invalid-feedback">
                                                 Please choose After Breakdown Image.
                                             </div>
@@ -192,10 +194,6 @@
                                         <input type="reset" value="Reset" class="btn btn-outline-secondary" title="Reset" />
                                         <input type="button" value="Back" class="btn btn-secondary" onclick="location.href='index.php'" title="Back">
                                     </div>
-                                    <div class="mt-5 d-flex justify-content-between gap-3">
-                                        <input type="button" value="< Preventive" class="btn btn-warning" onclick="location.href='../preventive/index?page=add'" title="Preventive">
-                                        <input type="button" value="History Card >" class="btn btn-success" onclick="location.href='../history_card/index?page=add'" title="History Card">
-                                    </div>
                                 </form>
                             </div>
                         </div>
@@ -205,8 +203,8 @@
                     <div class="col-lg-12 d-flex align-items-strech">
                         <div class="card w-100">
                             <div class="card-header d-flex justify-content-between align-items-center">
-                                <h5 class="mb-0">Breakdown Details</h5>
-                                <small class="text-muted float-end">Edit breakdown</small>
+                                <h5 class="mb-0"><?= $edit_breakdown['machine_name'] ?></h5>
+                                <small class="text-muted float-end">EDIT</small>
                             </div>
 
                             <div class="card-body">
@@ -376,59 +374,15 @@
                     $breakdown_name = isset($_REQUEST['search_breakdown_name']) ? $_REQUEST['search_breakdown_name'] : '';
                     $search_status = isset($_REQUEST['breakdown_search_status']) ? $_REQUEST['breakdown_search_status'] : '';
                     $company_id = isset($_REQUEST['search_company_id']) ? $_REQUEST['search_company_id'] : '';
-
+                    require "../../includes/filter.php";
                     ?>
 
 
-                    <div class="col-xl">
-                        <div class="card mb-4">
-                            <form action="index.php" method="POST" name="breakdown_form" id="breakdown_form" autocomplete="off">
-                                <div class="card-body container-bg">
-                                    <div class="form-group d-flex flex-column flex-md-row flex-wrap align-items-md-end justify-content-center gap-3">
-                                        <?php if ($_SESSION[SESS . 'session_admin_users_level'] == 'admin') { ?>
-                                            <div class="flex-column col-md-3">
-                                                <label class="form-label" for="search_company_id">Company</label>
-                                                <select name="search_company_id" id="search_company_id" class="form-select">
-                                                    <option value="">-Select-</option>
-                                                    <?php foreach ($listCompany as $data) { ?>
-                                                        <option value="<?= $data['company_id']; ?>" <?= ($company_id == $data['company_id']) ? 'selected' : '' ?>><?= $data['company_code'] . ' - ' . $data['company_name']; ?></option>
-                                                    <?php    } ?>
-                                                </select>
-                                            </div>
-                                        <?php } ?>
-
-                                        <div class="flex-column col-md-3">
-                                            <label class="form-label" for="">From Date </label>
-                                            <input type="text" name="from_date" id="from_date" class="form-control datepicker" value="<?= $breakdown_name ?>" />
-                                        </div>
-                                        <div class="flex-column col-md-3">
-                                            <label class="form-label" for="">To Date </label>
-                                            <input type="text" name="to_date" id="to_date" class="form-control datepicker" value="<?= $breakdown_name ?>" />
-                                        </div>
-                                        <!-- <div class="flex-column col-md-3">
-                                            <label class="form-label" for="breakdown_search_status">Status</label>
-                                            <select name="breakdown_search_status" id="breakdown_search_status" class="form-select">
-                                                <option value="active" <?php if ($search_status == 'active') { ?>selected <?php } ?>>Active</option>
-                                                <option value="inactive" <?php if ($search_status == 'inactive') { ?>selected <?php } ?>>In Active</option>
-                                                <option value="1" <?php if ($search_status == '1') { ?>selected <?php } ?>>Deleted</option>
-                                            </select>
-                                        </div> -->
-
-                                        <div class="d-flex justify-content-center gap-2">
-                                            <input name="search" type="submit" class="btn btn-primary" id="search" value="Search" title="Search" />
-                                            <input name="view_all" type="button" class="btn btn-success" id="view_all" onclick="location.href='index.php'" title="Display All" value="Display All" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-
-
-
                     <div class="card p-2">
-                        <div class="d-flex justify-content-end">
-                            <button class="btn btn-primary mx-2 my-2" onclick="location.href='index.php?page=add'">Add</button>
+                        <div class="d-flex justify-content-between">
+                            <!-- <button class="btn btn-primary mx-2 my-2" onclick="location.href='index.php?page=add'">Add</button> -->
+                            <button class="btn btn-danger mx-2 my-2" title="PDF" onclick="location.href='pdf.php?from_date=<?= $from_date ?>&to_date=<?= $to_date ?>'"><i class="bi bi-file-pdf"></i>PDF</button>
+                            <button class="btn btn-dark mx-2 my-2" title="Filter" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class="bi bi-filter-left"></i>Filter</button>
                         </div>
                         <div class="table-responsive text-nowrap">
                             <form action="index.php" method="POST" name="breakdown_form" id="breakdown_form" autocomplete="off">
@@ -444,7 +398,7 @@
 
                                             <?php if ($search_status != 1) { ?>
                                                 <th>Edit</th>
-                                                <th>Delete</th>
+                                                <!-- <th>Delete</th> -->
                                             <?php } else { ?>
                                                 <th>View</th>
                                                 <th>Undo </th>
@@ -459,22 +413,22 @@
                                         ?>
                                                 <tr>
                                                     <td><?= $sno++; ?></td>
-                                                    <td><?= ucfirst($value['year_breakdown_date']); ?></td>
+                                                    <td><?= dateGeneralFormat($value['year_breakdown_date']); ?></td>
                                                     <td><?= ucfirst($value['year_breakdown_problem']); ?></td>
                                                     <?php if ($search_status != 1) { ?>
                                                         <td>
                                                             <i class="bi bi-pencil-square" style="cursor: pointer;color:blue;" onclick="location.href='index.php?page=edit&year_breakdown_id=<?= $value['year_breakdown_id']; ?>'"></i>
                                                         </td>
-                                                        <td>
+                                                        <!-- <td>
                                                             <span data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="delete_record(<?= $value['year_breakdown_id']; ?>,'delete');"><i class="bi bi-trash" style="cursor: pointer;color:red"></i></span>
-                                                        </td>
+                                                        </td> -->
                                                     <?php } else { ?>
                                                         <td>
                                                             <i class="bi bi-eye fs-5" style="cursor: pointer;color:blue;" onclick="location.href='index.php?page=edit&year_breakdown_id=<?= $value['year_breakdown_id']; ?>'"></i>
                                                         </td>
-                                                        <td>
+                                                        <!-- <td>
                                                             <span data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="delete_record(<?= $value['year_breakdown_id']; ?>,'undo');"><i class="bi bi-arrow-counterclockwise fs-5" style="cursor: pointer;color:green"></i></span>
-                                                        </td>
+                                                        </td> -->
                                                     <?php  } ?>
                                                 </tr>
                                         <?php }
@@ -551,6 +505,7 @@
     <script src="<?= PROJECT_PATH ?>/src/jquery/external/jquery/jquery.js"></script>
     <script src="<?= PROJECT_PATH ?>/src/assets/DataTime/jquery.datetimepicker.full.min.js"></script>
     <script src="breakdown-function.js"></script>
+    <script src="../../assets/js/from-to-date.js"></script>
 
     <?php
 

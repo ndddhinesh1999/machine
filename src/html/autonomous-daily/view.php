@@ -304,7 +304,7 @@
 
                     <div class="col-xl">
                         <div class="card mb-4">
-                            <form action="index.php" method="POST" name="autonomous_form" id="autonomous_form" autocomplete="off">
+                            <form action="index.php" method="POST" autocomplete="off">
                                 <!-- <div class="card-body container-bg">
                                     <div class="form-group d-flex flex-column flex-md-row flex-wrap align-items-md-end justify-content-center gap-3"> -->
                                 <?php if ($_SESSION[SESS . 'session_admin_users_level'] == 'admin') { ?>
@@ -387,7 +387,7 @@
                                             <th>Status</th>
                                             <?php if ($search_status != 1) { ?>
                                                 <th>Edit</th>
-                                                <th>Delete</th>
+                                                <!-- <th>Delete</th> -->
                                             <?php } else { ?>
                                                 <th>View</th>
                                                 <th>Undo </th>
@@ -413,9 +413,9 @@
                                                         <td>
                                                             <i class="bi bi-pencil-square" style="cursor: pointer;color:blue;" onclick="location.href='index.php?page=edit&autonomous_id=<?= $value['autonomous_id']; ?>'"></i>
                                                         </td>
-                                                        <td>
+                                                        <!-- <td>
                                                             <span data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="delete_record(<?= $value['autonomous_id']; ?>,'delete');"><i class="bi bi-trash" style="cursor: pointer;color:red"></i></span>
-                                                        </td>
+                                                        </td> -->
                                                     <?php } else { ?>
                                                         <td>
                                                             <i class="bi bi-eye fs-5" style="cursor: pointer;color:blue;" onclick="location.href='index.php?page=edit&autonomous_id=<?= $value['autonomous_id']; ?>'"></i>

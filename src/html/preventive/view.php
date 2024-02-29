@@ -4,12 +4,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?= PROJECT_TITLE ?> - Development</title>
+    <title><?= PROJECT_TITLE ?> - Preventive</title>
     <link rel="shortcut icon" type="image/png" href="<?= PROJECT_PATH; ?>/src/assets/images/logos/company-logo.svg" />
     <link rel="stylesheet" href="<?= PROJECT_PATH ?>/src/assets/libs/bootstrap-icons/font/bootstrap-icons.css">
     <link rel="stylesheet" href="<?= PROJECT_PATH ?>/src/assets/css/styles.min.css" />
     <link rel="stylesheet" href="<?= PROJECT_PATH ?>/src/assets/css/styles.css" />
     <link href="<?= PROJECT_PATH ?>/src/assets/DataTable/datatables.min.css" rel="stylesheet" />
+    <link href="<?= PROJECT_PATH ?>/src/assets/jquery/jquery-ui.css" rel="stylesheet">
 </head>
 
 <body>
@@ -64,7 +65,7 @@
                                             <div class="invalid-feedback">
                                                 Please enter date.
                                             </div>
-                                        </div>
+                                        </div><br>
                                         <?php $i = 1;
                                         // echo "<pre>";
                                         // print_r($actively_details);
@@ -130,7 +131,9 @@
                                                         <?php $j++;
                                                         }
                                                         ?>
-                                                          <button type="button" class="btn btn-primary mt-3" onclick="$('#expand_<?= $i+1 ?>').click()">Next</button>
+                                                        <div class="d-flex justify-content-end">
+                                                            <button type="button" class="btn btn-primary mt-3" onclick="$('#expand_<?= $i + 1 ?>').click()">Next</button>
+                                                        </div>
                                                     </div>
                                                     <!-- <div class="accordion-footer d-flex justify-content-center gap-3 mb-2" style="background-color: #dfe7ff;padding: 10px;">
                                                         <input type="reset" class="btn btn-secondary">
@@ -138,7 +141,7 @@
                                                     </div> -->
                                                     <!-- </form> -->
                                                 </div>
-                                                
+
                                             </div><br>
                                         <?php $i++;
                                         }
@@ -177,53 +180,15 @@
                     $company_id = isset($_REQUEST['search_company_id']) ? $_REQUEST['search_company_id'] : '';
 
                     ?>
-
-
-                    <div class="col-xl">
-                        <div class="card mb-4">
-                            <form action="index.php" method="POST" name="department_form" id="department_form" autocomplete="off">
-                                <div class="card-body container-bg">
-                                    <div class="form-group d-flex flex-column flex-md-row flex-wrap align-items-md-end justify-content-center gap-3">
-                                        <?php if ($_SESSION[SESS . 'session_admin_users_level'] == 'admin') { ?>
-                                            <div class="flex-column col-md-3">
-                                                <label class="form-label" for="search_company_id">Company</label>
-                                                <select name="search_company_id" id="search_company_id" class="form-select">
-                                                    <option value="">-Select-</option>
-                                                    <?php foreach ($listCompany as $data) { ?>
-                                                        <option value="<?= $data['company_id']; ?>" <?= ($company_id == $data['company_id']) ? 'selected' : '' ?>><?= $data['company_code'] . ' - ' . $data['company_name']; ?></option>
-                                                    <?php    } ?>
-                                                </select>
-                                            </div>
-                                        <?php } ?>
-
-                                        <div class="flex-column col-md-3">
-                                            <label class="form-label" for="search_department_name">Department Name </label>
-                                            <input type="text" name="search_department_name" id="search_department_name" class="form-control" value="<?= $department_name ?>" />
-                                        </div>
-                                        <div class="flex-column col-md-3">
-                                            <label class="form-label" for="department_search_status">Status</label>
-                                            <select name="department_search_status" id="department_search_status" class="form-select">
-                                                <option value="active" <?php if ($search_status == 'active') { ?>selected <?php } ?>>Active</option>
-                                                <option value="inactive" <?php if ($search_status == 'inactive') { ?>selected <?php } ?>>In Active</option>
-                                                <option value="1" <?php if ($search_status == '1') { ?>selected <?php } ?>>Deleted</option>
-                                            </select>
-                                        </div>
-
-                                        <div class="d-flex justify-content-center gap-2">
-                                            <input name="search" type="submit" class="btn btn-primary" id="search" value="Search" title="Search" />
-                                            <input name="view_all" type="button" class="btn btn-success" id="view_all" onclick="location.href='index.php'" title="Display All" value="Display All" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-
-
+                    <?php
+                    include "../../includes/filter.php";
+                    ?>
 
                     <div class="card p-2">
-                        <div class="d-flex justify-content-end">
-                            <button class="btn btn-primary mx-2 my-2" onclick="location.href='index.php?page=add'">Add</button>
+                        <div class="d-flex justify-content-between">
+                            <!-- <button class="btn btn-primary mx-2 my-2" onclick="location.href='index.php?page=add'">Add</button> -->
+                            <button class="btn btn-danger mx-2 my-2" title="PDF" onclick="location.href='pdf.php?from_date=<?= $from_date ?>&to_date=<?= $to_date ?>'"><i class="bi bi-file-pdf"></i>PDF</button>
+                            <button class="btn btn-dark mx-2 my-2" title="Filter" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class="bi bi-filter-left"></i>Filter</button>
                         </div>
                         <div class="table-responsive text-nowrap">
                             <form action="index.php" method="POST" name="department_form" id="department_form" autocomplete="off">
@@ -237,7 +202,7 @@
                                             <th>Date</th>
 
                                             <th>Edit</th>
-                                            <th>Delete</th>
+                                            <!-- <th>Delete</th> -->
 
                                         </tr>
                                     </thead>
@@ -249,8 +214,8 @@
                                         ?>
                                             <tr>
                                                 <td><?= $i++ ?></td>
-                                                <td><?= $get['date'] ?></td>
-                                                <td></td>
+                                                <td><?= dateGeneralFormat($get['date']) ?></td>
+                                                <!-- <td></td> -->
                                                 <td></td>
                                             </tr>
                                         <?php } ?>
@@ -323,6 +288,7 @@
     <script src="<?= PROJECT_PATH ?>/src/assets/jquery/jquery-ui.js"></script>
     <script src="<?= PROJECT_PATH ?>/src/assets/DataTable/datatables.min.js"></script>
     <script src="preventive-function.js"></script>
+    <script src="../../assets/js/from-to-date.js"></script>
     <?php
 
     if (isset($_REQUEST['msg'])) {
@@ -357,7 +323,7 @@
             </div>
         </div>
     </div>
- 
+
     <?php if (isset($_REQUEST['msg'])) { ?>
         <script>
             function show_alert() {

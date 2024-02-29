@@ -100,9 +100,14 @@ function actively()
 function preventive_list()
 {
 
+    $where = "";
+    if (isset($_REQUEST['from_date']) && isset($_REQUEST['to_date']) && !empty($_REQUEST['from_date'])  && !empty($_REQUEST['to_date'])) {
+        $where .= "AND  preventive_main_date BETWEEN '" . dateDatabaseFormat($_REQUEST['from_date']) . "' AND '" . dateDatabaseFormat($_REQUEST['to_date']) . "'";
+    }
+
     $select = "SELECT * FROM preventive_main 
     LEFT JOIN preventives ON preventive_id=preventives_main_id 
-    WHERE preventive_main_deleted_status =0";
+    WHERE preventive_main_deleted_status =0 $where";
     list($row, $result) = selectRows($select);
     $array = array();
     $i = 0;

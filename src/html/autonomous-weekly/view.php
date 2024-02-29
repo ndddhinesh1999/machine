@@ -387,7 +387,7 @@
                                             <th>Status</th>
                                             <?php if ($search_status != 1) { ?>
                                                 <th>Edit</th>
-                                                <th>Delete</th>
+                                                <!-- <th>Delete</th> -->
                                             <?php } else { ?>
                                                 <th>View</th>
                                                 <th>Undo </th>
@@ -413,9 +413,9 @@
                                                         <td>
                                                             <i class="bi bi-pencil-square" style="cursor: pointer;color:blue;" onclick="location.href='index.php?page=edit&autonomous_id=<?= $value['autonomous_id']; ?>'"></i>
                                                         </td>
-                                                        <td>
+                                                        <!-- <td>
                                                             <span data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="delete_record(<?= $value['autonomous_id']; ?>,'delete');"><i class="bi bi-trash" style="cursor: pointer;color:red"></i></span>
-                                                        </td>
+                                                        </td> -->
                                                     <?php } else { ?>
                                                         <td>
                                                             <i class="bi bi-eye fs-5" style="cursor: pointer;color:blue;" onclick="location.href='index.php?page=edit&autonomous_id=<?= $value['autonomous_id']; ?>'"></i>

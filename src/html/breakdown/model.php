@@ -46,6 +46,11 @@ function listbreakdown()
         $where .= " AND year_breakdown_company_id  = '" . $_SESSION[SESS . 'session_admin_users_company_id'] . "'  ";
     }
 
+    $where = "";
+    if (isset($_REQUEST['from_date']) && isset($_REQUEST['to_date']) && !empty($_REQUEST['from_date'])  && !empty($_REQUEST['to_date'])) {
+        $where .= "AND  year_breakdown_date BETWEEN '" . dateDatabaseFormat($_REQUEST['from_date']) . "' AND '" . dateDatabaseFormat($_REQUEST['to_date']) . "'";
+    }
+
     if (!empty($_REQUEST['search_breakdown_name'])) {
         $where .= " AND  breakdown_name LIKE '%" . $_REQUEST['search_breakdown_name'] . "%' ";
     }
@@ -68,7 +73,7 @@ function listbreakdown()
 
     $select = "SELECT * FROM year_breakdown 
     LEFT JOIN machines ON machine_id=year_breakdown_machine_id
-    $where ORDER BY year_breakdown_id DESC ";
+    WHERE year_breakdown_deleted_status =0 $where ORDER BY year_breakdown_id DESC ";
 
     list($count, $result) = selectRows($select);
     return $result;
@@ -234,7 +239,7 @@ function updatebreakdown()
 				                    year_breakdown_modified_by='" . $_SESSION[SESS . 'session_admin_users_id'] . "',
 				                    year_breakdown_modified_on=UNIX_TIMESTAMP(NOW()),
 				                    year_breakdown_modified_ip='" . $ip . "' WHERE year_breakdown_id  = '" . $year_breakdown_id . "' ";
-            
+
             update($update_breakdown);
             header("Location:" . PROJECT_PATH . "src/html/breakdown/index.php?page=edit&year_breakdown_id=$year_breakdown_id&msg=2");
             exit();

@@ -216,7 +216,7 @@ function machine_type_detail()
 	if ($row > 1) {
 
 		foreach ($result as $record) {
-			$array[$i]['category_id '] = $record['category_id '];
+			$array[$i]['category_id '] = $record['category_id'];
 			$array[$i]['category_name'] = $record['category_name'];
 			$i++;
 		}

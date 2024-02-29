@@ -42,22 +42,24 @@
             <?php include '../../includes/header.php'; ?>
 
             <div class="container-fluid">
-                <div class="page-title">
-                    <h1>History Card</h1>
-                    <nav>
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/home/">Home</a></li>
-                            <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/machine/index.php?type=<?= isset($_REQUEST['type']) ? $_REQUEST['type'] : '' ?>">Machine</a></li>
-                            <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/machine-details/index.php?type= <?= isset($_REQUEST['type']) ? $_REQUEST['type'] : '' ?>&m_id=<?= $machine['machine_id'] ?>"><?= $machine['machine_name'] ?></a></li>
-                            <li class="breadcrumb-item active">historycard</li>
-                        </ol>
-                    </nav>
+                <div class="d-flex justify-content-between">
+                    <div class="page-title">
+                        <nav>
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/home/">Home</a></li>
+                                <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/machine/index.php?type=<?= isset($_REQUEST['type']) ? $_REQUEST['type'] : '' ?>">Machine</a></li>
+                                <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/machine-details/index.php?type= <?= isset($_REQUEST['type']) ? $_REQUEST['type'] : '' ?>&m_id=<?= $machine['machine_id'] ?>"><?= $machine['machine_name'] ?></a></li>
+                                <li class="breadcrumb-item active">History Card</li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <h4>History Card</h4>
                 </div>
                 <?php if (isset($_REQUEST['page']) && $_REQUEST['page'] == 'add') { ?>
                     <div class="col-lg-12 d-flex align-items-strech">
                         <div class="card w-100">
                             <div class="card-header d-flex justify-content-between align-items-center">
-                                <h5 class="mb-0">History Card Details</h5>
+                                <h5 class="mb-0"><?= $machine['machine_name'] ?></h5>
                                 <small class="text-muted float-end">Add History Card</small>
                             </div>
                             <div class="card-body">
@@ -77,10 +79,7 @@
                                                 </div>
                                             </div>
 
-                                        <?php    } ?>
-
-
-
+                                        <?php } ?>
                                         <div class="col-md-4">
                                             <label class="form-label machine_name" for="machine_name">Machine Name</label>
                                             <input name="machine_name" id="machine_name" class="form-control" value="<?= $machine['machine_name'] ?>" ; required readonly>
@@ -159,8 +158,8 @@
                     <div class="col-lg-12 d-flex align-items-strech">
                         <div class="card w-100">
                             <div class="card-header d-flex justify-content-between align-items-center">
-                                <h5 class="mb-0">History Card Details</h5>
-                                <small class="text-muted float-end">Edit History Card</small>
+                                <h5 class="mb-0"><?= $edit_history_card['machine_name'] ?></h5>
+                                <small class="text-muted float-end">Edit</small>
                             </div>
 
                             <div class="card-body">
@@ -371,7 +370,7 @@
                                         ?>
                                                 <tr>
                                                     <td><?= $sno++; ?></td>
-                                                    <td><?= $value['history_card_date']; ?></td>
+                                                    <td><?= dateGeneralFormat($value['history_card_date']); ?></td>
                                                     <td><?= ucfirst($value['history_card_problem']); ?></td>
                                                     <?php if ($search_status != 1) { ?>
                                                         <td>
@@ -463,6 +462,7 @@
     <script src="<?= PROJECT_PATH ?>/src/jquery/external/jquery/jquery.js"></script>
     <script src="<?= PROJECT_PATH ?>/src/assets/DataTime/jquery.datetimepicker.full.min.js"></script>
     <script src="historycard-function.js"></script>
+    <script src="../../assets/js/from-to-date.js"></script>
 
     <?php
 

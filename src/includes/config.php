@@ -52,7 +52,7 @@ function db_connction()
     return $connection;
 }
 
-define("PROJECT_TITLE", "ara-Attendance");
+define("PROJECT_TITLE", "GC");
 define("PROJECT_NAME", "ara-Attendance");
 define("PRODUCT_NAME", "ara-Attendance");
 

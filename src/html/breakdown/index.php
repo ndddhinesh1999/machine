@@ -3,10 +3,11 @@ include '../../includes/config.php';
 include '../../includes/utility_function.php';
 if (isset($_SESSION[SESS . 'session_admin_users_unique_id'])) {
     include 'model.php';
-$machine=machine_detail();
+    $machine = machine_detail();
     $list_breakdown = listbreakdown();
     $listCompany = listCompany();
     $listBranch = listBranch();
+    
     if (isset($_POST['add_breakdown'])) {
         insertbreakdown();
     }
