@@ -479,6 +479,7 @@
 
                     <div class="card p-2">
                         <div class="d-flex justify-content-end">
+                            <button class="btn btn-danger mx-2 my-2" title="PDF" onclick="location.href='pdf.php?'"><i class="bi bi-file-pdf"></i>PDF</button>
                             <button class="btn btn-primary mx-2 my-2" onclick="location.href='index.php?page=add&type=<?= isset($_REQUEST['type']) ? $_REQUEST['type'] : '' ?>'">Add</button>
                         </div>
                         <div class="table-responsive text-nowrap">
