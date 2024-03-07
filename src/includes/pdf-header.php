@@ -11,7 +11,7 @@ $companyDetails = companyDetails();
         <td align="left">
             <img src="<?= !empty($companyDetails['logo']) ? $companyDetails['logo'] : '' ?>" alt="" srcset="" class="left-logo">
         </td>
-        <td align="center">
+        <td align="center" colspan="2">
             <b style="font-size: 24px;"><?= $companyDetails['name'] ?></b>
             <h5><?= $companyDetails['address'] ?></h5>
         </td>

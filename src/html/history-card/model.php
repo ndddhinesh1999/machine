@@ -54,7 +54,14 @@ function listhistory_card()
         $where .= " AND history_card_company_id  = '" . $_REQUEST['search_company_id'] . "'  ";
     }
 
+    $machine = machine_detail();
+    if (!empty($machine['machine_id']) && !empty($machine['machine_id'])) {
+        $where .= " AND  history_card_machine_id = '" . $machine['machine_id'] . "'";
+    }
 
+    if (isset($_REQUEST['from_date']) && isset($_REQUEST['to_date']) && !empty($_REQUEST['from_date'])  && !empty($_REQUEST['to_date'])) {
+        $where .= "AND  history_card_date BETWEEN '" . dateDatabaseFormat($_REQUEST['from_date']) . "' AND '" . dateDatabaseFormat($_REQUEST['to_date']) . "'";
+    }
 
     if (!empty($_REQUEST['history_card_search_status'])) {
         if ($_REQUEST['history_card_search_status'] == 1) {
@@ -69,7 +76,6 @@ function listhistory_card()
     $select = "SELECT * FROM history_card 
     LEFT JOIN machines ON machine_id=history_card_machine_id
     $where ORDER BY history_card_id DESC ";
-
     list($count, $result) = selectRows($select);
     return $result;
 }

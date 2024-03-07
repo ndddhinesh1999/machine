@@ -136,7 +136,7 @@
                                                             </div>
                                                         <?php } else { ?>
                                                             <div class="d-flex justify-content-end">
-                                                                <button type="button" class="btn btn-primary mt-3" onclick="$('#expand_<?= $i?>').click(),valid_function(<?= $i  ?> )">Finish</button>
+                                                                <button type="button" class="btn btn-primary mt-3" onclick="$('#expand_<?= $i ?>').click(),valid_function(<?= $i  ?> )">Finish</button>
                                                             </div>
                                                         <?php } ?>
                                                     </div>
@@ -168,203 +168,313 @@
                     <div class="col-lg-12 d-flex align-items-strech">
                         <div class="card w-100">
                             <div class="card-header d-flex justify-content-between align-items-center">
-                                <h5 class="mb-0">Department Details</h5>
+                                <h5 class="mb-0"><?= $preventive_edit['machine_name'] ?></h5>
                                 <small class="text-muted float-end">EDIT</small>
                             </div>
                             <div class="card-body">
+                                <div class="accordion" id="accordionExample">
+                                    <form action="index.php" method="POST" name="department_form" id="department_form" autocomplete="off" class="needs-validation" enctype="multipart/form-data" novalidate>
+                                        <div class="col-md-4">
+                                            <!-- <label class="form-label machine_name" for="machine_name">Machine Name</label> -->
+                                            <!-- <input name="machine_name" id="machine_name" class="form-control" value="<?= $machine['machine_name'] ?>" ; required readonly> -->
+                                            <input type="hidden" name="machine_id" id="machine_id" class="form-control" value="<?= $preventive_edit['machine_id'] ?>" required readonly>
 
+                                            <div class="invalid-feedback">
+                                                Please enter Machine Name.
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="form-label date" for="date">Date</label>
+                                            <input name="date" id="date" value="<?= dateGeneralFormat($preventive_edit['date']) ?>" class="form-control datepicker" required>
+                                            <div class="invalid-feedback">
+                                                Please enter date.
+                                            </div>
+                                        </div><br>
+                                        <?php $i = 1;
+                                        // echo "<pre>";
+                                        // print_r($actively_details);
+                                        // exit;
+
+                                        foreach ($actively_details as $actively) { ?>
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header" id="heading<?= $i ?>">
+                                                    <button class="accordion-button bg-secondary text-white" type="button" onclick="valid_function(<?= $i ?>)" id="expand_<?= $i ?>" data-bs-toggle="collapse" data-bs-target="#collapse<?= $i ?>" aria-expanded="true" aria-controls="collapse<?= $i ?>">
+                                                        <?php echo $actively['activity_name'];
+                                                        $record = $actively['details']; ?>
+                                                    </button>
+                                                    <input type="hidden" name="activity_id[]" id="activity_id" value="<?= $actively['activity_id'] ?>">
+                                                </h2>
+                                                <div id="collapse<?= $i ?>" class="accordion-collapse collapse" aria-labelledby="heading<?= $i ?>" data-bs-parent="#accordionExample">
+                                                    <!-- <form action="index.php" method="POST" enctype="multipart/form-data"> -->
+                                                    <div class="accordion-body">
+                                                        <div class="row mt-2">
+                                                            <div class="col-3 p-0">
+                                                                <label class="form-label">Activity & Plan</label>
+                                                            </div>
+                                                            <div class="col-3 p-0">
+                                                                <label class="form-label">Remarks</label>
+                                                            </div>
+                                                            <div class="col-3 p-0">
+                                                                <label class="form-label">Before File</label>
+                                                            </div>
+                                                            <div class="col-3 p-0">
+                                                                <label class="form-label">After File</label>
+                                                            </div>
+                                                        </div>
+                                                        <?php $j = 1;
+                                                        foreach ($record as $details) {
+
+                                                            $value = details(1, $details['activity_detail_id']);
+                                                            $remark = isset($value['preventive_before_text']) ? $value['preventive_before_text'] : '';
+                                                            $before = isset($value['preventive_before_file']) ? $value['preventive_before_file'] : '';
+                                                            $after = isset($value['preventive_after_file']) ? $value['preventive_after_file'] : '';
+                                                        ?>
+                                                            <div class="row mt-2" id="form_row_<?= $i ?>">
+                                                                <div class="col-3 p-0">
+                                                                    <label class="form-label"><b><?= $details['activity_detail_name'] ?></b></label><br>
+                                                                    <label class="form-label"> <b><?= $details['activity_details_plan'] ?></b></label>
+                                                                    <input type="hidden" name="activity_detail_id<?= $actively['activity_id'] ?>[]" id="activity_detail_id" value="<?= $details['activity_detail_id'] ?>">
+                                                                </div>
+                                                                <div class="col-3 p-0">
+                                                                    <div class="input-group">
+                                                                        <textarea name="remarks<?= $actively['activity_id'] ?>[]" id="remarks<?= $j ?>" cols="30" rows="2" require><?= $remark ?></textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-3 p-0">
+                                                                    <div class="input-group">
+                                                                        <input type="file" name="before_image<?= $actively['activity_id'] ?>[]" id="before_image<?= $j ?>" class="form-control" accept="image/png, image/gif, image/jpeg" required>
+                                                                        <!-- <div class="input-group-text">
+                                                                            show
+                                                                        </div> -->
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-3 p-0">
+                                                                    <div class="input-group">
+                                                                        <input type="file" name="after_image<?= $actively['activity_id'] ?>[]" id="after_image<?= $j ?>" class="form-control" accept="image/png, image/gif, image/jpeg" required>
+                                                                        <!-- <div class="input-group-text">
+                                                                            show
+                                                                        </div> -->
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        <?php $j++;
+                                                        }
+                                                        if (count($actively_details) != $i) {
+                                                        ?>
+                                                            <div class="d-flex justify-content-end">
+                                                                <button type="button" class="btn btn-primary mt-3" onclick="$('#expand_<?= $i + 1 ?>').click(),valid_function(<?= $i  ?> )">Next</button>
+                                                            </div>
+                                                        <?php } else { ?>
+                                                            <div class="d-flex justify-content-end">
+                                                                <button type="button" class="btn btn-primary mt-3" onclick="$('#expand_<?= $i ?>').click(),valid_function(<?= $i  ?> )">Finish</button>
+                                                            </div>
+                                                        <?php } ?>
+                                                    </div>
+                                                    <!-- <div class="accordion-footer d-flex justify-content-center gap-3 mb-2" style="background-color: #dfe7ff;padding: 10px;">
+                                                        <input type="reset" class="btn btn-secondary">
+                                                        <input type="submit" name="save" value="Save" class="btn btn-success">
+                                                    </div> -->
+                                                    <!-- </form> -->
+                                                </div>
+
+                                            </div><br>
+                                        <?php $i++;
+                                        }
+                                        ?>
+                                         <input type="button" value="Back" class="btn btn-secondary" onclick="location.href='index.php?type=<?= isset($_REQUEST['type']) ? $_REQUEST['type'] : '' ?>&m_id=<?= $machine['machine_id'] ?>'" title="Back">
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                <?php } else {  ?>
+                    <?php } else {  ?>
 
-                    <?php
-                    $department_name = isset($_REQUEST['search_department_name']) ? $_REQUEST['search_department_name'] : '';
-                    $search_status = isset($_REQUEST['department_search_status']) ? $_REQUEST['department_search_status'] : '';
-                    $company_id = isset($_REQUEST['search_company_id']) ? $_REQUEST['search_company_id'] : '';
+                        <?php
+                        $department_name = isset($_REQUEST['search_department_name']) ? $_REQUEST['search_department_name'] : '';
+                        $search_status = isset($_REQUEST['department_search_status']) ? $_REQUEST['department_search_status'] : '';
+                        $company_id = isset($_REQUEST['search_company_id']) ? $_REQUEST['search_company_id'] : '';
 
-                    ?>
-                    <?php
-                    include "../../includes/filter.php";
-                    ?>
+                        ?>
+                        <?php
+                        include "../../includes/filter.php";
+                        ?>
 
-                    <div class="card p-2">
-                        <div class="d-flex justify-content-between">
-                            <!-- <button class="btn btn-primary mx-2 my-2" onclick="location.href='index.php?page=add'">Add</button> -->
-                            <button class="btn btn-danger mx-2 my-2" title="PDF" onclick="location.href='pdf.php?from_date=<?= $from_date ?>&to_date=<?= $to_date ?>'"><i class="bi bi-file-pdf"></i>PDF</button>
-                            <button class="btn btn-dark mx-2 my-2" title="Filter" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class="bi bi-filter-left"></i>Filter</button>
-                        </div>
-                        <div class="table-responsive text-nowrap">
-                            <form action="index.php" method="POST" name="department_form" id="department_form" autocomplete="off">
-                                <table id="example" class="table table-striped" style="width:100%">
-                                    <caption class="ms-4">
-                                        List of Information
-                                    </caption>
-                                    <thead>
-                                        <tr>
-                                            <th>S No.</th>
-                                            <th>Date</th>
-
-                                            <th>Edit</th>
-                                            <!-- <th>Delete</th> -->
-
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-                                        <?php
-                                        $i = 1;
-                                        foreach ($preventive_list as $get) {
-                                        ?>
+                        <div class="card p-2">
+                            <div class="d-flex justify-content-between">
+                                <!-- <button class="btn btn-primary mx-2 my-2" onclick="location.href='index.php?page=add'">Add</button> -->
+                                <button class="btn btn-danger mx-2 my-2" title="PDF" onclick="location.href='pdf.php?from_date=<?= $from_date ?>&to_date=<?= $to_date ?>"><i class="bi bi-file-pdf"></i>PDF</button>
+                                <button class="btn btn-dark mx-2 my-2" title="Filter" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class="bi bi-filter-left"></i>Filter</button>
+                            </div>
+                            <div class="table-responsive text-nowrap">
+                                <form action="index.php" method="POST" name="department_form" id="department_form" autocomplete="off">
+                                    <table id="example" class="table table-striped" style="width:100%">
+                                        <caption class="ms-4">
+                                            List of Information
+                                        </caption>
+                                        <thead>
                                             <tr>
-                                                <td><?= $i++ ?></td>
-                                                <td><?= dateGeneralFormat($get['date']) ?></td>
-                                                <!-- <td></td> -->
-                                                <td></td>
+                                                <th>S No.</th>
+                                                <th>Date</th>
+
+                                                <th>Edit</th>
+                                                <!-- <th>Delete</th> -->
+
                                             </tr>
-                                        <?php } ?>
-                                    </tbody>
-                                </table>
-                            </form>
+                                        </thead>
+                                        <tbody>
+
+                                            <?php
+                                            $i = 1;
+                                            foreach ($preventive_list as $get) {
+
+                                            ?>
+                                                <tr>
+                                                    <td><?= $i++ ?></td>
+                                                    <td><?= dateGeneralFormat($get['date']) ?></td>
+                                                    <td><i class="bi bi-pencil-square" style="cursor: pointer;color:blue;" onclick="location.href='index.php?page=edit&id=<?= $get['id']; ?>'"></i></td>
+                                                    <td></td>
+                                                </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </form>
+                            </div>
+                        </div>
+
+                    <?php } ?>
+
+
+
+                    <!-- footer -->
+                    <?php include '../../includes/footer.php'; ?>
+                    </div>
+            </div>
+        </div>
+
+        <!-- Delete modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"></h5>
+                    </div>
+                    <div class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" name="department_hidden_id" id="department_hidden_id" value="">
+                        <input type="hidden" name="department_hidden_status" id="department_hidden_status" value="">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="$('#exampleModal').modal('hide');">Close</button>
+                        <button type="button" class="btn btn-primary" id="delete_button">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Delete success message  modal -->
+        <div class="modal fade" id="success_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel1"></h5>
+                    </div>
+                    <div class="modal-body1">
+                        <div class="d-flex justify-content-center">
+                            <p>The
+                                <span id="record_name"></span> was <span id="record_status"></span>
+                            </p>
                         </div>
                     </div>
-
-                <?php } ?>
-
-
-
-                <!-- footer -->
-                <?php include '../../includes/footer.php'; ?>
-            </div>
-        </div>
-    </div>
-
-    <!-- Delete modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"></h5>
-                </div>
-                <div class="modal-body">
-
-                </div>
-                <div class="modal-footer">
-                    <input type="hidden" name="department_hidden_id" id="department_hidden_id" value="">
-                    <input type="hidden" name="department_hidden_status" id="department_hidden_status" value="">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="$('#exampleModal').modal('hide');">Close</button>
-                    <button type="button" class="btn btn-primary" id="delete_button">Delete</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Delete success message  modal -->
-    <div class="modal fade" id="success_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel1"></h5>
-                </div>
-                <div class="modal-body1">
-                    <div class="d-flex justify-content-center">
-                        <p>The
-                            <span id="record_name"></span> was <span id="record_status"></span>
-                        </p>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="location.href='index.php'">Close</button>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="location.href='index.php'">Close</button>
-                </div>
             </div>
         </div>
-    </div>
 
 
 
-    <script src="<?= PROJECT_PATH ?>/src/assets/libs/jquery/dist/jquery.min.js"></script>
-    <script src="<?= PROJECT_PATH ?>/src/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="<?= PROJECT_PATH ?>/src/assets/js/sidebarmenu.js"></script>
-    <script src="<?= PROJECT_PATH ?>/src/assets/js/app.min.js"></script>
-    <script src="<?= PROJECT_PATH ?>/src/assets/libs/apexcharts/dist/apexcharts.min.js"></script>
-    <script src="<?= PROJECT_PATH ?>/src/assets/libs/simplebar/dist/simplebar.js"></script>
-    <script src="<?= PROJECT_PATH ?>/src/assets/js/dashboard.js"></script>
-    <script src="<?= PROJECT_PATH ?>/src/assets/jquery/jquery.js"></script>
-    <script src="<?= PROJECT_PATH ?>/src/assets/jquery/jquery-ui.js"></script>
-    <script src="<?= PROJECT_PATH ?>/src/assets/DataTable/datatables.min.js"></script>
-    <script src="preventive-function.js"></script>
-    <script src="../../assets/js/from-to-date.js"></script>
-    <?php
+        <script src="<?= PROJECT_PATH ?>/src/assets/libs/jquery/dist/jquery.min.js"></script>
+        <script src="<?= PROJECT_PATH ?>/src/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="<?= PROJECT_PATH ?>/src/assets/js/sidebarmenu.js"></script>
+        <script src="<?= PROJECT_PATH ?>/src/assets/js/app.min.js"></script>
+        <script src="<?= PROJECT_PATH ?>/src/assets/libs/apexcharts/dist/apexcharts.min.js"></script>
+        <script src="<?= PROJECT_PATH ?>/src/assets/libs/simplebar/dist/simplebar.js"></script>
+        <script src="<?= PROJECT_PATH ?>/src/assets/js/dashboard.js"></script>
+        <script src="<?= PROJECT_PATH ?>/src/assets/jquery/jquery.js"></script>
+        <script src="<?= PROJECT_PATH ?>/src/assets/jquery/jquery-ui.js"></script>
+        <script src="<?= PROJECT_PATH ?>/src/assets/DataTable/datatables.min.js"></script>
+        <script src="preventive-function.js"></script>
+        <script src="../../assets/js/from-to-date.js"></script>
+        <?php
 
-    if (isset($_REQUEST['msg'])) {
-        if ($_REQUEST['msg'] == 1) {
-            $msg = 'Department Created successfully';
-            $color = 'success';
-        } else if ($_REQUEST['msg'] == 2) {
-            $msg = 'Department Updated successfully';
-            $color = 'success';
-        } else if ($_REQUEST['msg'] == 3) {
-            $msg = 'Department Deleted successfully';
-            $color = 'success';
-        } else if ($_REQUEST['msg'] == 4) {
-            $msg = 'Please fill all required fields';
-            $color = 'warning';
-        } else if ($_REQUEST['msg'] == 5) {
-            $msg = 'Department Name Already Created';
-            $color = 'danger';
-        }
-    }
-
-    ?>
-
-    <!-- Toasts -->
-    <div class="toast-container position-absolute top-0 end-0 mt-3 mx-2" style="z-index: 10000;">
-        <div class="toast align-items-center text-white bg-<?= $color ?> border-0" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="d-flex">
-                <div class="toast-body">
-                    <?= $msg ?>
-                </div>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        function valid_function(id) {
-            var count = 0;
-            $('#form_row_' + id + ' input[type="file"]').each(function() {
-                if (!$(this).val()) {
-                    count += 1;
-                }
-            });
-            $('#form_row_' + id + ' textarea').each(function() {
-                if (!$(this).val()) {
-                    count += 1;
-                }
-            });
-            if (count > 0) {
-                $('#expand_' + id).addClass('bg-secondary');
-                $('#expand_' + id).addClass('text-white');
-            } else {
-                $('#expand_' + id).removeClass('bg-secondary');
-                $('#expand_' + id).addClass('bg-success');
+        if (isset($_REQUEST['msg'])) {
+            if ($_REQUEST['msg'] == 1) {
+                $msg = 'Department Created successfully';
+                $color = 'success';
+            } else if ($_REQUEST['msg'] == 2) {
+                $msg = 'Department Updated successfully';
+                $color = 'success';
+            } else if ($_REQUEST['msg'] == 3) {
+                $msg = 'Department Deleted successfully';
+                $color = 'success';
+            } else if ($_REQUEST['msg'] == 4) {
+                $msg = 'Please fill all required fields';
+                $color = 'warning';
+            } else if ($_REQUEST['msg'] == 5) {
+                $msg = 'Department Name Already Created';
+                $color = 'danger';
             }
-
         }
-    </script>
-    <?php if (isset($_REQUEST['msg'])) { ?>
+
+        ?>
+
+        <!-- Toasts -->
+        <div class="toast-container position-absolute top-0 end-0 mt-3 mx-2" style="z-index: 10000;">
+            <div class="toast align-items-center text-white bg-<?= $color ?> border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        <?= $msg ?>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+
         <script>
-            function show_alert() {
-                var toastElList = [].slice
-                    .call(document.querySelectorAll('.toast'));
-                var toastList = toastElList.map(function(toastEl) {
-                    return new bootstrap.Toast(toastEl)
-                })
-                toastList.forEach(toast => toast.show())
+            function valid_function(id) {
+                var count = 0;
+                $('#form_row_' + id + ' input[type="file"]').each(function() {
+                    if (!$(this).val()) {
+                        count += 1;
+                    }
+                });
+                $('#form_row_' + id + ' textarea').each(function() {
+                    if (!$(this).val()) {
+                        count += 1;
+                    }
+                });
+                if (count > 0) {
+                    $('#expand_' + id).addClass('bg-secondary');
+                    $('#expand_' + id).addClass('text-white');
+                } else {
+                    $('#expand_' + id).removeClass('bg-secondary');
+                    $('#expand_' + id).addClass('bg-success');
+                }
+
             }
-            show_alert();
         </script>
-    <?php } ?>
+        <?php if (isset($_REQUEST['msg'])) { ?>
+            <script>
+                function show_alert() {
+                    var toastElList = [].slice
+                        .call(document.querySelectorAll('.toast'));
+                    var toastList = toastElList.map(function(toastEl) {
+                        return new bootstrap.Toast(toastEl)
+                    })
+                    toastList.forEach(toast => toast.show())
+                }
+                show_alert();
+            </script>
+        <?php } ?>
 
 </body>
 

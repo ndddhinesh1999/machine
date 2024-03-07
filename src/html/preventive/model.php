@@ -15,16 +15,26 @@ function CreateData()
     $machine_id = $_POST['machine_id'];
 
 
+
     $insert_main = "INSERT INTO  preventive_main  SET 
     preventive_main_uniq_id                 = '" . $uniq_id . "',
-    preventive_maine_machine_id             = '" . $machine_id . "',
-    preventive_main_date                    = '" . date('Y-m-d') . "',
+    preventive_main_machine_id             = '" . $machine_id . "',
+    preventive_main_date                    = '" . dateDatabaseFormat($_POST['date']) . "',
     preventive_main_company_id              ='" . $company_id . "',												
     preventive_main_added_by                ='" . $_SESSION[SESS . 'session_admin_users_id'] . "',
     preventive_main_added_on                =UNIX_TIMESTAMP(NOW()),
     preventive_main_added_ip                ='" . $ip . "'";
 
     $main_id = insert($insert_main);
+    $select_machine = "SELECT * FROM `machines` WHERE machine_deleted_status =0 AND machine_id='" . $machine_id . "' AND  machine_previously_maintanance >'" . dateDatabaseFormat($_POST['date']) . "' ORDER BY machine_previously_maintanance DESC LIMIT 1";
+
+    list($row, $result) = selectRow($select_machine);
+    if ($row > 0) {
+        $update_machine = "UPDATE machines SET machine_previously_maintanance='" . $result['machine_previously_maintanance'] . "' WHERE  machine_id='" . $machine_id . "' ";
+    } else {
+        $update_machine = "UPDATE machines SET machine_previously_maintanance='" . dateDatabaseFormat($_POST['date']) . "' WHERE machine_id='" . $machine_id . "' ";
+    }
+    update($update_machine);
 
     foreach ($_POST['activity_id'] as $get_activity) {
         $i = 0;
@@ -101,6 +111,12 @@ function preventive_list()
 {
 
     $where = "";
+
+    $machine = machine_detail();
+    if (!empty($machine['machine_id']) && !empty($machine['machine_id'])) {
+        $where .= " AND  preventive_main_machine_id = '" . $machine['machine_id'] . "'";
+    }
+
     if (isset($_REQUEST['from_date']) && isset($_REQUEST['to_date']) && !empty($_REQUEST['from_date'])  && !empty($_REQUEST['to_date'])) {
         $where .= "AND  preventive_main_date BETWEEN '" . dateDatabaseFormat($_REQUEST['from_date']) . "' AND '" . dateDatabaseFormat($_REQUEST['to_date']) . "'";
     }
@@ -112,10 +128,130 @@ function preventive_list()
     $array = array();
     $i = 0;
     foreach ($result as $get) {
-        $array[$i]['id'] = $get['preventive_main_date'];
+        $array[$i]['id'] = $get['preventive_main_id'];
         $array[$i]['date'] = $get['preventive_main_date'];
         $i++;
     }
 
     return $array;
+}
+function preventive_edit()
+{
+    $where = "";
+
+    $machine = machine_detail();
+    if (!empty($machine['machine_id']) && !empty($machine['machine_id'])) {
+        $where .= " AND  preventive_main_machine_id = '" . $machine['machine_id'] . "'";
+    }
+
+    if (isset($_REQUEST['from_date']) && isset($_REQUEST['to_date']) && !empty($_REQUEST['from_date'])  && !empty($_REQUEST['to_date'])) {
+        $where .= "AND  preventive_main_date BETWEEN '" . dateDatabaseFormat($_REQUEST['from_date']) . "' AND '" . dateDatabaseFormat($_REQUEST['to_date']) . "'";
+    }
+
+    $select = "SELECT * FROM preventive_main 
+    LEFT JOIN machines ON machine_id=preventive_main_machine_id
+    WHERE preventive_main_deleted_status =0 AND preventive_main_id='" . $_REQUEST['id'] . "' $where";
+
+    list($count, $result) = selectRow($select);
+    $arrD = array();
+
+    $arrD['machine_id']  = $result['machine_id'];
+    $arrD['machine_name']  = $result['machine_name'];
+    $arrD['preventive_main_id ']  = $result['preventive_main_id'];
+    $arrD['deleted_status'] = $result['preventive_main_deleted_status'];
+    $arrD['date'] = $result['preventive_main_date'];
+
+    return $arrD;
+}
+
+function details($machine_id, $activity_detail_id)
+{
+    $select_details = "SELECT * FROM  preventives  
+    LEFT JOIN activity_details ON  activity_detail_id = preventive_activity_detail_id  
+    LEFT JOIN activitys ON  activity_id = activity_detail_activity_id   
+    WHERE  preventive_deleted_status = 0 
+    AND preventives_main_id ='" . $machine_id . "' AND activity_detail_id='" . $activity_detail_id . "'   ORDER BY preventive_activity_detail_id ASC";
+
+    list($row, $records) = selectRow($select_details);
+
+    $arrayData = array();
+    if ($row > 0) {
+        $arrayData['activity_detail_id']            = $records['activity_detail_id'];
+        $arrayData['activity_detail_name']          = $records['activity_detail_name'];
+        $arrayData['activity_details_plan']         = $records['activity_details_plan'];
+        $arrayData['preventive_before_text']        = $records['preventive_before_text'];
+        $arrayData['preventive_before_file']        = $records['preventive_before_file'];
+        $arrayData['preventive_after_file']         = $records['preventive_after_file'];
+    }
+
+    return $arrayData;
+}
+
+
+function preventive_pdf_list()
+{
+
+    $where = "";
+
+    $machine = machine_detail();
+    if (!empty($machine['machine_id']) && !empty($machine['machine_id'])) {
+        $where .= " AND  preventive_main_machine_id = '" . $machine['machine_id'] . "'";
+    }
+
+    if (isset($_REQUEST['from_date']) && isset($_REQUEST['to_date']) && !empty($_REQUEST['from_date'])  && !empty($_REQUEST['to_date'])) {
+        $where .= "AND  preventive_main_date BETWEEN '" . dateDatabaseFormat($_REQUEST['from_date']) . "' AND '" . dateDatabaseFormat($_REQUEST['to_date']) . "'";
+    }
+
+    $select = "SELECT * FROM preventive_main 
+    LEFT JOIN machines ON machine_id=preventive_main_machine_id
+    WHERE preventive_main_deleted_status =0 $where";
+
+    list($count, $record) = selectRows($select);
+    $arrD = array();
+    $k = 0;
+    foreach ($record as $result) {
+        $arrD[$k]['deleted_status'] = $result['preventive_main_deleted_status'];
+        $arrD[$k]['dates'] = $result['preventive_main_date'];
+
+        if ($count > 0) {
+            $select_activity = "SELECT * FROM  preventives  
+            LEFT JOIN activity_details ON  activity_detail_id = preventive_activity_detail_id  
+            LEFT JOIN activitys ON  activity_id = activity_detail_activity_id   
+            WHERE  preventive_deleted_status = 0 
+            AND preventives_main_id ='" . $result['preventive_main_id'] . "' GROUP BY  activity_id  ORDER BY activity_id ASC";
+
+            list($row, $result_activity) = selectRows($select_activity);
+            $i = 0;
+            $arrLabel = array();
+            foreach ($result_activity as $get) {
+                $select_details = "SELECT * FROM  preventives  
+            LEFT JOIN activity_details ON  activity_detail_id = preventive_activity_detail_id  
+            LEFT JOIN activitys ON  activity_id = activity_detail_activity_id   
+            WHERE  preventive_deleted_status = 0 
+            AND preventives_main_id ='" . $result['preventive_main_id'] . "' AND activity_id='" . $get['activity_id'] . "'   ORDER BY preventive_activity_detail_id ASC";
+
+                list($row, $result_details) = selectRows($select_details);
+                $j = 0;
+                $arrayData = array();
+                foreach ($result_details as $records) {
+                    $arrayData[$j]['activity_detail_id']            = $records['activity_detail_id'];
+                    $arrayData[$j]['activity_detail_name']          = $records['activity_detail_name'];
+                    $arrayData[$j]['activity_details_plan']         = $records['activity_details_plan'];
+                    $arrayData[$j]['preventive_before_text']        = $records['preventive_before_text'];
+                    $arrayData[$j]['preventive_before_file']        = $records['preventive_before_file'];
+                    $arrayData[$j]['preventive_after_file']         = $records['preventive_after_file'];
+                    $j++;
+                }
+
+                $arrLabel[$i]['activity_id'] = $get['activity_id'];
+                $arrLabel[$i]['activity_name'] = $get['activity_name'];
+                $arrLabel[$i]['activity_details'] = $arrayData;
+                $i++;
+            }
+            $arrD[$k]['details']      = $arrLabel;
+        }
+        $k++;
+    }
+
+    return $arrD;
 }

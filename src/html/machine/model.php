@@ -88,8 +88,8 @@ function listmachine()
         $where .= "AND machine_active_status='active' AND machine_deleted_status = 0 ";
     }
 
-    $select = "SELECT machine_id,machine_name,machine_active_status
-                                     FROM   machines
+    $select = "SELECT * FROM   machines
+    LEFT JOIN categorys ON category_id=machine_type
                                     $where  ORDER BY  machine_id   DESC ";
     list($count, $result) = selectRows($select);
     return $result;
@@ -142,6 +142,7 @@ function insertmachine()
 
         if ($num_row == 0) {
             if (!empty($request_fields)) {
+                
                 $insert_machine = "INSERT INTO machines  SET 
                                    machine_type                     ='" . $machine_type . "',
 				                   machine_name                     ='" . $machine_name . "',
@@ -150,10 +151,10 @@ function insertmachine()
                                    machine_serial_number            ='" . $machine_sno . "',
                                    machine_number                   ='" . $machine_number . "',
                                    machine_image                    ='" . $destination . "',
-                                   machine_year_of_manufacture      ='" . $machine_manufac_year . "',
+                                   machine_year_of_manufacture      ='" . dateDatabaseFormat($machine_manufac_year . '-01') . "',
                                    machine_location                 ='" . $machine_location . "',
-                                   machine_previously_maintanance   ='" . $machine_prev_maintanance . "',
-                                   machine_planned_maintanance      ='" . $machine_planned_maintanance . "',
+                                   machine_previously_maintanance   ='" . dateDatabaseFormat($machine_prev_maintanance) . "',
+                                   machine_planned_maintanance      ='" . dateDatabaseFormat($machine_planned_maintanance) . "',
                                    machine_x_axis                   ='" . $machine_x_axis . "',
                                    machine_y_axis                   ='" . $machine_y_axis . "',
                                    machine_z_axis                   ='" . $machine_z_axis . "',
@@ -164,6 +165,7 @@ function insertmachine()
 				                   machine_added_by   ='" . $_SESSION[SESS . 'session_admin_users_id'] . "',
 				                   machine_added_on   =UNIX_TIMESTAMP(NOW()),
 				                   machine_added_ip   ='" . $ip . "'";
+                                   
                 insert($insert_machine);
 
                 header("Location:" . PROJECT_PATH . "src/html/machine/index.php?page=add&msg=1");
@@ -249,10 +251,10 @@ function updatemachine()
                                    machine_serial_number            ='" . $machine_sno . "',
                                    machine_number                   ='" . $machine_number . "',
                                    $machineImage
-                                   machine_year_of_manufacture      ='" . $machine_manufac_year . "',
+                                   machine_year_of_manufacture      ='" . dateDatabaseFormat($machine_manufac_year) . "',
                                    machine_location                 ='" . $machine_location . "',
-                                   machine_previously_maintanance   ='" . $machine_prev_maintanance . "',
-                                   machine_planned_maintanance      ='" . $machine_planned_maintanance . "',
+                                   machine_previously_maintanance   ='" . dateDatabaseFormat($machine_prev_maintanance) . "',
+                                   machine_planned_maintanance      ='" . dateDatabaseFormat($machine_planned_maintanance) . "',
                                    machine_x_axis                   ='" . $machine_x_axis . "',
                                    machine_y_axis                   ='" . $machine_y_axis . "',
                                    machine_z_axis                   ='" . $machine_z_axis . "',
@@ -264,7 +266,7 @@ function updatemachine()
 				  machine_modified_by='" . $_SESSION[SESS . 'session_admin_users_id'] . "',
 				  machine_modified_on=UNIX_TIMESTAMP(NOW()),
 				  machine_modified_ip='" . $ip . "' WHERE machine_id = '" . $machine_id . "' ";
-                //   echo $update_machine;exit; 
+
                 update($update_machine);
                 header("Location:" . PROJECT_PATH . "src/html/machine/index.php?page=edit&machine_id=$machine_id&msg=2");
                 exit();

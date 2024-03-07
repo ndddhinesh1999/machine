@@ -47,6 +47,11 @@ function listbreakdown()
     }
 
     $where = "";
+
+    $machine = machine_detail();
+    if (!empty($machine['machine_id']) && !empty($machine['machine_id'])) {
+        $where .= " AND  year_breakdown_machine_id = '" . $machine['machine_id'] . "'";
+    }
     if (isset($_REQUEST['from_date']) && isset($_REQUEST['to_date']) && !empty($_REQUEST['from_date'])  && !empty($_REQUEST['to_date'])) {
         $where .= "AND  year_breakdown_date BETWEEN '" . dateDatabaseFormat($_REQUEST['from_date']) . "' AND '" . dateDatabaseFormat($_REQUEST['to_date']) . "'";
     }
@@ -74,7 +79,6 @@ function listbreakdown()
     $select = "SELECT * FROM year_breakdown 
     LEFT JOIN machines ON machine_id=year_breakdown_machine_id
     WHERE year_breakdown_deleted_status =0 $where ORDER BY year_breakdown_id DESC ";
-
     list($count, $result) = selectRows($select);
     return $result;
 }
@@ -248,4 +252,8 @@ function updatebreakdown()
             exit();
         }
     }
+}
+function pdfList()
+{
+    
 }

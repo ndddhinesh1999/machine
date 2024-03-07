@@ -36,7 +36,8 @@
                         <td style="text-align:center;" class="report-border-right report-border-top report-padding-top-bottom report-table-border-bottom">
                             <p><?= $get_record['remark']; ?></p>
                         </td>
-                        <td style="text-align:center;" class="report-border-right report-border-top report-padding-top-bottom report-table-border-bottom"><img style="height:80px;" src="<?= !empty($get_record['before_image']) ? '../../' . $get_record['before_image'] : './demo.jpg' ?>" alt=""></td>
+                      
+                        <td style="text-align:center;" class="report-border-right report-border-top report-padding-top-bottom report-table-border-bottom"><img style="height:80px;" src="<?= !empty($get_record['before_image']) ? '../../' . $get_record['before_image'] : '../../uploads/no-image.png'?>" alt=""></td>
                         <td style="text-align:center;" class="report-border-right report-border-top report-padding-top-bottom report-table-border-bottom"><img style="height:80px;" src="<?= !empty($get_record['after_image']) ? '../../' . $get_record['after_image'] : './demo.jpg' ?>" alt=""></td>
 
 

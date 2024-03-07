@@ -10,6 +10,9 @@ if (isset($_SESSION[SESS . 'session_admin_users_unique_id'])) {
         CreateData();
     }
 
+    if (isset($_REQUEST['page']) && !empty($_REQUEST['page'] == 'edit')) {
+       $preventive_edit= preventive_edit();
+    }
     include 'view.php';
 } else {
     header("Location:../../../index.php");

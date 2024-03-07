@@ -8,6 +8,7 @@ if (isset($_SESSION[SESS . 'session_admin_users_unique_id'])) {
 
     $machine_type_detail = machine_type_detail();
 
+
     $list_machine = listmachine();
 
     $listCompany = listCompany();

@@ -1,6 +1,7 @@
 <?php
 
 $db_data_type = array("int" => "INT", "varchar" => "VARCHAR", "text" => "TEXT", "date" => "DATE", "datetime" => "DATETIME", "float" => "FLOAT", "tinyint" => "TINYINT");
+
 function dataValidation($value)
 {
 	$dbc = db_connction();
@@ -164,7 +165,7 @@ function user_info($user_id, $user_lever)
 		}
 	}
 }
-function machine_detail()
+function insert_machine_detail()
 {
 
 	if (isset($_REQUEST['m_id']) && !empty($_REQUEST['m_id']) ? $_REQUEST['m_id'] : '') {
@@ -195,9 +196,23 @@ function machine_detail()
 			$array['machine_image'] = $record['machine_image'];
 		}
 	}
+
+	file_put_contents('../../includes/md.json', json_encode($array));
+
 	return $array;
 }
 
+function machine_detail()
+{
+	$details = json_decode(file_get_contents('../../includes/md.json'));
+	$array = array();
+
+	$array['machine_id']	 	= $details->machine_id;
+	$array['machine_name'] 		= $details->machine_name;
+	$array['machine_model'] 	= $details->machine_model;
+	$array['machine_image'] 	= $details->machine_image;
+	return $array;
+}
 
 function machine_type_detail()
 {
@@ -232,4 +247,16 @@ function machine_type_detail()
 function companyDetails()
 {
 	return array('name' => 'GLOBE COMPONENTS (P) LTD', 'address' => 'CHENNAI -58', 'logo' => '../../assets/images/logos/gc.jpeg');
+}
+function c_file_exists($file)
+{
+	$file_headers = @get_headers($file);
+	if (strpos($file_headers[0], '404 Not Found')) {
+		return false;
+	}
+	return true;
+}
+function dateFormateMonth($date){
+	$newDate = date("Y-m", strtotime($date));
+	return $newDate;
 }

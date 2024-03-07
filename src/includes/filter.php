@@ -7,6 +7,8 @@ $from_date = isset($_REQUEST['from_date']) ? $_REQUEST['from_date'] : '';
 $to_date = isset($_REQUEST['to_date']) ? $_REQUEST['to_date'] : '';
 $search_status = isset($_REQUEST['autonomous_search_status']) ? $_REQUEST['autonomous_search_status'] : '';
 $company_id = isset($_REQUEST['search_company_id']) ? $_REQUEST['search_company_id'] : '';
+$m_id = isset($_REQUEST['m_id']) ? $_REQUEST['m_id'] : '';
+$machine_id = '<input type="hidden" name="m_id" id="m_id" class="form-control " value="' . $m_id . '"/>';
 if (array_search('preventive', $array)) { ?>
     <form action="index.php" method="POST" autocomplete="off">
         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
@@ -37,6 +39,7 @@ if (array_search('preventive', $array)) { ?>
                             <option value="1" <?php if ($search_status == '1') { ?>selected <?php } ?>>Deleted</option>
                         </select>
                     </div>
+                    <?= $machine_id ?>
                 </div><br>
                 <div class="d-flex justify-content-center gap-2">
                     <input name="search" type="submit" class="btn btn-primary" id="search" value="Search" title="Search" />
@@ -75,6 +78,7 @@ if (array_search('preventive', $array)) { ?>
                             <option value="1" <?php if ($search_status == '1') { ?>selected <?php } ?>>Deleted</option>
                         </select>
                     </div>
+                    <?= $machine_id ?>
                 </div><br>
                 <div class="d-flex justify-content-center gap-2">
                     <input name="search" type="submit" class="btn btn-primary" id="search" value="Search" title="Search" />
@@ -113,6 +117,7 @@ if (array_search('preventive', $array)) { ?>
                             <option value="1" <?php if ($search_status == '1') { ?>selected <?php } ?>>Deleted</option>
                         </select>
                     </div>
+                    <?= $machine_id ?>
                 </div><br>
                 <div class="d-flex justify-content-center gap-2">
                     <input name="search" type="submit" class="btn btn-primary" id="search" value="Search" title="Search" />

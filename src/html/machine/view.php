@@ -99,15 +99,15 @@
                                                 Please enter machine type.
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
+                                        <!-- <div class="col-md-4">
                                             <label class="form-label machine_name" for="machine_name">Machine Name</label>
                                             <input name="machine_name" id="machine_name" class="form-control" required>
                                             <div class="invalid-feedback">
                                                 Please enter machine name.
                                             </div>
-                                        </div>
+                                        </div> -->
 
-                                        <div class="col-md-4">
+                                        <div class="col-md-8">
                                             <label class="form-label machine_name" for="machine_name">Machine Name</label>
                                             <input name="machine_name" id="machine_name" class="form-control" required>
                                             <div class="invalid-feedback">
@@ -259,7 +259,7 @@
 
                                         <?php    } ?>
                                         <div class="col-md-4">
-                                            <label class="form-label machine_name" for="machine_name">Machine Type</label>
+                                            <!-- <label class="form-label machine_name" for="machine_name">Machine Type</label>
                                             <select name="machine_type" id="machine_tpe" class="form-select" required>
                                                 <option value="">SELECT</option>
                                                 <?php foreach ($category as $get_data) { ?>
@@ -268,9 +268,26 @@
                                             </select>
                                             <div class="invalid-feedback">
                                                 Please enter machine type.
+                                            </div> -->
+                                            <label class="form-label machine_name" for="machine_name">Machine Type</label>
+                                            <?php if (isset($_REQUEST['type']) && !empty($_REQUEST['type'])) { ?>
+
+                                                <input type="text" name="machine_type_name" id="machine_type_name" class="form-control" required value=" <?= $machine_type_detail['category_name'] ?>" readonly>
+                                                <input type="hidden" name="machine_type" id="machine_type" class="form-control" required value=" <?= $machine_type_detail['category_id'] ?>" readonly>
+                                            <?php      } else { ?>
+                                                <select name="machine_type" id="machine_type" class="form-select" required aria-readonly="readonly">
+                                                    <option value="">SELECT</option>
+                                                    <?php foreach ($category as $get_data) { ?>
+                                                        <option value="<?= $get_data['category_id'] ?>" <?= (isset($_REQUEST['type']) && $_REQUEST['type'] == $get_data['category_id']) ? 'selected' : '' ?>><?= $get_data['category_name'] ?></option>
+                                                    <?php   } ?>
+                                                </select>
+                                            <?php }  ?>
+
+                                            <div class="invalid-feedback">
+                                                Please enter machine type.
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-8">
                                             <label class="form-label machine_name" for="machine_name">Machine Name</label>
                                             <input name="machine_name" id="machine_name" class="form-control" value="<?= $edit_machine['machine_name'] ?>" required>
                                             <div class="invalid-feedback">
@@ -306,20 +323,20 @@
                                             </div>
                                         </div>
                                         <div class="col-md-4">
-                                            <label class="form-label machine_manufac_year" for="machine_manufac_year">Year Of Manufacture</label>
-                                            <!-- <input name="machine_manufac_year" id="machine_manufac_year" class="form-control" value="<?= $edit_machine['machine_year_of_manufacture'] ?>" required> -->
+                                            <label class="form-label machine_manufac_year" for="machine_manufac_year">Year Of Manufacture(month,year)</label>
+                                            <input name="machine_manufac_year" id="machine_manufac_year" type="month" class="form-control" value="<?= dateFormateMonth($edit_machine['machine_year_of_manufacture']) ?>" required>
 
-                                            <select name="machine_manufac_year" id="machine_manufac_year" class="form-control" value="<?= $edit_machine['machine_year_of_manufacture'] ?>" required>
-                                                <?php
-                                                // Assuming you want a range of years, for example, from 2020 to 2030
-                                                $startYear = date('Y') - 72;
-                                                $endYear = date('Y');
+                                            <!-- <select name="machine_manufac_year" id="machine_manufac_year" class="form-control" value="<?= $edit_machine['machine_year_of_manufacture'] ?>" required> -->
+                                            <?php
+                                            // Assuming you want a range of years, for example, from 2020 to 2030
+                                            $startYear = date('Y') - 72;
+                                            $endYear = date('Y');
 
-                                                for ($year = $endYear; $year >= $startYear; $year--) {
-                                                    echo "<option value=\"$year\">$year</option>";
-                                                }
-                                                ?>
-                                            </select>
+                                            for ($year = $endYear; $year >= $startYear; $year--) {
+                                                // echo "<option value=\"$year\">$year</option>";
+                                            }
+                                            ?>
+                                            <!-- </select> -->
                                             <div class="invalid-feedback">
                                                 Please enter manufacture year.
                                             </div>
@@ -333,7 +350,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label class="form-label machine_prev_maintanance" for="machine_prev_maintanance">Previouslt Maintanance Done</label>
-                                            <input name="machine_prev_maintanance" type="text" id="machine_prev_maintanance" class="form-control datepicker" value="<?= $edit_machine['machine_previously_maintanance'] ?>" required>
+                                            <input name="machine_prev_maintanance" type="text" id="machine_prev_maintanance" class="form-control datepicker" value="<?= dateGeneralFormat($edit_machine['machine_previously_maintanance']) ?>" required>
                                             <div class="invalid-feedback">
                                                 Please enter prev maintanance.
                                             </div>
@@ -343,7 +360,7 @@
 
                                         <div class="col-md-4">
                                             <label class="form-label machine_planned_maintanance" for="machine_planned_maintanance">Planned Maintanance</label>
-                                            <input name="machine_planned_maintanance" id="machine_planned_maintanance" class="form-control datepicker" value="<?= $edit_machine['machine_planned_maintanance'] ?>" required>
+                                            <input name="machine_planned_maintanance" id="machine_planned_maintanance" class="form-control datepicker" value="<?= dateGeneralFormat($edit_machine['machine_planned_maintanance']) ?>" required>
                                             <div class="invalid-feedback">
                                                 Please enter planned maintanance.
                                             </div>
@@ -384,13 +401,13 @@
                                             </select>
                                         </div>
 
-                                        <div class="col-md-5" style="margin-top:25px ">
+                                        <div class="col-md-4">
                                             <label class="form-label machine_img" for="machine_img">Machine Image</label>
                                             <input type="file" name="machine_img" id="machine_img" class="form-control">
                                         </div>
 
                                         <?php if ($edit_machine['machine_image'] != '') { ?>
-                                            <div class="col-md-5">
+                                            <div class="col-md-4">
                                                 <!-- image_preview -->
                                                 <!-- <label>Image Preview</label><br> --><br>
                                                 <img class="preview-trigger" style="width: 100px;" src="<?= PROJECT_PATH . 'src/' . $edit_machine['machine_image'] ?>" alt="Image Preview">
@@ -478,7 +495,7 @@
 
 
                     <div class="card p-2">
-                        <div class="d-flex justify-content-end">
+                        <div class="d-flex justify-content-between">
                             <button class="btn btn-danger mx-2 my-2" title="PDF" onclick="location.href='pdf.php?'"><i class="bi bi-file-pdf"></i>PDF</button>
                             <button class="btn btn-primary mx-2 my-2" onclick="location.href='index.php?page=add&type=<?= isset($_REQUEST['type']) ? $_REQUEST['type'] : '' ?>'">Add</button>
                         </div>
@@ -495,7 +512,7 @@
                                             <th>Status</th>
                                             <th>Entry</th>
                                             <?php if ($search_status != 1) { ?>
-                                                <!-- <th>Edit</th> -->
+                                                <th>Edit</th>
                                                 <!-- <th>Delete</th> -->
                                             <?php } else { ?>
                                                 <th>View</th>
@@ -513,11 +530,12 @@
                                                     <td><?= $sno++; ?></td>
                                                     <td><?= ucfirst($value['machine_name']); ?></td>
                                                     <td><?= $value['machine_active_status'] ?></td>
-                                                    <td><i class="bi bi-plus-circle-fill fs-6" style="cursor: pointer;color:blue;" onclick="location.href='../machine-details/index.php?type=<?= isset($_REQUEST['type']) ? $_REQUEST['type'] : '' ?>&id=<?= $value['machine_id'] ?>'"></i></td>
+                                                    <td><i class="bi bi-plus-circle-fill fs-6" style="cursor: pointer;color:blue;" onclick="location.href='../machine-details/index.php?type=<?= isset($_REQUEST['type']) ? $_REQUEST['type'] : '' ?>&m_id=<?= $value['machine_id'] ?>'"></i></td>
+
                                                     <?php if ($search_status != 1) { ?>
-                                                        <!-- <td>
-                                                            <i class="bi bi-pencil-square fs-6" style="cursor: pointer;color:blue;" onclick="location.href='index.php?page=edit&machine_id=<?= $value['machine_id']; ?>'"></i>
-                                                        </td> -->
+                                                        <td>
+                                                            <i class="bi bi-pencil-square fs-6" style="cursor: pointer;color:blue;" onclick="location.href='index.php?page=edit&type=<?= $value['machine_type'] ?>&machine_id=<?= $value['machine_id']; ?>'"></i>
+                                                        </td>
                                                         <!-- <td>
                                                             <span data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="delete_record(<?= $value['machine_id']; ?>,'delete');"><i class="bi bi-trash fs-6" style="cursor: pointer;color:red"></i></span>
                                                         </td> -->

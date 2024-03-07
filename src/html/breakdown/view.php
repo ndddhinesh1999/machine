@@ -48,7 +48,7 @@
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/home/">Home</a></li>
                                 <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/machine/">Machine</a></li>
-                                <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/machine-details/index.php?type= <?= isset($_REQUEST['type']) ? $_REQUEST['type'] : '' ?>&m_id=<?= $machine['machine_id'] ?>"><?= $machine['machine_name'] ?></a></li>
+                                <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/machine-details/index.php?type=<?= isset($_REQUEST['type']) ? $_REQUEST['type'] : '' ?>&m_id=<?= $machine['machine_id'] ?>"><?= $machine['machine_name'] ?></a></li>
                                 <li class="breadcrumb-item active">Breakdown</li>
                             </ol>
                         </nav>
@@ -361,7 +361,8 @@
                                             <?php } ?>
                                             <input type="hidden" name="breakdown_page" id="breakdown_page" value="edit">
                                             <input type="hidden" name="breakdown_status" id="breakdown_status" value="<?= $edit_breakdown['year_breakdown_deleted_status'] ?>">
-                                            <input type="button" value="Back" class="btn btn-secondary" onclick="location.href='index.php'" title="Back">
+                                            <!-- <input type="button" value="Back" class="btn btn-secondary" onclick="location.href='index.php'" title="Back"> -->
+                                            <input type="button" value="Back" class="btn btn-secondary" onclick="location.href='index.php?type= <?= isset($_REQUEST['type']) ? $_REQUEST['type'] : '' ?>&m_id=<?= $machine['machine_id'] ?>'" title="Back">
                                         </div>
                                 </form>
                             </div>

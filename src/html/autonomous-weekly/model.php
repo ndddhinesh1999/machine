@@ -53,8 +53,9 @@ function listautonomous()
         $where .= " AND  autonomous_date BETWEEN '" . dateDatabaseFormat($_REQUEST['from_date']) . "'  AND '" . dateDatabaseFormat($_REQUEST['to_date']) . "'";
     }
 
-    if (!empty($_REQUEST['m_id']) && !empty($_REQUEST['m_id'])) {
-        $where .= " AND  autonomous_machine_id = '" . $_REQUEST['m_id'] . "'";
+    $machine = machine_detail();
+    if (!empty($machine['machine_id']) && !empty($machine['machine_id'])) {
+        $where .= " AND  autonomous_machine_id = '" . $machine['machine_id'] . "'";
     }
     if (!empty($_REQUEST['search_company_id'])) {
         $where .= " AND autonomous_company_id  = '" . $_REQUEST['search_company_id'] . "'  ";
@@ -302,7 +303,10 @@ function pdfList()
     if (isset($_REQUEST['from_date']) && isset($_REQUEST['to_date']) && !empty($_REQUEST['from_date'])  && !empty($_REQUEST['to_date'])) {
         $where .= "AND  autonomous_date BETWEEN '" . dateDatabaseFormat($_REQUEST['from_date']) . "' AND '" . dateDatabaseFormat($_REQUEST['to_date']) . "'";
     }
-
+    $machine = machine_detail();
+    if (!empty($machine['machine_id']) && !empty($machine['machine_id'])) {
+        $where .= " AND  autonomous_machine_id = '" . $machine['machine_id'] . "'";
+    }
     $select = "SELECT * FROM  autonomous  
                  LEFT JOIN machines ON machine_id = autonomous_machine_id
                  WHERE  autonomous_deleted_status=0 AND  autonomous_type ='2' $where ORDER BY autonomous_date ASC";

@@ -24,16 +24,20 @@
             <?php include '../../includes/header.php'; ?>
 
             <div class="container-fluid">
+
+                <div class="page-title">
+                    <nav>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/home/">Home</a></li>
+                            <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/machine/index.php?type= <?= isset($_REQUEST['type']) ? $_REQUEST['type'] : '' ?>">Machine</a></li>
+                            <li class="breadcrumb-item active"><?= $machine['machine_name'] ?></li>
+                        </ol>
+                    </nav>
+                </div>
+
+
                 <div class="d-flex justify-content-between">
-                    <div class="page-title">
-                        <nav>
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/home/">Home</a></li>
-                                <li class="breadcrumb-item"><a href="<?= PROJECT_PATH ?>src/html/machine/index.php?type= <?= isset($_REQUEST['type']) ? $_REQUEST['type'] : '' ?>">Machine</a></li>
-                                <li class="breadcrumb-item active"><?= $machine['machine_name'] ?></li>
-                            </ol>
-                        </nav>
-                    </div>
+                    <button class="btn btn-danger mx-2 my-2" title="PDF" onclick="location.href='pdf.php?'"><i class="bi bi-file-pdf"></i>PDF</button>
                     <h3><?= $machine['machine_name'] ?></h3>
                 </div>
                 <?php if (isset($_REQUEST['page']) && $_REQUEST['page'] == 'add') { ?>
@@ -146,7 +150,6 @@
 
                     ?>
 
-
                     <div class="card p-2">
 
                         <div class="table-responsive text-nowrap">
@@ -168,17 +171,16 @@
                                     <tbody>
                                         <?php
                                         $sno = 1;
-                                        if ($list_details) {
+                                        if ($lastDateDetails) {
 
-                                            foreach ($list_details as $value) {
-
+                                            foreach ($lastDateDetails['menu'] as $value) {
                                         ?>
                                                 <tr>
                                                     <td><?= $sno++; ?></td>
-                                                    <td><?= $value ?></td>
-                                                    <td>2024/01/11</td>
-                                                    <td><i class="bi bi-pencil-square fs-7" style="cursor: pointer;color:blue;" onclick="location.href='../<?= $value ?>/index.php?type=<?= $_REQUEST['type'] ?>&m_id=<?= $machine['machine_id'] ?>'"></i></td>
-                                                    <td><i class="bi bi-plus-circle-fill fs-7" style="cursor: pointer;color:blue;" onclick="location.href='../<?= $value ?>/index.php?page=add&type=<?= $_REQUEST['type'] ?>&m_id=<?= $machine['machine_id'] ?>'"></i></td>
+                                                    <td><?= $value['labe'] ?></td>
+                                                    <td><?= ($value['date']) ? dateGeneralFormat($value['date']) : 'DD/MM/YYYY' ?></td>
+                                                    <td><i class="bi bi-pencil-square fs-7" style="cursor: pointer;color:blue;" onclick="location.href='../<?= $value['labe'] ?>/index.php?type=<?= $_REQUEST['type'] ?>'"></i></td>
+                                                    <td><i class="bi bi-plus-circle-fill fs-7" style="cursor: pointer;color:blue;" onclick="location.href='../<?= $value['labe'] ?>/index.php?page=add&type=<?= $_REQUEST['type'] ?>&m_id=<?= $lastDateDetails['machine_id'] ?>'"></i></td>
                                                 </tr>
                                         <?php }
                                         } ?>
